@@ -5,8 +5,7 @@
  */
 package worldofzuulfx;
 
-import worldofzuulfx.sprites.DrawableRoom;
-import worldofzuulfx.sprites.DrawablePlayer;
+
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -38,7 +37,7 @@ public class Main extends Application {
     private static Game game;
     private Pane background;
     private Pane sprites;
-    private HashMap<String, DrawableRoom> rooms;
+    private HashMap<String, Room> rooms;
     private FXMLMainController controller;
     private String consoleTxt;
 

@@ -9,7 +9,10 @@ package worldofzuulfx;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.NPC.NPC;
+import worldofzuulfx.tiles.Tile;
+import worldofzuulfx.tiles.TileMap;
 
 public class Room {
 
@@ -19,8 +22,11 @@ public class Room {
     private HashMap<String, Room> exits;
     private Inventory roomInventory;
     private ArrayList<NPC> npcList;
+    private Pane background;
+    private final TileMap tileMap;
+    private final int[][] tileLayout;
 
-    public Room(String ID, String description) {
+    public Room(String ID, String description, Pane layer, HashMap<Integer, Tile> tiles, int[][] tileLayout) {
         // Constructor - defines the description of the room.
         this.ID = ID;
         this.description = description;
@@ -29,6 +35,10 @@ public class Room {
         exits = new HashMap<>();
         roomInventory = new Inventory();
         npcList = new ArrayList<>();
+        this.background = layer;
+        this.tileLayout = tileLayout;
+        
+        tileMap = new TileMap(this.tileLayout, tiles);
     }
 
     public void setExit(String direction, Room neighbor) {
@@ -126,5 +136,18 @@ public class Room {
         
         return null;
     }
+       public TileMap getTileMap() {
+        return this.tileMap;
+    }
+    
+    public void draw() {
+        tileMap.draw(background);
+    }
 
+    /**
+     * @return the background
+     */
+    public Pane getBackground() {
+        return background;
+    }
 }

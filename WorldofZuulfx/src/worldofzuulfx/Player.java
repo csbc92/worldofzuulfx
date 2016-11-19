@@ -3,6 +3,8 @@ package worldofzuulfx;
 import worldofzuulfx.Quest.Quest;
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
 import worldofzuulfx.Events.NavigateEvent;
@@ -13,6 +15,7 @@ import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Quest.Reward;
 import worldofzuulfx.Interfaces.NavigateListener;
+import worldofzuulfx.sprites.SpriteBase;
 
 public class Player implements BarValueListener {
 
@@ -27,13 +30,14 @@ public class Player implements BarValueListener {
     private Room currentRoom;
     private int alcoTolerance;
     private int alcoCounter;
+    private final SpriteBase sprite;
     private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
     private ArrayList<Room> roomRandom;
     private ArrayList<NavigateListener> navigateListener;
 
-    public Player(String name) {
+    public Player(String name, Pane layer, Image image, double posX, double posY) {
         
         this.name = name;
         ects = new Bar(0, 30, 0);
@@ -47,6 +51,7 @@ public class Player implements BarValueListener {
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
         inactiveQuests = new ArrayList<>();
+        sprite = new SpriteBase(layer, image, posX, posY) {};
     }
 
     public int getECTS() {
@@ -193,7 +198,8 @@ public class Player implements BarValueListener {
 
         // Decrease the players energy each time he navigates between rooms.
         energy.setValue(energy.getValue() - 2);
-
+        
+        currentRoom.draw();
         notifyChangeRoomListeners(oldRoom, currentRoom);
     }
 
@@ -395,6 +401,10 @@ public class Player implements BarValueListener {
      */
     public boolean isDrunk() {
         return this.drunk;
+    }
+    
+     public SpriteBase getSprite() {
+        return this.sprite;
     }
 
     /**

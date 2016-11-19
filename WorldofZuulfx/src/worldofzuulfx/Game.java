@@ -1,7 +1,6 @@
 package worldofzuulfx;
 
-import worldofzuulfx.sprites.DrawableRoom;
-import worldofzuulfx.sprites.DrawablePlayer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
@@ -37,9 +36,9 @@ public class Game {
     private PartyGuy partyguy;
     private HashMap<String, Quest> allGameQuests;
     private ArrayList<String> RPSCommands;
-    private DrawablePlayer player;
+    private Player player;
     private TileMap tileMap;
-    private ArrayList<DrawableRoom> dRooms;
+    private ArrayList<Room> Rooms;
 //    private HashMap<String, DrawableRoom> rooms;
     private Pane background;
     private Pane sprites;
@@ -51,7 +50,7 @@ public class Game {
         this.sprites = sprites;
         addInputControls(scene);
         ConsoleInfo.setConsoleData("Test");
-        player = new DrawablePlayer("Player-name", this.sprites, new Image("http://i.imgur.com/zLwFeje.png"), 64.0, 64.0);
+        player = new Player("Player-name", this.sprites, new Image("http://i.imgur.com/zLwFeje.png"), 64.0, 64.0);
         player.getSprite().setCanCollide(true);
         player.getSprite().setDx(32);
         player.getSprite().setDy(16);
@@ -97,7 +96,7 @@ public class Game {
          boolean result = false;
         String currentRoomID = this.player.getCurrentRoom().getID();
         
-        DrawableRoom currentRoom = this.getRoom(currentRoomID);
+        Room currentRoom = this.getRoom(currentRoomID);
         
         for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
             
@@ -130,7 +129,7 @@ public class Game {
             }
             if (key.getCode() == KeyCode.LEFT) {
                 player.getSprite().move(SpriteBase.spriteActions.LEFT);
-                ConsoleInfo.setConsoleData("Test");
+                
 
             }
             if (key.getCode() == KeyCode.UP) {
@@ -361,9 +360,9 @@ public class Game {
         partyguy.spawn(getRooms(false), getAllGameQuests());
     }
 
-    public DrawableRoom getRoom(String ID) {
+    public Room getRoom(String ID) {
 
-        for (DrawableRoom r : this.dRooms) {
+        for (Room r : this.Rooms) {
             if (r.getID().equalsIgnoreCase(ID)) {
                 return r;
             }
@@ -374,13 +373,13 @@ public class Game {
 
     public ArrayList<Room> getRooms(Boolean lockedRooms) {
         ArrayList<Room> roomsToReturn = new ArrayList<>();
-// TODO Kan checkes
-//        for (DrawableRoom room : this.dRooms) {
-//
-//            if (room.isLocked() == lockedRooms) {
-//                roomsToReturn.add(room);
-//            }
-//        }
+ //TODO Kan checkes
+        for (Room room : this.Rooms) {
+
+            if (room.isLocked() == lockedRooms) {
+                roomsToReturn.add(room);
+            }
+        }
         return roomsToReturn;
     }
 
@@ -401,13 +400,13 @@ public class Game {
     }
 
     private void createRooms() {
-        DrawableRoom outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
+        Room outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
 
-        dRooms = new ArrayList<>();
+        Rooms = new ArrayList<>();
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/E04tZvB.png"), 32, 32);
         HashMap<Integer, Tile> tiles = tLoader.getTiles();
 
-        canteen = new DrawableRoom("Canteen", "Canteen", tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        canteen = new Room("Canteen", "Canteen", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -419,8 +418,9 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        dRooms.add(canteen);
-        canteen.draw(background);
+        
+        Rooms.add(canteen);
+        
         
 
 //        outside = new Room("Outside", "outside the main entrance of the university");
