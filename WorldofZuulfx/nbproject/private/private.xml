@@ -3,15 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/GUI/MapDlg.java</file>
-            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/ConsoleInfo.java</file>
-            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/CommandWords.java</file>
-            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/NPC/PartyGuy.java</file>
+            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/tiles/TileMap.java</file>
             <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Game.java</file>
+            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/sprites/DrawableRoom.java</file>
             <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Player.java</file>
             <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/FXMLMainController.java</file>
-            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Exam/Exam.java</file>
-            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Quest/QuestGiver.java</file>
+            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Room.java</file>
+            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Items/Drink.java</file>
+            <file>file:/C:/Users/JV/OneDrive/SDU/Projekt/1%20semesterprojekt/Application/worldofzuulfx/WorldofZuulfx/src/worldofzuulfx/Main.java</file>
         </group>
     </open-files>
 </project-private>

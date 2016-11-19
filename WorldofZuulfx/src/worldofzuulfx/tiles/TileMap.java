@@ -42,6 +42,12 @@ public class TileMap {
                 if (tile.getID() == 0) {
                    tile.setCanCollide(true);
                 }
+                if (tile.getID() == 49) {
+                   tile.setCanCollide(true);
+                }
+                if (tile.getID() ==57) {
+                   tile.setCanCollide(true);
+                }
                 tile.setLayer(pane);
                 
                 tileTerrain.add(tile);

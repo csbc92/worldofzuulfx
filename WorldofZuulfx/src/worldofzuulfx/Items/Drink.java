@@ -48,7 +48,7 @@ public class Drink extends Item {
         Room currentRoom = player.getCurrentRoom();
         // TODO
         options = Main.getGame().getNPCNameList(currentRoom);
-        options = new ArrayList<>(); //TODO denne skal slettes
+    
         options.add("drink");
         ConsoleInfo.setConsoleData(String.format("Give the %s to a person in the room or drink it.", this.getDescription()));
 

@@ -39,7 +39,7 @@ public class Game {
     private ArrayList<String> RPSCommands;
     private DrawablePlayer player;
     private TileMap tileMap;
-    private ArrayList<DrawableRoom> rooms;
+    private ArrayList<DrawableRoom> dRooms;
 //    private HashMap<String, DrawableRoom> rooms;
     private Pane background;
     private Pane sprites;
@@ -76,7 +76,7 @@ public class Game {
 
                 updateSprites();
 
-//                checkCollisions();
+                checkCollisions();
 
                 cleanupSprites();
 
@@ -94,12 +94,26 @@ public class Game {
     }
 
     public void checkCollisions() {
-        boolean result = false;
-        for (Tile tile : tileMap.getTileTerrain()) {
+         boolean result = false;
+        String currentRoomID = this.player.getCurrentRoom().getID();
+        
+        DrawableRoom currentRoom = this.getRoom(currentRoomID);
+        
+        for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
+            
             if (player.getSprite().collidesWith(tile)) {
                 result = true;
             }
         }
+        if (result) {
+          //player.stopMovement();
+        }
+//       boolean result = false;
+//        for (Tile tile : tileMap.getTileTerrain()) {
+//            if (player.getSprite().collidesWith(tile)) {
+//                result = true;
+//            }
+//        }
     }
 
     public void cleanupSprites() {
@@ -347,9 +361,9 @@ public class Game {
         partyguy.spawn(getRooms(false), getAllGameQuests());
     }
 
-    public Room getRoom(String ID) {
+    public DrawableRoom getRoom(String ID) {
 
-        for (DrawableRoom r : this.rooms) {
+        for (DrawableRoom r : this.dRooms) {
             if (r.getID().equalsIgnoreCase(ID)) {
                 return r;
             }
@@ -360,13 +374,13 @@ public class Game {
 
     public ArrayList<Room> getRooms(Boolean lockedRooms) {
         ArrayList<Room> roomsToReturn = new ArrayList<>();
-
-        for (DrawableRoom room : this.rooms) {
-
-            if (room.isLocked() == lockedRooms) {
-                roomsToReturn.add(room);
-            }
-        }
+// TODO Kan checkes
+//        for (DrawableRoom room : this.dRooms) {
+//
+//            if (room.isLocked() == lockedRooms) {
+//                roomsToReturn.add(room);
+//            }
+//        }
         return roomsToReturn;
     }
 
@@ -389,7 +403,7 @@ public class Game {
     private void createRooms() {
         DrawableRoom outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
 
-        rooms = new ArrayList<>();
+        dRooms = new ArrayList<>();
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/E04tZvB.png"), 32, 32);
         HashMap<Integer, Tile> tiles = tLoader.getTiles();
 
@@ -405,7 +419,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        rooms.add(canteen);
+        dRooms.add(canteen);
         canteen.draw(background);
         
 

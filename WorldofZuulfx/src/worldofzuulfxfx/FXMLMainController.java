@@ -13,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
+import worldofzuulfx.ConsoleInfo;
 
 /**
  * FXML Controller class
@@ -25,8 +26,6 @@ public class FXMLMainController implements Initializable {
     private AnchorPane masterPane;
     @FXML
     private TextArea taConsol;
-    @FXML
-    private TextFlow tfConsole;
 
     /**
      * Initializes the controller class.
@@ -34,6 +33,7 @@ public class FXMLMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
     }    
 
     @FXML

@@ -23,7 +23,11 @@ public final class ConsoleInfo {
     }
 
     public static void setConsoleData(String data) {
-        info.set(info.get() + data + "\n");
+//        if (info.getValue().equals("")) {
+//            info.set( data + "\n");
+//        } else {
+            info.set(info.get() + data + "\n");
+ //       }
 
     }
 
@@ -32,7 +36,7 @@ public final class ConsoleInfo {
     }
 
     public static void clearData() {
-       // info.set("");
+        // info.set("");
     }
 
 }
