@@ -1,6 +1,5 @@
 package worldofzuulfx;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
@@ -38,7 +37,7 @@ public class Game {
     private ArrayList<String> RPSCommands;
     private Player player;
     private TileMap tileMap;
-    private ArrayList<Room> Rooms;
+    private ArrayList<Room> rooms;
 //    private HashMap<String, DrawableRoom> rooms;
     private Pane background;
     private Pane sprites;
@@ -61,7 +60,7 @@ public class Game {
         //TODO
 //        initNPCs();
 //        initQuests();
-        
+
         gameLoop();
         play();
     }
@@ -93,19 +92,19 @@ public class Game {
     }
 
     public void checkCollisions() {
-         boolean result = false;
+        boolean result = false;
         String currentRoomID = this.player.getCurrentRoom().getID();
-        
+
         Room currentRoom = this.getRoom(currentRoomID);
-        
+
         for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
-            
+
             if (player.getSprite().collidesWith(tile)) {
                 result = true;
             }
         }
         if (result) {
-          //player.stopMovement();
+            //player.stopMovement();
         }
 //       boolean result = false;
 //        for (Tile tile : tileMap.getTileTerrain()) {
@@ -129,7 +128,6 @@ public class Game {
             }
             if (key.getCode() == KeyCode.LEFT) {
                 player.getSprite().move(SpriteBase.spriteActions.LEFT);
-                
 
             }
             if (key.getCode() == KeyCode.UP) {
@@ -362,7 +360,7 @@ public class Game {
 
     public Room getRoom(String ID) {
 
-        for (Room r : this.Rooms) {
+        for (Room r : this.rooms) {
             if (r.getID().equalsIgnoreCase(ID)) {
                 return r;
             }
@@ -373,8 +371,8 @@ public class Game {
 
     public ArrayList<Room> getRooms(Boolean lockedRooms) {
         ArrayList<Room> roomsToReturn = new ArrayList<>();
- //TODO Kan checkes
-        for (Room room : this.Rooms) {
+        //TODO Kan checkes
+        for (Room room : this.rooms) {
 
             if (room.isLocked() == lockedRooms) {
                 roomsToReturn.add(room);
@@ -402,11 +400,11 @@ public class Game {
     private void createRooms() {
         Room outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
 
-        Rooms = new ArrayList<>();
+        rooms = new ArrayList<>();
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/E04tZvB.png"), 32, 32);
         HashMap<Integer, Tile> tiles = tLoader.getTiles();
 
-        canteen = new Room("Canteen", "Canteen", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        outside = new Room("outside", "outside", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -418,10 +416,130 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        
-        Rooms.add(canteen);
-        
-        
+
+        exam = new Room("exam", "exam", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+
+        campus = new Room("campus", "campus", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 48, 56, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        downunder = new Room("downunder", "downunder", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        bookstore = new Room("bookstore", "bookstore", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 49, 57, 49, 57, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        hutten = new Room("hutten", "hutten", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        canteen = new Room("Canteen", "Canteen", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 48, 56, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        knoldene = new Room("knoldene", "knoldene", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 49, 57, 13, 117, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        u163 = new Room("u163", "u163", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 117, 13, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        u170 = new Room("u170", "u170", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 48, 56, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 48, 56, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+        u180 = new Room("u180", "u180", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        {0, 5, 17, 49, 57, 13, 13, 117, 21, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
+        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        });
+
+        rooms.add(canteen);
 
 //        outside = new Room("Outside", "outside the main entrance of the university");
 //        exam = new Room("Exam", "in the exam room");
@@ -469,20 +587,20 @@ public class Game {
 //        u180.setExit("west", knoldene);
 //
 //        rooms = new ArrayList<Room>();
-//        rooms.add(outside);
-//        rooms.add(exam);
-//        rooms.add(campus);
-//        rooms.add(bookstore);
-//        rooms.add(hutten);
-//        rooms.add(downunder);
-//        rooms.add(canteen);
-//        rooms.add(knoldene);
-//        rooms.add(u163);
-//        rooms.add(u170);
-//        rooms.add(u180);
+        rooms.add(outside);
+        rooms.add(exam);
+        rooms.add(campus);
+        rooms.add(bookstore);
+        rooms.add(hutten);
+        rooms.add(downunder);
+        rooms.add(canteen);
+        rooms.add(knoldene);
+        rooms.add(u163);
+        rooms.add(u170);
+        rooms.add(u180);
 //
 //        // CurrentRoom tildeles referencen til Outside.
-        getPlayer().navigateTo(canteen);
+        getPlayer().navigateTo(outside);
     }
 
     public void play() {

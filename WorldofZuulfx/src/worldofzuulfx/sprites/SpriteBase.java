@@ -188,52 +188,53 @@ public class SpriteBase {
     public boolean collidesWith(SpriteBase otherSprite) {
         boolean collides = false;
         double i;
+        double l;
         if (this.canCollide && otherSprite.canCollide) {
             if (getBounds().getBoundsInParent().intersects(otherSprite.getImageView().getBoundsInParent())) {
-
+                   i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
+                   l = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
+ 
                 // Player either hits a tile with its top or bottom
-                if (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()) > 0
-                        && getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()) < 35) {
-                    i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
-                    // Top
-                    actions.put(spriteActions.UP, false);
-
-                }
-                if (getCenterY(otherSprite.getBounds()) - getCenterY(getBounds()) < 0
-                        && getCenterY(otherSprite.getBounds()) - getCenterY(getBounds()) < -200) {
-                    i = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
-                    actions.put(spriteActions.DOWN, false);
-                }
-
-                if (getCenterX(getBounds()) - getCenterX(otherSprite.getBounds()) > 0
-                        && getCenterX(getBounds()) - getCenterX(otherSprite.getBounds()) < 35) {
-                    // Left
-                    i = getCenterX(getBounds()) - getCenterX(otherSprite.getBounds());
-                    actions.put(spriteActions.LEFT, false);
-                }
-                if (getCenterX(otherSprite.getBounds()) - getCenterX(getBounds()) < 0
-                        && getCenterX(otherSprite.getBounds()) - getCenterX(getBounds()) < -250) {
-                    i = getCenterX(otherSprite.getBounds()) - getCenterX(getBounds());
-                    actions.put(spriteActions.RIGHT, false);
-                }
-
-//                if (getBounds().getBoundsInParent().getMinY() < otherSprite.getImageView().getBoundsInParent().getMinY()
-//                        && getBounds().getBoundsInParent().getMaxY() > otherSprite.getImageView().getBoundsInParent().getMinY()) {
-//                    actions.put(spriteActions.DOWN, false);
-//                    System.out.println("Bottom");
-//                } else {
+//                if (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()) > 0
+//                        && (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()))/2 < 35) {
+//                    // Top
 //                    actions.put(spriteActions.UP, false);
-//                    System.out.println("Top");
+//
 //                }
-//                // Player either hits a tile with its left side or right side
-//                if (getBounds().getBoundsInParent().getMinX() < otherSprite.getImageView().getBoundsInParent().getMaxX()
-//                        && getBounds().getBoundsInParent().getMaxX() > otherSprite.getImageView().getBoundsInParent().getMaxX()) {
+//                if (getCenterY(otherSprite.getBounds()) - getCenterY(getBounds()) < 0
+//                        && getCenterY(otherSprite.getBounds()) - getCenterY(getBounds()) < -200) {
+//                    // Bottom
+//                    actions.put(spriteActions.DOWN, false);
+//                }
+//
+//                if (getCenterX(getBounds()) - getCenterX(otherSprite.getBounds()) > 0
+//                        && getCenterX(getBounds()) - getCenterX(otherSprite.getBounds()) < 35) {
+//                    // Left
 //                    actions.put(spriteActions.LEFT, false);
-//                    System.out.println("LEFT");
-//                } else {
-//                    actions.put(spriteActions.RIGHT, false);
-//                    System.out.println("Right");
 //                }
+//                if (getCenterX(otherSprite.getBounds()) - getCenterX(getBounds()) < 0
+//                        && getCenterX(otherSprite.getBounds()) - getCenterX(getBounds()) < -250) {
+//                    //Right
+//                    actions.put(spriteActions.RIGHT, false);
+//                }
+
+                if (getBounds().getBoundsInParent().getMinY() < otherSprite.getBounds().getBoundsInParent().getMinY()
+                        && getBounds().getBoundsInParent().getMaxY() > otherSprite.getBounds().getBoundsInParent().getMinY()) {
+                    actions.put(spriteActions.DOWN, false);
+                    System.out.println("Bottom");
+                } else {
+                    actions.put(spriteActions.UP, false);
+                    System.out.println("Top");
+                }
+                // Player either hits a tile with its left side or right side
+                if (getBounds().getBoundsInParent().getMinX() < otherSprite.getBounds().getBoundsInParent().getMaxX()
+                        && getBounds().getBoundsInParent().getMaxX() > otherSprite.getBounds().getBoundsInParent().getMaxX()) {
+                    actions.put(spriteActions.LEFT, false);
+                    System.out.println("LEFT");
+                } else {
+                    actions.put(spriteActions.RIGHT, false);
+                    System.out.println("Right");
+                }
             }
 
         }
