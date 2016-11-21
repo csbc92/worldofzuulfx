@@ -260,13 +260,15 @@ public class SpriteBase {
 //                    actions.put(spriteActions.RIGHT, false);
 //                    System.out.println("Right");
 //                }
+                getBounds().setStrokeWidth(1.0);
+                
                 Shape intersect = Shape.intersect(getBounds(), otherSprite.getBounds());
                 double h = this.getCenterX();
                 double j = otherSprite.getCenterX();
                 double k = h - j;
                 boolean right = this.getCenterX() - otherSprite.getCenterX() < 0;
                 boolean bottom = this.getCenterY() - otherSprite.getCenterY() < 0;
-                
+
                 if (intersect.getBoundsInParent().getHeight() > intersect.getBoundsInParent().getWidth()) {
                     System.out.println("Side");
                 } else {
@@ -284,7 +286,6 @@ public class SpriteBase {
 //                } else {
 //                    System.out.println("Top");
 //                }
-
             }
 
         }
