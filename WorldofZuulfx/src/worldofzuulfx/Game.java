@@ -49,10 +49,11 @@ public class Game {
         this.sprites = sprites;
         addInputControls(scene);
         ConsoleInfo.setConsoleData("Test");
-        player = new Player("Player-name", this.sprites, new Image("http://i.imgur.com/zLwFeje.png"), 64.0, 64.0);
-        player.getSprite().setCanCollide(true);
-        player.getSprite().setDx(32);
-        player.getSprite().setDy(16);
+        player = new Player("Player-name", this.sprites, new Image("http://i.imgur.com/zLwFeje.png"), 
+                background.getLayoutX() + 64.0, background.getLayoutY() + 64.0);
+        player.setCanCollide(true);
+        player.setDx(32);
+        player.setDy(16);
 
         createRooms();
 
@@ -88,7 +89,7 @@ public class Game {
 
     public void updateSprites() {
 //        player.move();
-        player.getSprite().updateUI();
+        player.updateUI();
     }
 
     public void checkCollisions() {
@@ -99,7 +100,7 @@ public class Game {
 
         for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
 
-            if (player.getSprite().collidesWith(tile)) {
+            if (player.collidesWith(tile)) {
                 result = true;
             }
         }
@@ -123,19 +124,19 @@ public class Game {
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.RIGHT) {
-                player.getSprite().move(SpriteBase.spriteActions.RIGHT);
+                player.move(SpriteBase.spriteActions.RIGHT);
 
             }
             if (key.getCode() == KeyCode.LEFT) {
-                player.getSprite().move(SpriteBase.spriteActions.LEFT);
+                player.move(SpriteBase.spriteActions.LEFT);
 
             }
             if (key.getCode() == KeyCode.UP) {
-                player.getSprite().move(SpriteBase.spriteActions.UP);
+                player.move(SpriteBase.spriteActions.UP);
 
             }
             if (key.getCode() == KeyCode.DOWN) {
-                player.getSprite().move(SpriteBase.spriteActions.DOWN);
+                player.move(SpriteBase.spriteActions.DOWN);
 
             }
 

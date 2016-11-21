@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 /**
  *
@@ -47,7 +48,7 @@ public class SpriteBase {
 
         this.w = image.getWidth();
         this.h = image.getHeight();
-        bounds = new Rectangle(33, 16);
+        bounds = new Rectangle(h, w);
         bounds.setFill(Color.RED);
 
     }
@@ -68,7 +69,7 @@ public class SpriteBase {
         this.dr = 0;
         this.imageView.relocate(x, y);
         this.actions = new HashMap<>();
-        bounds = new Rectangle(x, y, 33, 16);
+        bounds = new Rectangle(x, y, 32, 16);
         bounds.setFill(Color.RED);
         resetActions();
         addToLayer();
@@ -82,6 +83,7 @@ public class SpriteBase {
 
     public void removeFromLayer() {
         this.layer.getChildren().remove(this.getImageView());
+        this.layer.getChildren().remove(this.getBounds());
     }
 
     public Pane getLayer() {
@@ -90,6 +92,23 @@ public class SpriteBase {
 
     public void setLayer(Pane layer) {
         this.layer = layer;
+    }
+
+    public final double getX() {
+        return getBounds().getX();
+    }
+
+    public final void setX(double x) {
+        getBounds().setX(x);
+    }
+
+    public final double getY() {
+        return getBounds().getY();
+
+    }
+
+    public final void setY(double y) {
+        getBounds().setY(y);
     }
 
     public double getDx() {
@@ -165,7 +184,13 @@ public class SpriteBase {
     }
 
     public void updateUI() {
-        getImageView().relocate(getBounds().getX(), getBounds().getY() - 16);
+
+        double x = getBounds().getX();
+        double y = getBounds().getY();
+
+        getBounds().relocate(x, y);
+        getImageView().relocate(getBounds().getX(), getBounds().getY());
+
     }
 
     public double getWidth() {
@@ -176,12 +201,12 @@ public class SpriteBase {
         return h;
     }
 
-    public double getCenterX(Rectangle bounds) {
-        return bounds.getX() + bounds.getWidth() / 2;
+    public double getCenterX() {
+        return getBounds().getX() + getBounds().getWidth() / 2;
     }
 
-    public double getCenterY(Rectangle bounds) {
-        return bounds.getY() + bounds.getHeight() / 2;
+    public double getCenterY() {
+        return getBounds().getY() + getBounds().getHeight() / 2;
     }
 
     // TODO: per-pixel-collision
@@ -190,10 +215,10 @@ public class SpriteBase {
         double i;
         double l;
         if (this.canCollide && otherSprite.canCollide) {
-            if (getBounds().getBoundsInParent().intersects(otherSprite.getImageView().getBoundsInParent())) {
-                   i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
-                   l = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
- 
+            if (getBounds().getBoundsInParent().intersects(otherSprite.getBounds().getBoundsInParent())) {
+//                i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
+//                l = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
+
                 // Player either hits a tile with its top or bottom
 //                if (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()) > 0
 //                        && (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()))/2 < 35) {
@@ -217,24 +242,49 @@ public class SpriteBase {
 //                    //Right
 //                    actions.put(spriteActions.RIGHT, false);
 //                }
+//**************************************************************
+//                if (getBounds().getBoundsInParent().getMinY() < otherSprite.getBounds().getBoundsInParent().getMinY()
+//                        && getBounds().getBoundsInParent().getMaxY() > otherSprite.getBounds().getBoundsInParent().getMinY()) {
+//                    actions.put(spriteActions.DOWN, false);
+//                    System.out.println("Bottom");
+//                } else {
+//                    actions.put(spriteActions.UP, false);
+//                    System.out.println("Top");
+//                }
+//                // Player either hits a tile with its left side or right side
+//                if (getBounds().getBoundsInParent().getMinX() < otherSprite.getBounds().getBoundsInParent().getMaxX()
+//                        && getBounds().getBoundsInParent().getMaxX() > otherSprite.getBounds().getBoundsInParent().getMaxX()) {
+//                    actions.put(spriteActions.LEFT, false);
+//                    System.out.println("LEFT");
+//                } else {
+//                    actions.put(spriteActions.RIGHT, false);
+//                    System.out.println("Right");
+//                }
+                Shape intersect = Shape.intersect(getBounds(), otherSprite.getBounds());
+                double h = this.getCenterX();
+                double j = otherSprite.getCenterX();
+                double k = h - j;
+                boolean right = this.getCenterX() - otherSprite.getCenterX() < 0;
+                boolean bottom = this.getCenterY() - otherSprite.getCenterY() < 0;
+                
+                if (intersect.getBoundsInParent().getHeight() > intersect.getBoundsInParent().getWidth()) {
+                    System.out.println("Side");
+                } else {
+                    System.out.println("Top/Bottom");
+                }
 
-                if (getBounds().getBoundsInParent().getMinY() < otherSprite.getBounds().getBoundsInParent().getMinY()
-                        && getBounds().getBoundsInParent().getMaxY() > otherSprite.getBounds().getBoundsInParent().getMinY()) {
-                    actions.put(spriteActions.DOWN, false);
-                    System.out.println("Bottom");
-                } else {
-                    actions.put(spriteActions.UP, false);
-                    System.out.println("Top");
-                }
-                // Player either hits a tile with its left side or right side
-                if (getBounds().getBoundsInParent().getMinX() < otherSprite.getBounds().getBoundsInParent().getMaxX()
-                        && getBounds().getBoundsInParent().getMaxX() > otherSprite.getBounds().getBoundsInParent().getMaxX()) {
-                    actions.put(spriteActions.LEFT, false);
-                    System.out.println("LEFT");
-                } else {
-                    actions.put(spriteActions.RIGHT, false);
-                    System.out.println("Right");
-                }
+//                if (right) {
+//                    System.out.println("Right");
+//                } else {
+//                    System.out.println("Left");
+//                }
+//
+//                if (bottom) {
+//                    System.out.println("Bottom");
+//                } else {
+//                    System.out.println("Top");
+//                }
+
             }
 
         }

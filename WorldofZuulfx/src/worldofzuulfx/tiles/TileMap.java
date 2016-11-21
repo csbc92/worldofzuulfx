@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  *
  * @author cclausen
  */
 public class TileMap {
+
     private HashMap<Integer, Tile> tileSet;
     private ArrayList<Tile> tileTerrain;
     private int[][] tileTerrainLayout;
@@ -22,43 +24,44 @@ public class TileMap {
     public final static int mapHeight = 384;
     private final static int tileWidth = 32;
     private final static int tileHeight = 32;
-    
+
     public TileMap(int[][] tileTerrainLayout, HashMap<Integer, Tile> tileSet) {
         this.tileTerrainLayout = tileTerrainLayout;
         this.tileSet = new HashMap<>(tileSet);
         this.tileTerrain = new ArrayList<>();
     }
-    
+
     public void draw(Pane pane) {
-        
+
         int xOffset = 0;
         int yOffset = 0;
-        
+
         for (int row = 0; row < tileTerrainLayout.length; row++) {
             for (int column = 0; column < tileTerrainLayout[row].length; column++) {
-                
+
                 int tileId = tileTerrainLayout[row][column];
                 Tile tile = this.tileSet.get(tileId).clone();
+                tile.setCanCollide(false);
                 if (tile.getID() == 0) {
-                   tile.setCanCollide(true);
-                }
-                if (tile.getID() == 49) {
-                   tile.setCanCollide(true);
-                }
-                if (tile.getID() ==57) {
-                   tile.setCanCollide(true);
+                    tile.setCanCollide(true);
+                    tile.getBounds().setFill(Color.RED);
+
+                    pane.getChildren().add(tile.getBounds());
+                } else {
+                    tile.getBounds().setFill(Color.GREEN);
+
+                    pane.getChildren().add(tile.getBounds());
                 }
                 tile.setLayer(pane);
-                
+
                 tileTerrain.add(tile);
-                
-                ImageView iv = tile.getImageView();
-                
-                iv.setLayoutX(xOffset);
-                iv.setLayoutY(yOffset);
-                
-                pane.getChildren().add(iv);              
-                
+
+                // This line draws the tile on the pane
+                pane.getChildren().add(tile.getImageView());
+                tile.setX(xOffset);
+                tile.setY(yOffset);
+                tile.updateUI();
+
                 xOffset += 32;
             }
             xOffset = 0;
@@ -72,6 +75,5 @@ public class TileMap {
     public ArrayList<Tile> getTileTerrain() {
         return tileTerrain;
     }
-    
-    
+
 }

@@ -17,7 +17,7 @@ import worldofzuulfx.Quest.Reward;
 import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.sprites.SpriteBase;
 
-public class Player implements BarValueListener {
+public class Player extends SpriteBase implements BarValueListener {
 
     private String name;
     private Bar ects;
@@ -30,7 +30,6 @@ public class Player implements BarValueListener {
     private Room currentRoom;
     private int alcoTolerance;
     private int alcoCounter;
-    private final SpriteBase sprite;
     private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
@@ -38,7 +37,7 @@ public class Player implements BarValueListener {
     private ArrayList<NavigateListener> navigateListener;
 
     public Player(String name, Pane layer, Image image, double posX, double posY) {
-        
+        super(layer, image, posX, posY);
         this.name = name;
         ects = new Bar(0, 30, 0);
         energy = new Bar(0, 100, 100);
@@ -51,7 +50,7 @@ public class Player implements BarValueListener {
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
         inactiveQuests = new ArrayList<>();
-        sprite = new SpriteBase(layer, image, posX, posY) {};
+        //sprite = new SpriteBase(layer, image, posX, posY) {};
     }
 
     public int getECTS() {
@@ -403,9 +402,9 @@ public class Player implements BarValueListener {
         return this.drunk;
     }
     
-     public SpriteBase getSprite() {
-        return this.sprite;
-    }
+//     public SpriteBase getSprite() {
+//        return this.sprite;
+//    }
 
     /**
      * Checks if the player reached minimum energy after energy change, or if
@@ -431,5 +430,10 @@ public class Player implements BarValueListener {
                 Main.getGame().setFinished();
             }
         }
+    }
+    @Override
+    public void updateUI(){
+        super.updateUI();
+        getImageView().relocate(getBounds().getX(), getBounds().getY() - 16);
     }
 }

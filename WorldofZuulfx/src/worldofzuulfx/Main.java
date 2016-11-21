@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import worldofzuulfx.sprites.Player;
 import worldofzuulfx.sprites.SpriteBase.spriteActions;
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileLoader;
@@ -48,6 +47,8 @@ public class Main extends Application {
         controller = (FXMLMainController) fxmlLoader.getController();
 
         background = new Pane();
+        background.setLayoutX(0);
+        background.setLayoutY(0);
         sprites = new Pane();
         root.getChildren().add(background);
         root.getChildren().add(sprites);
