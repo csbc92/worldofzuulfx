@@ -38,13 +38,13 @@ public class FXMLMainController implements Initializable {
     private Pane pSprites;
     @FXML
     private Pane pBackground;
+    @FXML
+    private Pane pObjects;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-        
 
     }
 
@@ -61,7 +61,7 @@ public class FXMLMainController implements Initializable {
     private void onClickNewGame(ActionEvent event) {
         
         butNewGame.setVisible(false);
-        game = new Game(pBackground, pSprites, pBackground.getScene()); //En instans af spillet oprettes.
+        game = new Game(pBackground, pSprites, pObjects, pBackground.getScene()); //En instans af spillet oprettes.
     }
 
 }

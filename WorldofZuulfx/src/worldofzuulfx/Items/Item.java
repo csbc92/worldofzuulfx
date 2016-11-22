@@ -3,7 +3,10 @@
  */
 package worldofzuulfx.Items;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.Player;
+import worldofzuulfx.sprites.SpriteBase;
 
 
  
@@ -12,14 +15,15 @@ import worldofzuulfx.Player;
  * @version (15/10/2016)
  */
 
-public abstract class Item{
+public abstract class Item extends SpriteBase{
     private int weight; 
     protected String description;
     private Boolean isLocked;
+    private String ID;
 
 
-    public Item(String description, int weight) {
-
+    public Item(Pane layer, Image image, String ID, String description, int weight) {
+        super(layer, image, 0, 0);
         this.description = description;
         this.weight = weight; 
         isLocked = false;
@@ -52,6 +56,13 @@ public abstract class Item{
     }
     
     public abstract void use(Player player);
+
+    /**
+     * @return the ID
+     */
+    public String getID() {
+        return ID;
+    }
 }
 
 

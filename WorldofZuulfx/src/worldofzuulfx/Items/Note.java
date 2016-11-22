@@ -5,16 +5,19 @@
  */
 package worldofzuulfx.Items;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import worldofzuulfx.Game;
 import worldofzuulfx.Player;
 
 public class Note extends Item {
 
     protected String content;
 
-    public Note(String description, int weight, String contentString) {
-        super(description, weight);
+    public Note(Pane layer, String description, String ID, int weight, String contentString) {
+        super(layer, Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight );
+        
         content = contentString;
-
     }
 
     public String getContent() {

@@ -6,6 +6,7 @@
 package worldofzuulfx;
 
 import java.util.ArrayList;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.Items.Item;
 
 /**
@@ -17,18 +18,18 @@ public class Inventory {
     private final int capacity;
     private final int maxWeight;
     private int currentWeight;
+    private Pane layer;
     private ArrayList<Item> itemList;
 
-    public Inventory(int maxWeight, int capacity) {
+    public Inventory(Pane layer, int maxWeight, int capacity) {
         this.maxWeight = maxWeight;
         this.capacity = capacity;
+        this.layer = layer;
         this.itemList = new ArrayList<>();
     }
 
-    public Inventory() {
-        this.maxWeight = 100000;
-        this.capacity = 20;
-        this.itemList = new ArrayList<>();
+    public Inventory(Pane layer) {
+        this(layer,10000,20);
     }
 
     /**
@@ -118,6 +119,15 @@ public class Inventory {
             }
         }
         return counter;
+    }
+    
+    public boolean contains(String ID){
+        for (Item item : itemList) {
+            if (item.getID().equals(ID)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public Item find (String itemString){

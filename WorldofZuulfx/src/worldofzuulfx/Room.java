@@ -33,7 +33,7 @@ public class Room {
         this.Locked = false;
         // Create HashMap containing exit-String and a Room
         exits = new HashMap<>();
-        roomInventory = new Inventory();
+        roomInventory = new Inventory(Game.objectsLayer);
         npcList = new ArrayList<>();
         this.background = layer;
         this.tileLayout = tileLayout;

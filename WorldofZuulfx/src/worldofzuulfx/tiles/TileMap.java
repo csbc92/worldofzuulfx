@@ -37,7 +37,7 @@ public class TileMap {
 
         int xOffset = 0;
         int yOffset = 0;
-
+        pane.getChildren().clear();
         for (int row = 0; row < tileTerrainLayout.length; row++) {
             for (int column = 0; column < tileTerrainLayout[row].length; column++) {
 
@@ -52,18 +52,6 @@ public class TileMap {
                     }
                 }
                 
-                // DEBUGGING ONLY
-                if (tile.getID() == 0) {
-                    tile.getBounds().setFill(Color.RED);
-                    tile.getBounds().setStroke(Color.BLACK);
-
-                    pane.getChildren().add(tile.getBounds());
-                } else {
-                    tile.getBounds().setFill(Color.GREEN);
-                    tile.getBounds().setStroke(Color.BLACK);
-
-                    pane.getChildren().add(tile.getBounds());
-                }
                 tile.setLayer(pane);
 
                 tileTerrain.add(tile);

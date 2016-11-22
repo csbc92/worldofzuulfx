@@ -44,10 +44,7 @@ public class Main extends Application {
         //       initiate();
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
- 
-     //   game = new Game(background, sprites, scene); //En instans af spillet oprettes.
- 
+        stage.show(); 
     }
 
     

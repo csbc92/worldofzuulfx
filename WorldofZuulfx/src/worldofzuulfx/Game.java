@@ -8,66 +8,68 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+
 import javafx.scene.shape.Rectangle;
-import worldofzuulfx.Items.Book;
-import worldofzuulfx.Items.Coffee;
-import worldofzuulfx.Items.CoffeeVoucher;
 import worldofzuulfx.Items.Drink;
+
 import worldofzuulfx.Items.Item;
-import worldofzuulfx.Items.Note;
+import worldofzuulfx.Items.ItemFactory;
+
 import worldofzuulfx.NPC.*;
 import worldofzuulfx.Quest.Quest;
 import worldofzuulfx.Quest.QuestFactory;
 import worldofzuulfx.Quest.QuestHandler;
-import worldofzuulfx.Quest.Reward;
+
 import worldofzuulfx.Minigame.RockPaperScissors;
-import worldofzuulfx.sprites.SpriteBase;
+
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileLoader;
 import worldofzuulfx.tiles.TileMap;
 
 public class Game {
 
-    //private Room currentRoom;
     private boolean finished;
-//    private Player player;
     private QuestHandler questHandler;
-//    private ArrayList<Room> rooms;
     private PartyGuy partyguy;
     private HashMap<String, Quest> allGameQuests;
     private ArrayList<String> RPSCommands;
     private Player player;
     private TileMap tileMap;
     private ArrayList<Room> rooms;
-//    private HashMap<String, DrawableRoom> rooms;
-    private Pane background;
-    private Pane sprites;
+    public static Pane backgroundLayer;
+    public static Pane spritesLayer;
+    public static Pane objectsLayer;
     private AnimationTimer timer;
-    
+    public static HashMap<Integer, Tile> tiles;
+
     private double nextPosX;
     private double nextPosY;
 
-    public Game(Pane background, Pane sprites, Scene scene) // Constructor - ingen argumenter
+    public Game(Pane background, Pane sprites, Pane objects, Scene scene) // Constructor - ingen argumenter
     {
-        this.background = background;
-        this.sprites = sprites;
+        this.backgroundLayer = background;
+        this.spritesLayer = sprites;
+        this.objectsLayer = objects;
         addInputControls(scene);
         ConsoleInfo.setConsoleData("Test");
-        player = new Player("Player-name", this.sprites, new Image("http://i.imgur.com/zLwFeje.png"), 
+        player = new Player("Player-name", sprites, new Image("http://i.imgur.com/zLwFeje.png"),
                 background.getLayoutX() + 65.0, background.getLayoutY() + 65.0);
         player.setCanCollide(true);
         player.setDx(32);
         player.setDy(16);
+        player.getBounds().setHeight(14);
+        player.getBounds().setWidth(30);
         nextPosX = player.getBounds().getX();
         nextPosY = player.getBounds().getY();
 
+        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/E04tZvB.png"), 32, 32);
+        tiles = tLoader.getTiles();
+
         createRooms();
 
-        makeTestGame();//Denne skal slettes - skal kun bruges til at teste spillet!!!!
         //TODO
-//        initNPCs();
-//        initQuests();
+        initNPCs();
+        initQuests();
 
         gameLoop();
         play();
@@ -95,31 +97,30 @@ public class Game {
     }
 
     public void updateSprites() {
-//        player.move();
         player.updateUI();
     }
 
     public void checkCollisions() {
-//        boolean result = false;
-//        String currentRoomID = this.player.getCurrentRoom().getID();
-//
-//        Room currentRoom = this.getRoom(currentRoomID);
-//
-//        for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
-//
-//            if (player.collidesWith(tile)) {
-//                result = true;
-//            }
-//        }
-//        if (result) {
-//            //player.stopMovement();
-//        }
-//       boolean result = false;
-//        for (Tile tile : tileMap.getTileTerrain()) {
-//            if (player.getSprite().collidesWith(tile)) {
-//                result = true;
-//            }
-//        }
+        String currentRoomID = this.player.getCurrentRoom().getID();
+
+        Room currentRoom = this.getRoom(currentRoomID);
+
+        for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
+
+            if (tile.getCanCollide()) {
+                Rectangle nextMove = new Rectangle(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight());
+
+                if (tile.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
+                    // Reset the nextPos since a collision was detected
+                    nextPosX = player.getX();
+                    nextPosY = player.getY();
+                    return;
+                }
+            }
+        }
+        
+
+        player.move(nextPosX, nextPosY);
     }
 
     public void cleanupSprites() {
@@ -127,56 +128,25 @@ public class Game {
     }
 
     private void addInputControls(Scene scene) {
-               
+
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.RIGHT) {
                 nextPosX = player.getBounds().getX() + player.getDx();
-                //player.move(SpriteBase.spriteActions.RIGHT);
-
             }
             if (key.getCode() == KeyCode.LEFT) {
                 nextPosX = player.getBounds().getX() - player.getDx();
-                //player.move(SpriteBase.spriteActions.LEFT);
-
             }
             if (key.getCode() == KeyCode.UP) {
                 nextPosY = player.getBounds().getY() - player.getDy();
-                //player.move(SpriteBase.spriteActions.UP);
-
             }
             if (key.getCode() == KeyCode.DOWN) {
                 nextPosY = player.getBounds().getY() + player.getDy();
-                //player.move(SpriteBase.spriteActions.DOWN);
-
             }
             
-            String currentRoomID = this.player.getCurrentRoom().getID();
-
-            Room currentRoom = this.getRoom(currentRoomID);
-
-            for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
-                
-                if (tile.getCanCollide()) {
-                    Rectangle nextMove = new Rectangle(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight());
-                    nextMove.setFill(Color.BLUE);
-                    
-                    if (tile.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                        
-                        background.getChildren().add(nextMove);
-                        System.out.println("Collision! : " + tile.getID() + " X: " + tile.getX() + " Y: " + tile.getY() + " w: " + tile.getWidth() + " h:" + tile.getHeight());
-                        System.out.println("X: " + nextPosX + " Y: " + nextPosY + " 32 16");
-                        
-                        // Reset the nextPos since a collision was detected
-                        nextPosX = player.getX();
-                        nextPosY = player.getY();
-                        return;
-                    }
-                }
+            if (key.getCode() == KeyCode.A) {
+                player.navigateTo(rooms.get(4));
             }
-            
-            player.getBounds().setX(nextPosX);
-            player.getBounds().setY(nextPosY);
 
         });
     }
@@ -234,7 +204,7 @@ public class Game {
                     + "You can exchange Coffee Vouchers for coffee in the canteen. "
                     + "\n\nHurry up! The lesson is about to begin!";
             ConsoleInfo.setConsoleData(postCompleteMessage);
-            this.player.getInventory().addItem(new CoffeeVoucher("Coffee Voucher", 0, 10));
+            this.player.getInventory().addItem(ItemFactory.makeCoffeeVoucher(objectsLayer));
         });
 
         Quest goToCanteenQ = qFactory.roomQuest("Canteen", "Go to the Canteen.", null);
@@ -244,7 +214,7 @@ public class Game {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest coffeeQ = qFactory.pickupItemQuest(Coffee.class, "Buy a coffee.", null);
+        Quest coffeeQ = qFactory.pickupItemQuest("coffee", "Buy a coffee.", null);
         coffeeQ.setPostAction(() -> {
             String postCompleteMessage = "Quickly! Bring the coffee to Anders in U163.";
 
@@ -252,7 +222,7 @@ public class Game {
         });
 
         NPC anders = getRoom("U163").getNPC("Anders");
-        Quest deliverCoffeeQ = qFactory.deliveryQuest(Coffee.class, anders, "Deliver the coffee to Anders.", null);
+        Quest deliverCoffeeQ = qFactory.deliveryQuest("coffee", anders, "Deliver the coffee to Anders.", null);
         deliverCoffeeQ.setPostAction(() -> {
             String postCompleteMessage = "Anders:"
                     + "\n\"Coffee is the source for maintaining your energy-level. "
@@ -284,7 +254,7 @@ public class Game {
                     + "e.g. ‘take oopbook’ in the console.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            getRoom("Bookstore").getRoomInventory().addItem(new Book("OOP-Book", 400));
+            getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "OOP-Book"));
         });
 
         Quest returnToU163 = qFactory.roomQuest("U163", "Return to U163", null);
@@ -305,7 +275,7 @@ public class Game {
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            getRoom("Bookstore").getRoomInventory().addItem(new Book("ISE-Book", 400));
+            getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "ISE-Book"));
         });
 
         Quest bookstoreIse = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
@@ -333,7 +303,7 @@ public class Game {
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            getRoom("Bookstore").getRoomInventory().addItem(new Book("COS-Book", 400));
+            getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "COS-Book"));
         });
 
         Quest bookstoreCos = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
@@ -440,10 +410,8 @@ public class Game {
         Room outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
 
         rooms = new ArrayList<>();
-        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/E04tZvB.png"), 32, 32);
-        HashMap<Integer, Tile> tiles = tLoader.getTiles();
 
-        outside = new Room("outside", "outside", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        outside = new Room("outside", "outside", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -456,7 +424,7 @@ public class Game {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
 
-        exam = new Room("exam", "exam", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        exam = new Room("exam", "exam", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -469,7 +437,7 @@ public class Game {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
 
-        campus = new Room("campus", "campus", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        campus = new Room("campus", "campus", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -481,7 +449,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        downunder = new Room("downunder", "downunder", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        downunder = new Room("downunder", "downunder", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -493,7 +461,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        bookstore = new Room("bookstore", "bookstore", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        bookstore = new Room("bookstore", "bookstore", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 49, 57, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -505,7 +473,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        hutten = new Room("hutten", "hutten", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        hutten = new Room("hutten", "hutten", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -517,7 +485,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        canteen = new Room("Canteen", "Canteen", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        canteen = new Room("Canteen", "Canteen", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -529,7 +497,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        knoldene = new Room("knoldene", "knoldene", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        knoldene = new Room("knoldene", "knoldene", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 117, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -541,7 +509,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        u163 = new Room("u163", "u163", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        u163 = new Room("u163", "u163", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 117, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -553,7 +521,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        u170 = new Room("u170", "u170", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        u170 = new Room("u170", "u170", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -565,7 +533,7 @@ public class Game {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        u180 = new Room("u180", "u180", background, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        u180 = new Room("u180", "u180", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 17, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -640,6 +608,10 @@ public class Game {
 //
 //        // CurrentRoom tildeles referencen til Outside.
         getPlayer().navigateTo(outside);
+        Drink drink = ItemFactory.makeBeer(objectsLayer);
+        drink.setX(64);
+        drink.setY(64);
+        drink.updateUI();
     }
 
     public void play() {
@@ -753,7 +725,7 @@ public class Game {
                 ConsoleInfo.setConsoleData(">");
                 rpsMiniGame.play();
                 if (rpsMiniGame.getMoveComparison() == 1) {
-                    getPlayer().pickupItem(new Drink("Øl", 1, 1, true));
+                    getPlayer().pickupItem(ItemFactory.makeBeer(objectsLayer));
                 }
                 if (rpsMiniGame.getMoveComparison() == -1) {
                     getPlayer().increaseEnergy(-5);
@@ -810,18 +782,6 @@ public class Game {
         } else {
             return true;
         }
-    }
-
-    public void makeTestGame() {
-
-        // Dette skal slettes!!!!! Benyttes til at teste spillet!
-        getPlayer().pickupItem(new Drink("Vin", 1, 1, true));
-        getPlayer().pickupItem(new Note("MyNotes", 1, "Dette er en test"));
-        getPlayer().pickupItem(new Drink("Cider", 1, 1, true));
-        getPlayer().pickupItem(new Note("MyNotes2", 1, "Dette er en test"));
-        getPlayer().pickupItem(new Drink("Øl", 1, 1, true));
-        getPlayer().pickupItem(new Note("MyNotes3", 1, "Dette er en test"));
-        getPlayer().getCurrentRoom().getRoomInventory().addItem(new Drink("Beer", 10, 10, true));
     }
 
     private void use(Command command) {

@@ -8,7 +8,10 @@ package worldofzuulfx.Items;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.ConsoleInfo;
+import worldofzuulfx.Game;
 import worldofzuulfx.Main;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
@@ -26,8 +29,8 @@ public class Drink extends Item {
     private int energyValue;
     private boolean alcoholDrink;
 
-    public Drink(String description, int weight, int energyValueVar, boolean alcoholicBeverage) {
-        super(description, weight);
+    public Drink(Pane layer, String ID, String description, int weight, int energyValueVar, boolean alcoholicBeverage) {
+        super(layer, Game.tiles.get(56).clone().getImageView().getImage(), ID, description, weight);
         this.energyValue = energyValueVar;
         this.alcoholDrink = alcoholicBeverage;
 

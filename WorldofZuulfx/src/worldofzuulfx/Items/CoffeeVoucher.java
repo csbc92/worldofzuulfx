@@ -5,11 +5,12 @@
  */
 package worldofzuulfx.Items;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.ConsoleInfo;
+import worldofzuulfx.Game;
+import static worldofzuulfx.Game.objectsLayer;
 import worldofzuulfx.Player;
-
-
-
 
 /**
  *
@@ -19,8 +20,8 @@ public class CoffeeVoucher extends Item {
 
     protected int voucherAmount;
 
-    public CoffeeVoucher(String description, int weight, int voucherAmountVar) {
-        super(description, weight);
+    public CoffeeVoucher(Pane layer, String ID, String description, int weight, int voucherAmountVar) {
+        super(layer, Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
         voucherAmount = voucherAmountVar;
 
     }
@@ -30,7 +31,8 @@ public class CoffeeVoucher extends Item {
     }
 
     /**
-     *  Use the Coffee Voucher by decrementing the total amount of vouchers by 1.
+     * Use the Coffee Voucher by decrementing the total amount of vouchers by 1.
+     *
      * @return true if the voucher amount is greater than 0.
      */
     public Boolean decrementAmount() {
@@ -45,14 +47,14 @@ public class CoffeeVoucher extends Item {
     @Override
     public void use(Player player) {
         if (player.getCurrentRoom().getID().equalsIgnoreCase("Canteen")) {
-                if (this.decrementAmount()) {
-                    player.pickupItem(new Coffee("Coffee", 250, 40, false));
-                } else {
-                    ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
-                    player.getInventory().removeItem(this);
-                }
+            if (this.decrementAmount()) {
+                player.pickupItem(ItemFactory.makeBeer(Game.objectsLayer));
             } else {
-                ConsoleInfo.setConsoleData("The Coffee Voucher can be used in the canteen.");
+                ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
+                player.getInventory().removeItem(this);
+            }
+        } else {
+            ConsoleInfo.setConsoleData("The Coffee Voucher can be used in the canteen.");
         }
     }
 }

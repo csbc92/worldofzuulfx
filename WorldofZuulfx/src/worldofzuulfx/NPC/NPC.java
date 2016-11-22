@@ -1,6 +1,7 @@
 
 package worldofzuulfx.NPC;
 
+import worldofzuulfx.Game;
 import worldofzuulfx.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Room;
@@ -19,7 +20,7 @@ public abstract class NPC {
     public NPC(String ID, String name){ // Constructor for NPC class
         this.ID = ID;
         this.name = name;
-        this.inventory = new Inventory(5000, 100);
+        this.inventory = new Inventory(Game.spritesLayer,5000, 100);
     }
     
     public String getID() {

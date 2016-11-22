@@ -62,14 +62,14 @@ public class QuestFactory {
      * @param reward The reward of the quest.
      * @return Returns the Quest.
      */
-    public Quest pickupItemQuest(Class<?> item, String questDescription, Reward reward) {
+    public Quest pickupItemQuest(String ID, String questDescription, Reward reward) {
         // Create the quest without any reward.
         Quest pickupQuest = new Quest(questDescription, reward, Questtype.DYNAMIC);
 
         pickupQuest.setRequirement(() -> {
             Inventory inventory = player.getInventory();
             
-            if (inventory.contains(item)) {
+            if (inventory.contains(ID)) {
                 return true;
             } else {
                 return false;
@@ -88,7 +88,7 @@ public class QuestFactory {
      * @param reward The reward of the quest.
      * @return Returns the Quest.
      */
-    public Quest deliveryQuest(Class<?> item, NPC npc, String questDescription, Reward reward) {
+    public Quest deliveryQuest(String ID, NPC npc, String questDescription, Reward reward) {
         
         Quest deliverQuest = new Quest(questDescription, reward, Questtype.STATIC);
         
@@ -97,7 +97,7 @@ public class QuestFactory {
             NPC n = npc;
             Inventory inventory = n.getInventory();
             
-            if (inventory.contains(item)) {
+            if (inventory.contains(ID)) {
                 return true;
             } else {
                 return false;

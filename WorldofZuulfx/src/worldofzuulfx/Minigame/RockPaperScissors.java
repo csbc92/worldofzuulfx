@@ -2,12 +2,14 @@ package worldofzuulfx.Minigame;
 
 import java.util.Random;
 import worldofzuulfx.ConsoleInfo;
+import worldofzuulfx.Game;
 import worldofzuulfx.Inventory;
 import worldofzuulfx.Items.Drink;
+import worldofzuulfx.Items.ItemFactory;
 
 public class RockPaperScissors {
 
-    Inventory i = new Inventory();
+    Inventory i = new Inventory(Game.objectsLayer);
     private RockPaperScissorsMoves computerMove;
     private RockPaperScissorsMoves playerMove;
     private int moveComparison;
@@ -30,7 +32,8 @@ public class RockPaperScissors {
                 break;
             case 1:
                 ConsoleInfo.setConsoleData("You won because " + playerMove + " defeats " + computerMove);
-                i.addItem(new Drink("Øl", 1, 1, true));
+                // TODO Skal tilføjes til Player's inventory
+                i.addItem(ItemFactory.makeBeer(Game.objectsLayer));
                 break;
             case -1:
                 ConsoleInfo.setConsoleData("You lost: " + computerMove + " defeats " + playerMove);

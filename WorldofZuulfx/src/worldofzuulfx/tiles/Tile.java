@@ -29,6 +29,6 @@ public class Tile extends SpriteBase {
     
     public Tile clone(){
         
-        return new Tile(this.id,this.getImage());
+        return new Tile(this.id,this.getImageView().getImage());
     }
 }

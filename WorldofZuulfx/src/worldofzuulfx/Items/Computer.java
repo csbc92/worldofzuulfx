@@ -5,6 +5,9 @@
  */
 package worldofzuulfx.Items;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import worldofzuulfx.Game;
 import worldofzuulfx.Player;
 
 /**
@@ -13,8 +16,8 @@ import worldofzuulfx.Player;
  */
 public class Computer extends Item {
 
-    public Computer(String description, int weight) {
-        super(description, weight);
+    public Computer(Pane layer, String ID, String description, int weight) {
+        super(layer, Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
     }
 
     @Override

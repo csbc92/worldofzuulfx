@@ -45,7 +45,7 @@ public class Player extends SpriteBase implements BarValueListener {
         hp = new Bar(0, 3, 3);
         drunk = false;
 
-        inventory = new Inventory(5000, 15);
+        inventory = new Inventory(Game.spritesLayer,5000, 15);
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
