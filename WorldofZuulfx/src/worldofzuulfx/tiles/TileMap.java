@@ -20,6 +20,7 @@ public class TileMap {
     private HashMap<Integer, Tile> tileSet;
     private ArrayList<Tile> tileTerrain;
     private int[][] tileTerrainLayout;
+    private int[] collideableTilesIDs;
     private final static int mapWidth = 512;
     public final static int mapHeight = 384;
     private final static int tileWidth = 32;
@@ -29,6 +30,7 @@ public class TileMap {
         this.tileTerrainLayout = tileTerrainLayout;
         this.tileSet = new HashMap<>(tileSet);
         this.tileTerrain = new ArrayList<>();
+        this.collideableTilesIDs = new int[] { 0, 48, 56 };
     }
 
     public void draw(Pane pane) {
@@ -42,13 +44,23 @@ public class TileMap {
                 int tileId = tileTerrainLayout[row][column];
                 Tile tile = this.tileSet.get(tileId).clone();
                 tile.setCanCollide(false);
+                
+                // Set collision
+                for (int i = 0; i < this.collideableTilesIDs.length; i++) {
+                    if (tile.getID() == this.collideableTilesIDs[i]) {
+                        tile.setCanCollide(true);
+                    }
+                }
+                
+                // DEBUGGING ONLY
                 if (tile.getID() == 0) {
-                    tile.setCanCollide(true);
                     tile.getBounds().setFill(Color.RED);
+                    tile.getBounds().setStroke(Color.BLACK);
 
                     pane.getChildren().add(tile.getBounds());
                 } else {
                     tile.getBounds().setFill(Color.GREEN);
+                    tile.getBounds().setStroke(Color.BLACK);
 
                     pane.getChildren().add(tile.getBounds());
                 }

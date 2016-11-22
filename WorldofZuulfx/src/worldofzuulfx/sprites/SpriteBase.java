@@ -69,7 +69,7 @@ public class SpriteBase {
         this.dr = 0;
         this.imageView.relocate(x, y);
         this.actions = new HashMap<>();
-        bounds = new Rectangle(x, y, 32, 16);
+        bounds = new Rectangle(x, y, 30, 14);
         bounds.setFill(Color.RED);
         resetActions();
         addToLayer();
@@ -216,6 +216,29 @@ public class SpriteBase {
         double l;
         if (this.canCollide && otherSprite.canCollide) {
             if (getBounds().getBoundsInParent().intersects(otherSprite.getBounds().getBoundsInParent())) {
+                
+                
+                
+                boolean left = (this.getCenterX() > otherSprite.getCenterX() &&
+                                 (this.getCenterY() > otherSprite.getCenterY() || this.getCenterY() < otherSprite.getCenterY()));
+                
+                boolean right = (this.getCenterX() < otherSprite.getCenterX() &&
+                                (this.getCenterY() > otherSprite.getCenterY() || this.getCenterY() < otherSprite.getCenterY()));
+                
+                boolean top = (this.getCenterX() == otherSprite.getCenterX() && this.getCenterY() > otherSprite.getCenterY());
+                
+                boolean bottom = (this.getCenterX() == otherSprite.getCenterX() && this.getCenterY() < otherSprite.getCenterY());
+                
+                if (right) {
+                    System.out.println("RIGHT");
+                } else if (left) {
+                    System.out.println("LEFT");
+                } else if (top) {
+                    System.out.println("TOP");
+                } else if (bottom) {
+                    System.out.println("BOTTOM");
+                }
+                
 //                i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
 //                l = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
 
@@ -260,18 +283,21 @@ public class SpriteBase {
 //                    actions.put(spriteActions.RIGHT, false);
 //                    System.out.println("Right");
 //                }
-                Shape intersect = Shape.intersect(getBounds(), otherSprite.getBounds());
-                double h = this.getCenterX();
-                double j = otherSprite.getCenterX();
-                double k = h - j;
-                boolean right = this.getCenterX() - otherSprite.getCenterX() < 0;
-                boolean bottom = this.getCenterY() - otherSprite.getCenterY() < 0;
-                
-                if (intersect.getBoundsInParent().getHeight() > intersect.getBoundsInParent().getWidth()) {
-                    System.out.println("Side");
-                } else {
-                    System.out.println("Top/Bottom");
-                }
+
+
+
+//                Shape intersect = Shape.intersect(getBounds(), otherSprite.getBounds());
+//                double h = this.getCenterX();
+//                double j = otherSprite.getCenterX();
+//                double k = h - j;
+//                boolean right = this.getCenterX() - otherSprite.getCenterX() < 0;
+//                boolean bottom = this.getCenterY() - otherSprite.getCenterY() < 0;
+//                
+//                if (intersect.getBoundsInParent().getHeight() > intersect.getBoundsInParent().getWidth()) {
+//                    System.out.println("Side");
+//                } else {
+//                    System.out.println("Top/Bottom");
+//                }
 
 //                if (right) {
 //                    System.out.println("Right");
@@ -324,6 +350,10 @@ public class SpriteBase {
      */
     public void setCanCollide(boolean canCollide) {
         this.canCollide = canCollide;
+    }
+    
+    public boolean getCanCollide() {
+        return this.canCollide;
     }
 
     public void resetActions() {

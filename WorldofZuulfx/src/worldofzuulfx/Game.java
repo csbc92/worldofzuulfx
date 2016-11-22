@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import worldofzuulfx.Items.Book;
 import worldofzuulfx.Items.Coffee;
 import worldofzuulfx.Items.CoffeeVoucher;
@@ -42,6 +44,9 @@ public class Game {
     private Pane background;
     private Pane sprites;
     private AnimationTimer timer;
+    
+    private double nextPosX;
+    private double nextPosY;
 
     public Game(Pane background, Pane sprites, Scene scene) // Constructor - ingen argumenter
     {
@@ -50,10 +55,12 @@ public class Game {
         addInputControls(scene);
         ConsoleInfo.setConsoleData("Test");
         player = new Player("Player-name", this.sprites, new Image("http://i.imgur.com/zLwFeje.png"), 
-                background.getLayoutX() + 64.0, background.getLayoutY() + 64.0);
+                background.getLayoutX() + 65.0, background.getLayoutY() + 65.0);
         player.setCanCollide(true);
         player.setDx(32);
         player.setDy(16);
+        nextPosX = player.getBounds().getX();
+        nextPosY = player.getBounds().getY();
 
         createRooms();
 
@@ -93,20 +100,20 @@ public class Game {
     }
 
     public void checkCollisions() {
-        boolean result = false;
-        String currentRoomID = this.player.getCurrentRoom().getID();
-
-        Room currentRoom = this.getRoom(currentRoomID);
-
-        for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
-
-            if (player.collidesWith(tile)) {
-                result = true;
-            }
-        }
-        if (result) {
-            //player.stopMovement();
-        }
+//        boolean result = false;
+//        String currentRoomID = this.player.getCurrentRoom().getID();
+//
+//        Room currentRoom = this.getRoom(currentRoomID);
+//
+//        for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
+//
+//            if (player.collidesWith(tile)) {
+//                result = true;
+//            }
+//        }
+//        if (result) {
+//            //player.stopMovement();
+//        }
 //       boolean result = false;
 //        for (Tile tile : tileMap.getTileTerrain()) {
 //            if (player.getSprite().collidesWith(tile)) {
@@ -120,25 +127,56 @@ public class Game {
     }
 
     private void addInputControls(Scene scene) {
-
+               
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.RIGHT) {
-                player.move(SpriteBase.spriteActions.RIGHT);
+                nextPosX = player.getBounds().getX() + player.getDx();
+                //player.move(SpriteBase.spriteActions.RIGHT);
 
             }
             if (key.getCode() == KeyCode.LEFT) {
-                player.move(SpriteBase.spriteActions.LEFT);
+                nextPosX = player.getBounds().getX() - player.getDx();
+                //player.move(SpriteBase.spriteActions.LEFT);
 
             }
             if (key.getCode() == KeyCode.UP) {
-                player.move(SpriteBase.spriteActions.UP);
+                nextPosY = player.getBounds().getY() - player.getDy();
+                //player.move(SpriteBase.spriteActions.UP);
 
             }
             if (key.getCode() == KeyCode.DOWN) {
-                player.move(SpriteBase.spriteActions.DOWN);
+                nextPosY = player.getBounds().getY() + player.getDy();
+                //player.move(SpriteBase.spriteActions.DOWN);
 
             }
+            
+            String currentRoomID = this.player.getCurrentRoom().getID();
+
+            Room currentRoom = this.getRoom(currentRoomID);
+
+            for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
+                
+                if (tile.getCanCollide()) {
+                    Rectangle nextMove = new Rectangle(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight());
+                    nextMove.setFill(Color.BLUE);
+                    
+                    if (tile.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
+                        
+                        background.getChildren().add(nextMove);
+                        System.out.println("Collision! : " + tile.getID() + " X: " + tile.getX() + " Y: " + tile.getY() + " w: " + tile.getWidth() + " h:" + tile.getHeight());
+                        System.out.println("X: " + nextPosX + " Y: " + nextPosY + " 32 16");
+                        
+                        // Reset the nextPos since a collision was detected
+                        nextPosX = player.getX();
+                        nextPosY = player.getY();
+                        return;
+                    }
+                }
+            }
+            
+            player.getBounds().setX(nextPosX);
+            player.getBounds().setY(nextPosY);
 
         });
     }
