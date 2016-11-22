@@ -20,8 +20,8 @@ public class CoffeeVoucher extends Item {
 
     protected int voucherAmount;
 
-    public CoffeeVoucher(Pane layer, String ID, String description, int weight, int voucherAmountVar) {
-        super(layer, Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
+    public CoffeeVoucher(String ID, String description, int weight, int voucherAmountVar) {
+        super(Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
         voucherAmount = voucherAmountVar;
 
     }
@@ -48,7 +48,7 @@ public class CoffeeVoucher extends Item {
     public void use(Player player) {
         if (player.getCurrentRoom().getID().equalsIgnoreCase("Canteen")) {
             if (this.decrementAmount()) {
-                player.pickupItem(ItemFactory.makeBeer(Game.objectsLayer));
+                player.pickupItem(ItemFactory.makeBeer());
             } else {
                 ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
                 player.getInventory().removeItem(this);

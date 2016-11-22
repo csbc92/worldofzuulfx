@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import javafx.scene.layout.Pane;
+import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileMap;
@@ -142,6 +143,12 @@ public class Room {
     
     public void draw() {
         tileMap.draw(background);
+        for (Item item : roomInventory.getItemList()) {
+            item.setLayer(Game.objectsLayer);
+            item.addToLayer();
+            item.updateUI();
+        }
+        
     }
 
     /**

@@ -29,8 +29,8 @@ public class Drink extends Item {
     private int energyValue;
     private boolean alcoholDrink;
 
-    public Drink(Pane layer, String ID, String description, int weight, int energyValueVar, boolean alcoholicBeverage) {
-        super(layer, Game.tiles.get(56).clone().getImageView().getImage(), ID, description, weight);
+    public Drink(String ID, String description, int weight, int energyValueVar, boolean alcoholicBeverage) {
+        super(Game.tiles.get(142).clone().getImageView().getImage(), ID, description, weight);
         this.energyValue = energyValueVar;
         this.alcoholDrink = alcoholicBeverage;
 

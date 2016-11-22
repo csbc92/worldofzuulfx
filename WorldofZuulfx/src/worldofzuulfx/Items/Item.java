@@ -22,10 +22,11 @@ public abstract class Item extends SpriteBase{
     private String ID;
 
 
-    public Item(Pane layer, Image image, String ID, String description, int weight) {
-        super(layer, image, 0, 0);
+    public Item( Image image, String ID, String description, int weight) {
+        super(image);
+        super.setCanCollide(true);
         this.description = description;
-        this.weight = weight; 
+        this.weight = weight;
         isLocked = false;
 
     }

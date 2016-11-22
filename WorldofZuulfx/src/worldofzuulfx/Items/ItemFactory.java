@@ -17,34 +17,34 @@ public class ItemFactory {
 
     }
 
-    public static Drink makeBeer(Pane layer) {
+    public static Drink makeBeer() {
 
-        return new Drink(layer, "beer", "Beer", 1, 1, true);
+        return new Drink("beer", "Beer", 1, 1, true);
     }
 
     public static Drink makeCoffee(Pane layer) {
 
-        return new Drink(layer, "coffee", "Coffee", 1, 10, false);
+        return new Drink("coffee", "Coffee", 1, 10, false);
     }
 
     public static Computer makeComputer(Pane layer) {
 
-        return new Computer(layer, "computer", "Computer", 10);
+        return new Computer("computer", "Computer", 10);
     }
 
     public static CoffeeVoucher makeCoffeeVoucher(Pane layer) {
 
-        return new CoffeeVoucher(layer, "coffeeVoucher", "Coffee Voucher", 0, 10);
+        return new CoffeeVoucher("coffeeVoucher", "Coffee Voucher", 0, 10);
     }
 
     public static Book makeBook(Pane layer, String description) {
 
-        return new Book(layer, description, description, 5);
+        return new Book(description, description, 5);
     }
 
     public static Note makeNote(Pane layer, String content) {
 
-        return new Note(layer, "book", "Book", 5, content);
+        return new Note("book", "Book", 5, content);
     }
 
 }

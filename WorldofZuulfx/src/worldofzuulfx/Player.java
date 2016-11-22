@@ -198,7 +198,7 @@ public class Player extends SpriteBase implements BarValueListener {
         // Decrease the players energy each time he navigates between rooms.
         energy.setValue(energy.getValue() - 2);
         
-        currentRoom.draw();
+        
         notifyChangeRoomListeners(oldRoom, currentRoom);
     }
 
@@ -416,7 +416,7 @@ public class Player extends SpriteBase implements BarValueListener {
     public void barValueChanged(Bar bar) {
         if (bar.getValue() <= 0 || isDrunk() == true) {
             // TODO - Håndter blackout!
-            this.blackout(Main.getGame().getRooms(false));
+            this.blackout(Main.getGame().getRoomHandler().getRooms(false));
             ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
             
             if (hp.getValue() > 0) {

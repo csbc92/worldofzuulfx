@@ -29,7 +29,7 @@ public class Inventory {
     }
 
     public Inventory(Pane layer) {
-        this(layer,10000,20);
+        this(layer, 10000, 20);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Inventory {
         else if (itemList.size() != capacity && (item.getWeight() + this.currentWeight) < maxWeight) {
             itemList.add(item);
             return true;
-        }        
+        }
         return false;
     }
 
@@ -120,8 +120,8 @@ public class Inventory {
         }
         return counter;
     }
-    
-    public boolean contains(String ID){
+
+    public boolean contains(String ID) {
         for (Item item : itemList) {
             if (item.getID().equals(ID)) {
                 return true;
@@ -129,8 +129,8 @@ public class Inventory {
         }
         return false;
     }
-    
-    public Item find (String itemString){
+
+    public Item find(String itemString) {
         try {
             for (Item item : itemList) {
                 if (item.getDescription().equalsIgnoreCase(itemString)) {

@@ -10,6 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.shape.Rectangle;
+import worldofzuulfx.Events.NavigateEvent;
+import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.Items.Drink;
 
 import worldofzuulfx.Items.Item;
@@ -21,37 +23,51 @@ import worldofzuulfx.Quest.QuestFactory;
 import worldofzuulfx.Quest.QuestHandler;
 
 import worldofzuulfx.Minigame.RockPaperScissors;
+import worldofzuulfx.Quest.QuestInventory;
 
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileLoader;
 import worldofzuulfx.tiles.TileMap;
 
-public class Game {
+public class Game implements NavigateListener {
 
     private boolean finished;
-    private QuestHandler questHandler;
+//    private QuestHandler questHandler;
     private PartyGuy partyguy;
-    private HashMap<String, Quest> allGameQuests;
+//    private HashMap<String, Quest> allGameQuests;
     private ArrayList<String> RPSCommands;
     private Player player;
     private TileMap tileMap;
-    private ArrayList<Room> rooms;
+    private RoomHandler roomHandler;
+    private QuestInventory questInventory;
+
     public static Pane backgroundLayer;
     public static Pane spritesLayer;
     public static Pane objectsLayer;
+    public static Pane inventorysLayer;
+    
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
 
     private double nextPosX;
     private double nextPosY;
 
-    public Game(Pane background, Pane sprites, Pane objects, Scene scene) // Constructor - ingen argumenter
+    public Game(Pane background, Pane sprites, Pane objects, Pane Inventory, Scene scene) // Constructor - ingen argumenter
     {
         this.backgroundLayer = background;
         this.spritesLayer = sprites;
         this.objectsLayer = objects;
+        this.inventorysLayer = Inventory;
         addInputControls(scene);
-        ConsoleInfo.setConsoleData("Test");
+        
+        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
+        tiles = tLoader.getTiles();
+
+        roomHandler = new RoomHandler();
+        roomHandler.setRooms(RoomFactory.createRooms(tiles));
+        
+        questInventory = new QuestInventory();
+        
         player = new Player("Player-name", sprites, new Image("http://i.imgur.com/zLwFeje.png"),
                 background.getLayoutX() + 65.0, background.getLayoutY() + 65.0);
         player.setCanCollide(true);
@@ -59,19 +75,17 @@ public class Game {
         player.setDy(16);
         player.getBounds().setHeight(14);
         player.getBounds().setWidth(30);
+        player.addNavigateListener(this);
         nextPosX = player.getBounds().getX();
         nextPosY = player.getBounds().getY();
-
-        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/E04tZvB.png"), 32, 32);
-        tiles = tLoader.getTiles();
-
-        createRooms();
-
+        
         //TODO
         initNPCs();
-        initQuests();
+        questInventory.initQuests(roomHandler, player);
 
         gameLoop();
+
+        player.navigateTo(roomHandler.getRoom("outside"));
         play();
     }
 
@@ -103,13 +117,11 @@ public class Game {
     public void checkCollisions() {
         String currentRoomID = this.player.getCurrentRoom().getID();
 
-        Room currentRoom = this.getRoom(currentRoomID);
+        Room currentRoom = this.getRoomHandler().getRoom(currentRoomID);
 
         for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
 
             if (tile.getCanCollide()) {
-                Rectangle nextMove = new Rectangle(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight());
-
                 if (tile.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
                     nextPosX = player.getX();
@@ -118,7 +130,16 @@ public class Game {
                 }
             }
         }
-        
+        for (Item item : currentRoom.getRoomInventory().getItemList()) {
+            if (item.getCanCollide()) {
+                if (item.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
+                    // Reset the nextPos since a collision was detected
+                    nextPosX = player.getX();
+                    nextPosY = player.getY();
+                    return;
+                }
+            }
+        }
 
         player.move(nextPosX, nextPosY);
     }
@@ -143,251 +164,19 @@ public class Game {
             if (key.getCode() == KeyCode.DOWN) {
                 nextPosY = player.getBounds().getY() + player.getDy();
             }
-            
+
             if (key.getCode() == KeyCode.A) {
-                player.navigateTo(rooms.get(4));
+                player.navigateTo(getRoomHandler().getRoom("Campus"));
             }
 
         });
     }
 
-    public HashMap<String, Quest> getAllGameQuests() {
-        return allGameQuests;
-    }
-
-    private void initQuests() {
-        // Initialize Quests and Quest handling
-        this.allGameQuests = new HashMap<>();
-        QuestFactory qFactory = new QuestFactory(this.player);
-        questHandler = new QuestHandler(this.player);
-
-        // Create quests
-        Quest goToCampusQ = qFactory.roomQuest("Campus", "Go to Campus", null);
-        goToCampusQ.setPostAction(() -> {
-            String postCompleteMessage = "The final exam for the semester awaits, but you're not prepared. "
-                    + "\nYou have spent your time on anything else than studying."
-                    + "\n\nFind your way to the exam room by using the map. "
-                    + "Remember you can navigate using the go-command.";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest goToExamnRoomQ = qFactory.roomQuest("Exam", "Go to the examn room.", null);
-        getRoom("Exam").setLocked(false); // Temporarily unlock so the player can navigate here
-        goToExamnRoomQ.setPostAction(() -> {
-
-            String postCompleteMessage = "To prepare for the final exam you'll have to explore the university "
-                    + "and collect both ECTS-points "
-                    + "and important notes that you were too lazy to take during the semester."
-                    + "\n\nThe exam room will unlock when you have collected enough ECTS-points. "
-                    + "\n\nYou have been given a new Quest. "
-                    + "To view its content type ‘quest’ in the console. You can type this command if you are lost.";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-            // Navigate the player out of the exam room
-            Room campus = getRoom("Campus");
-            this.player.navigateSilentlyTo(campus);
-            getRoom("Exam").setLocked(true); // Lock the exam room again
-
-            // unlock rooms so the player can move further
-            getRoom("Gydehutten").setLocked(false);
-            getRoom("Bookstore").setLocked(false);
-        });
-
-        Quest goToU163RoomQ = qFactory.roomQuest("U163", "Go to teaching room U163.", null);
-        goToU163RoomQ.setPostAction(() -> {
-
-            String postCompleteMessage = "This is the teaching room for Object Oriented Programming."
-                    + "\n\nDaniel are excited to prepare you for the upcoming exam, "
-                    + "but Anders is not very impressed with this being the first time you show up for OOP lessons "
-                    + "in this semester. "
-                    + "\n\nAs a penalty, Anders wants you to get him a cup of coffee in the canteen. "
-                    + "\n\nTo buy Coffee, Anders has given you Coffee Vouchers. "
-                    + "You can exchange Coffee Vouchers for coffee in the canteen. "
-                    + "\n\nHurry up! The lesson is about to begin!";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-            this.player.getInventory().addItem(ItemFactory.makeCoffeeVoucher(objectsLayer));
-        });
-
-        Quest goToCanteenQ = qFactory.roomQuest("Canteen", "Go to the Canteen.", null);
-        goToCanteenQ.setPostAction(() -> {
-            String postCompleteMessage = "This is the canteen where you can exchange Coffee Vouchers for coffee"
-                    + "\n\nUse the Coffee Voucher by typing 'use' followed by 'coffee voucher' in the console.";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest coffeeQ = qFactory.pickupItemQuest("coffee", "Buy a coffee.", null);
-        coffeeQ.setPostAction(() -> {
-            String postCompleteMessage = "Quickly! Bring the coffee to Anders in U163.";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        NPC anders = getRoom("U163").getNPC("Anders");
-        Quest deliverCoffeeQ = qFactory.deliveryQuest("coffee", anders, "Deliver the coffee to Anders.", null);
-        deliverCoffeeQ.setPostAction(() -> {
-            String postCompleteMessage = "Anders:"
-                    + "\n\"Coffee is the source for maintaining your energy-level. "
-                    + "Throughout the game you have to maintain your energy-level by drinking coffee "
-                    + "but the amount of Coffee Vouchers is limited so use them wisely. "
-                    + "If you run out of energy, you will black out and wake up at a random place in the university. "
-                    + "\n\nBe careful. You can only black out a few times before you remain unconscious and the game is lost.\""
-                    + "\n\nTo drink a Coffee type ‘use coffee’ followed by ‘drink’ in the console.";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest leaveU163Q = qFactory.roomQuest("Knoldene", "Leave U163", null);
-        leaveU163Q.setPostAction(() -> {
-            String postCompleteMessage = "Daniel:"
-                    + "\n\"The OOP lesson has not finished yet. To attend to the course, you need your OOP book. "
-                    + "You can collect the book in the Book store.\""
-                    + "\n\nFind your way to the Book store and collect the book. "
-                    + "Remember that you can use the map if you’re lost.";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest goToBookStoreQ = qFactory.roomQuest("Bookstore", "Go to the Bookstore", null);
-        goToBookStoreQ.setPostAction(() -> {
-            String postCompleteMessage = "This is the Book store. "
-                    + "\nIn here you can collect books that are needed to attend to different courses at the university. "
-                    + "\n\nTo search a room for items type ‘search’ in the console. "
-                    + "To collect an item type ‘take’ followed by the name of the item you want to collect. "
-                    + "e.g. ‘take oopbook’ in the console.";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-
-            getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "OOP-Book"));
-        });
-
-        Quest returnToU163 = qFactory.roomQuest("U163", "Return to U163", null);
-        returnToU163.setPostAction(() -> {
-            String postCompleteMessage = "Daniel:"
-                    + "\n\"Now that you have the book, the course can begin.\"";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-            initPartyGuy();
-        });
-
-        Quest u170Lecture = qFactory.roomQuest("U170", "Participate in lecture", null);
-        u170Lecture.setPostAction(() -> {
-            String postCompleteMessage = "Lone:"
-                    + "\n\"Welcome to the ISE-lecture."
-                    + "\nBefore we can start the lecture you need your ISE Book."
-                    + "\nGet your book in the Bookstore.";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-
-            getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "ISE-Book"));
-        });
-
-        Quest bookstoreIse = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
-        bookstoreIse.setPostAction(() -> {
-            String postCompleteMessage = "Bookstore"
-                    + "\nSearch for the ISE-Book";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest returnToU170 = qFactory.roomQuest("U170", "Return to U170", null);
-        returnToU170.setPostAction(() -> {
-            String postCompleteMessage = "Lone:"
-                    + "\n\"Great! You've collected the book."
-                    + "\nThe lecture can now begin\"";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest u180Lecture = qFactory.roomQuest("U180", "Participate in lecture", null);
-        u180Lecture.setPostAction(() -> {
-            String postCompleteMessage = "Erik:"
-                    + "\n\"Welcome to the COS-lecture."
-                    + "\nBefore we can start the lecture you need your BOS Book."
-                    + "\nGet your book in the Bookstore.";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-
-            getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "COS-Book"));
-        });
-
-        Quest bookstoreCos = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
-        bookstoreCos.setPostAction(() -> {
-            String postCompleteMessage = "Search for the COS Book";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-
-        });
-
-        Quest returnToU180 = qFactory.roomQuest("u180", "Return to U180", null);
-        returnToU180.setPostAction(() -> {
-            String postCompleteMessage = "Erik:"
-                    + "\n\"Great! You've collected the book."
-                    + "\nThe lecture can now begin\"";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-
-        });
-
-        // Give the player an initial quest
-        this.player.setActiveQuest(goToCampusQ, true);
-
-        // Chain quests together in a "tutorial"
-        goToCampusQ.setChainQuest(goToExamnRoomQ);
-        goToExamnRoomQ.setChainQuest(goToU163RoomQ);
-        goToU163RoomQ.setChainQuest(goToCanteenQ);
-        goToCanteenQ.setChainQuest(coffeeQ);
-        coffeeQ.setChainQuest(deliverCoffeeQ);
-        deliverCoffeeQ.setChainQuest(leaveU163Q);
-        leaveU163Q.setChainQuest(goToBookStoreQ);
-        goToBookStoreQ.setChainQuest(returnToU163);
-
-        // Chain the rest of the quests together in the game
-        u170Lecture.setChainQuest(bookstoreIse);
-        bookstoreIse.setChainQuest(returnToU170);
-
-        u180Lecture.setChainQuest(bookstoreCos);
-        bookstoreCos.setChainQuest(returnToU180);
-
-        // Save a reference to the rest of the quests
-        this.allGameQuests.put("goToCampusQ", goToCampusQ);
-        this.allGameQuests.put("goToExamRoomQ", goToExamnRoomQ);
-        this.allGameQuests.put("goToU163RoomQ", goToU163RoomQ);
-        this.allGameQuests.put("goToCanteenQ", goToCanteenQ);
-        this.allGameQuests.put("coffeeQ", coffeeQ);
-        this.allGameQuests.put("deliverCoffeeQ", deliverCoffeeQ);
-        this.allGameQuests.put("leaveU163Q", leaveU163Q);
-        this.allGameQuests.put("goToBookStoreQ", goToBookStoreQ);
-        this.allGameQuests.put("returnToU163", returnToU163);
-        this.allGameQuests.put("u170Lecuture", u170Lecture);
-        this.allGameQuests.put("bookstoreIse", bookstoreIse);
-        this.allGameQuests.put("returnToU170", returnToU170);
-        this.allGameQuests.put("u180Lecture", u180Lecture);
-        this.allGameQuests.put("bookstoreCos", bookstoreCos);
-        this.allGameQuests.put("returnToU180", returnToU180);
-    }
+    
 
     private void initPartyGuy() {
         partyguy = new PartyGuy("PartyGuy", "Den festlige ven");
-        partyguy.spawn(getRooms(false), getAllGameQuests());
-    }
-
-    public Room getRoom(String ID) {
-
-        for (Room r : this.rooms) {
-            if (r.getID().equalsIgnoreCase(ID)) {
-                return r;
-            }
-        }
-
-        return null;
-    }
-
-    public ArrayList<Room> getRooms(Boolean lockedRooms) {
-        ArrayList<Room> roomsToReturn = new ArrayList<>();
-        //TODO Kan checkes
-        for (Room room : this.rooms) {
-
-            if (room.isLocked() == lockedRooms) {
-                roomsToReturn.add(room);
-            }
-        }
-        return roomsToReturn;
+        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
     }
 
     /**
@@ -404,215 +193,6 @@ public class Game {
         }
 
         return list;
-    }
-
-    private void createRooms() {
-        Room outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
-
-        rooms = new ArrayList<>();
-
-        outside = new Room("outside", "outside", backgroundLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 214, 12, 0},
-                                                                                {0, 12, 13, 13, 13, 13, 13, 13, 13, 215, 12, 0},
-                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
-                                                                                {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 34, 0},
-                                                                                {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-                                                                                {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
-                                                                                {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0}
-                                                                                });
-
-        exam = new Room("exam", "exam", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-
-        campus = new Room("campus", "campus", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 48, 56, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        downunder = new Room("downunder", "downunder", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        bookstore = new Room("bookstore", "bookstore", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 49, 57, 49, 57, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        hutten = new Room("hutten", "hutten", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        canteen = new Room("Canteen", "Canteen", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 48, 56, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        knoldene = new Room("knoldene", "knoldene", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 49, 57, 13, 117, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        u163 = new Room("u163", "u163", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 117, 13, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        u170 = new Room("u170", "u170", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 48, 56, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 48, 56, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-        u180 = new Room("u180", "u180", backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
-        {0, 5, 17, 49, 57, 13, 13, 117, 21, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 48, 56, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
-        {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        });
-
-        rooms.add(canteen);
-
-//        outside = new Room("Outside", "outside the main entrance of the university");
-//        exam = new Room("Exam", "in the exam room");
-//        exam.setLocked(true);
-//        campus = new Room("Campus", "in the hallway of the university");
-//        bookstore = new Room("Bookstore", "in the bookstore");
-//        bookstore.setLocked(true);
-//        hutten = new Room("Gydehutten", "in the Gydehutten");
-//        hutten.setLocked(true);
-//        downunder = new Room("Fredagsbar", "in Downunder");
-//        canteen = new Room("Canteen", "in the canteen");
-//        knoldene = new Room("Knoldene", "in the Knoldene");
-//        u163 = new Room("U163", "in U163");
-//        u170 = new Room("U170", "in U170");
-//        u180 = new Room("U180", "in U180");
-//
-//        outside.setExit("north", campus);
-//
-//        campus.setExit("north", hutten);
-//        campus.setExit("west", exam);
-//        campus.setExit("east", bookstore);
-//
-//        exam.setExit("east", campus);
-//
-//        bookstore.setExit("west", campus);
-//
-//        hutten.setExit("south", campus);
-//        hutten.setExit("east", canteen);
-//        hutten.setExit("north", knoldene);
-//        hutten.setExit("down", downunder);
-//
-//        canteen.setExit("west", hutten);
-//        canteen.setExit("north", downunder);
-//
-//        downunder.setExit("up", hutten);
-//        downunder.setExit("south", canteen);
-//
-//        knoldene.setExit("north", u163);
-//        knoldene.setExit("west", u170);
-//        knoldene.setExit("east", u180);
-//        knoldene.setExit("south", hutten);
-//
-//        u163.setExit("south", knoldene);
-//        u170.setExit("east", knoldene);
-//        u180.setExit("west", knoldene);
-//
-//        rooms = new ArrayList<Room>();
-        rooms.add(outside);
-        rooms.add(exam);
-        rooms.add(campus);
-        rooms.add(bookstore);
-        rooms.add(hutten);
-        rooms.add(downunder);
-        rooms.add(canteen);
-        rooms.add(knoldene);
-        rooms.add(u163);
-        rooms.add(u170);
-        rooms.add(u180);
-//
-//        // CurrentRoom tildeles referencen til Outside.
-        getPlayer().navigateTo(outside);
-        Drink drink = ItemFactory.makeBeer(objectsLayer);
-        drink.setX(64);
-        drink.setY(64);
-        drink.updateUI();
     }
 
     public void play() {
@@ -714,7 +294,7 @@ public class Game {
     private void challenge(Command command) {
         RockPaperScissors rpsMiniGame = new RockPaperScissors();
 
-        if (getPlayer().getCurrentRoom() == getRoom("Fredagsbar")) {
+        if (getPlayer().getCurrentRoom() == getRoomHandler().getRoom("Fredagsbar")) {
             ConsoleInfo.setConsoleData("I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*");
             ConsoleInfo.setConsoleData("Sound trumpets! let our bloody colours wave! And either victory, or else a grave. ");
             ConsoleInfo.setConsoleData("Just kidding. If you win I will give you coffee, if you lose then your energy will drain");
@@ -726,7 +306,7 @@ public class Game {
                 ConsoleInfo.setConsoleData(">");
                 rpsMiniGame.play();
                 if (rpsMiniGame.getMoveComparison() == 1) {
-                    getPlayer().pickupItem(ItemFactory.makeBeer(objectsLayer));
+                    getPlayer().pickupItem(ItemFactory.makeBeer());
                 }
                 if (rpsMiniGame.getMoveComparison() == -1) {
                     getPlayer().increaseEnergy(-5);
@@ -736,7 +316,7 @@ public class Game {
             ConsoleInfo.setConsoleData("Just type 'use' - no need for a second word");
 
         }
-        if (getPlayer().getCurrentRoom() != getRoom("Fredagsbar")) {
+        if (getPlayer().getCurrentRoom() != getRoomHandler().getRoom("Fredagsbar")) {
             ConsoleInfo.setConsoleData("There is a time and place for everything, and now is not time for a challenge.");
         }
     }
@@ -760,11 +340,11 @@ public class Game {
             getPlayer().navigateTo(nextRoom);
             showInfo();
             getPlayer().barValueChanged(getPlayer().getEnergyBar());
-            if (getAllGameQuests().get("returnToU163").isCompleted()) {
+            if (questInventory.getAllGameQuests().get("returnToU163").isCompleted()) {
                 if (getPlayer().getCurrentRoom() == getPartyGuy().getCurrentRoom()) {
                     ConsoleInfo.clearData();
                     ConsoleInfo.setConsoleData("You met your good ol' buddy ol' pal the Partyguy who took you to 'FredagsBaren' but where did he go?");
-                    getPartyGuy().partyTime(getPlayer(), getRoom("FredagsBar"), getRooms(false), getAllGameQuests());
+                    getPartyGuy().partyTime(getPlayer(), getRoomHandler().getRoom("FredagsBar"), getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
                     showInfo();
                 }
             }
@@ -872,10 +452,29 @@ public class Game {
     }
 
     private void initNPCs() {
-        Room u163 = getRoom("U163");
+        Room u163 = getRoomHandler().getRoom("U163");
         NPC anders = new Lector("Anders", "Anders");
         NPC daniel = new Lector("Daniel", "Daniel");
         u163.addNPC(daniel);
         u163.addNPC(anders);
+    }
+
+    @Override
+    public void navigated(NavigateEvent event) {
+        event.getNewRoom().draw();
+    }
+
+    /**
+     * @return the roomHandler
+     */
+    public RoomHandler getRoomHandler() {
+        return roomHandler;
+    }
+
+    /**
+     * @return the questInventory
+     */
+    public QuestInventory getQuestInventory() {
+        return questInventory;
     }
 }

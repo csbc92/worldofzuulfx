@@ -16,8 +16,8 @@ import worldofzuulfx.Player;
  */
 public class Computer extends Item {
 
-    public Computer(Pane layer, String ID, String description, int weight) {
-        super(layer, Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
+    public Computer( String ID, String description, int weight) {
+        super(Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
     }
 
     @Override

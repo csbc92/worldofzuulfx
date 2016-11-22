@@ -40,6 +40,8 @@ public class FXMLMainController implements Initializable {
     private Pane pBackground;
     @FXML
     private Pane pObjects;
+    @FXML
+    private Pane pInventory;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,7 +63,7 @@ public class FXMLMainController implements Initializable {
     private void onClickNewGame(ActionEvent event) {
         
         butNewGame.setVisible(false);
-        game = new Game(pBackground, pSprites, pObjects, pBackground.getScene()); //En instans af spillet oprettes.
+        game = new Game(pBackground, pSprites, pObjects, pInventory, pBackground.getScene()); //En instans af spillet oprettes.
     }
 
 }
