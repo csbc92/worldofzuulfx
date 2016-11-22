@@ -30,7 +30,7 @@ public class TileMap {
         this.tileTerrainLayout = tileTerrainLayout;
         this.tileSet = new HashMap<>(tileSet);
         this.tileTerrain = new ArrayList<>();
-        this.collideableTilesIDs = new int[] { 0, 48, 56 };
+        this.collideableTilesIDs = new int[] { 0, 12, 13, 214 };
     }
 
     public void draw(Pane pane) {
