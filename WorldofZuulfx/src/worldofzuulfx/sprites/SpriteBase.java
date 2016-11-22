@@ -49,7 +49,7 @@ public class SpriteBase {
         this.w = image.getWidth();
         this.h = image.getHeight();
         bounds = new Rectangle(h, w);
-        bounds.setFill(Color.RED);
+        bounds.setFill(Color.TRANSPARENT);
 
     }
 
@@ -70,7 +70,7 @@ public class SpriteBase {
         this.imageView.relocate(x, y);
         this.actions = new HashMap<>();
         bounds = new Rectangle(x, y, 30, 14);
-        bounds.setFill(Color.RED);
+        bounds.setFill(Color.TRANSPARENT);
         resetActions();
         addToLayer();
     }
