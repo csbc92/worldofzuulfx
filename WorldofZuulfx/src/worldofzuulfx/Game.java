@@ -888,6 +888,7 @@ public class Game {
     }
 
     public void showInfo() {
+        // TODO skal muligvis slettes
         ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
                 + "\nPersons: " + getPlayer().getCurrentRoom().getPersonsString());
         ConsoleInfo.setConsoleData("-----------------------------"

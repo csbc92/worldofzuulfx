@@ -285,7 +285,6 @@ public class SpriteBase {
 //                }
 
 
-
 //                Shape intersect = Shape.intersect(getBounds(), otherSprite.getBounds());
 //                double h = this.getCenterX();
 //                double j = otherSprite.getCenterX();
@@ -310,7 +309,6 @@ public class SpriteBase {
 //                } else {
 //                    System.out.println("Top");
 //                }
-
             }
 
         }
