@@ -41,10 +41,8 @@ public class Game implements NavigateListener {
     private double nextPosX;
     private double nextPosY;
 
-    public Game(Scene scene) // Constructor - ingen argumenter
+    public Game() // Constructor - ingen argumenter
     {
-        addInputControls(scene);
-        
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
         tiles = tLoader.getTiles();
 
@@ -109,8 +107,8 @@ public class Game implements NavigateListener {
             if (tile.getCanCollide()) {
                 if (tile.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
-                    nextPosX = player.getX();
-                    nextPosY = player.getY();
+                    setNextPosX(player.getX());
+                    setNextPosY(player.getY());
                     return;
                 }
             }
@@ -119,8 +117,8 @@ public class Game implements NavigateListener {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
-                    nextPosX = player.getX();
-                    nextPosY = player.getY();
+                    setNextPosX(player.getX());
+                    setNextPosY(player.getY());
                     return;
                 }
             }
@@ -132,31 +130,6 @@ public class Game implements NavigateListener {
     public void cleanupSprites() {
 
     }
-
-    private void addInputControls(Scene scene) {
-
-        // keyboard handler: key pressed
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if (key.getCode() == KeyCode.RIGHT) {
-                nextPosX = player.getBounds().getX() + player.getDx();
-            }
-            if (key.getCode() == KeyCode.LEFT) {
-                nextPosX = player.getBounds().getX() - player.getDx();
-            }
-            if (key.getCode() == KeyCode.UP) {
-                nextPosY = player.getBounds().getY() - player.getDy();
-            }
-            if (key.getCode() == KeyCode.DOWN) {
-                nextPosY = player.getBounds().getY() + player.getDy();
-            }
-
-            if (key.getCode() == KeyCode.A) {
-                player.navigateTo(getRoomHandler().getRoom("Campus"));
-            }
-
-        });
-    }
-
     
 
     private void initPartyGuy() {
@@ -461,5 +434,19 @@ public class Game implements NavigateListener {
      */
     public QuestInventory getQuestInventory() {
         return questInventory;
+    }
+
+    /**
+     * @param nextPosX the nextPosX to set
+     */
+    public void setNextPosX(double nextPosX) {
+        this.nextPosX = nextPosX;
+    }
+
+    /**
+     * @param nextPosY the nextPosY to set
+     */
+    public void setNextPosY(double nextPosY) {
+        this.nextPosY = nextPosY;
     }
 }

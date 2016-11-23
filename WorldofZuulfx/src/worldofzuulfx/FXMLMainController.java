@@ -10,9 +10,12 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -48,9 +51,31 @@ public class FXMLMainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
+        
 
     }
 
+    private void addInputControls(Scene scene) {
+
+        // keyboard handler: key pressed
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.RIGHT) {
+                game.setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
+            }
+            if (key.getCode() == KeyCode.LEFT) {
+                game.setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
+
+            }
+            if (key.getCode() == KeyCode.UP) {
+                game.setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
+
+            }
+            if (key.getCode() == KeyCode.DOWN) {
+                game.setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
+            }
+
+        });
+    }
 
     public void write(String s) {
         taConsol.appendText(s);
@@ -62,13 +87,14 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private void onClickNewGame(ActionEvent event) {
-        
+
         butNewGame.setVisible(false);
         Layers.backgroundLayer = pBackground;
         Layers.spritesLayer = pSprites;
         Layers.objectsLayer = pObjects;
         Layers.inventorysLayer = pInventory;
-        game = new Game(pBackground.getScene()); //En instans af spillet oprettes.
+        addInputControls(pBackground.getScene());
+        game = new Game(); //En instans af spillet oprettes.
     }
 
 }
