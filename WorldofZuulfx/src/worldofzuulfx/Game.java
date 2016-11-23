@@ -7,20 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-
-import javafx.scene.shape.Rectangle;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.NavigateListener;
-import worldofzuulfx.Items.Drink;
 
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
 
 import worldofzuulfx.NPC.*;
 import worldofzuulfx.Quest.Quest;
-import worldofzuulfx.Quest.QuestFactory;
-import worldofzuulfx.Quest.QuestHandler;
 
 import worldofzuulfx.Minigame.RockPaperScissors;
 import worldofzuulfx.Quest.QuestInventory;
@@ -40,24 +34,15 @@ public class Game implements NavigateListener {
     private TileMap tileMap;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-
-    public static Pane backgroundLayer;
-    public static Pane spritesLayer;
-    public static Pane objectsLayer;
-    public static Pane inventorysLayer;
-    
+   
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
 
     private double nextPosX;
     private double nextPosY;
 
-    public Game(Pane background, Pane sprites, Pane objects, Pane Inventory, Scene scene) // Constructor - ingen argumenter
+    public Game(Scene scene) // Constructor - ingen argumenter
     {
-        this.backgroundLayer = background;
-        this.spritesLayer = sprites;
-        this.objectsLayer = objects;
-        this.inventorysLayer = Inventory;
         addInputControls(scene);
         
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
@@ -68,8 +53,8 @@ public class Game implements NavigateListener {
         
         questInventory = new QuestInventory();
         
-        player = new Player("Player-name", sprites, new Image("http://i.imgur.com/zLwFeje.png"),
-                background.getLayoutX() + 65.0, background.getLayoutY() + 65.0);
+        player = new Player("Player-name", Layers.spritesLayer, new Image("http://i.imgur.com/zLwFeje.png"),
+                Layers.backgroundLayer.getLayoutX() + 65.0, Layers.backgroundLayer.getLayoutY() + 65.0);
         player.setCanCollide(true);
         player.setDx(32);
         player.setDy(16);

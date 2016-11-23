@@ -7,8 +7,9 @@ package worldofzuulfx.Quest;
 
 import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
-import static worldofzuulfx.Game.objectsLayer;
+
 import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Layers;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.NPC.PartyGuy;
 import worldofzuulfx.Player;
@@ -81,7 +82,7 @@ public class QuestInventory {
                     + "You can exchange Coffee Vouchers for coffee in the canteen. "
                     + "\n\nHurry up! The lesson is about to begin!";
             ConsoleInfo.setConsoleData(postCompleteMessage);
-            player.getInventory().addItem(ItemFactory.makeCoffeeVoucher(objectsLayer));
+            player.getInventory().addItem(ItemFactory.makeCoffeeVoucher(Layers.objectsLayer));
         });
 
         Quest goToCanteenQ = qFactory.roomQuest("Canteen", "Go to the Canteen.", null);
@@ -131,7 +132,7 @@ public class QuestInventory {
                     + "e.g. ‘take oopbook’ in the console.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "OOP-Book"));
+            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(Layers.objectsLayer, "OOP-Book"));
         });
 
         Quest returnToU163 = qFactory.roomQuest("U163", "Return to U163", null);
@@ -153,7 +154,7 @@ public class QuestInventory {
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "ISE-Book"));
+            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(Layers.objectsLayer, "ISE-Book"));
         });
 
         Quest bookstoreIse = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
@@ -181,7 +182,7 @@ public class QuestInventory {
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(objectsLayer, "COS-Book"));
+            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook(Layers.objectsLayer, "COS-Book"));
         });
 
         Quest bookstoreCos = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
