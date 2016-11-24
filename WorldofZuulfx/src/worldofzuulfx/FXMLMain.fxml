@@ -20,7 +20,7 @@
    <children>
       <AnchorPane fx:id="apConsole" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
-            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="18.0" layoutY="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="656.0" />
+            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="18.0" layoutY="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" />
          </children>
       </AnchorPane>
       <Pane prefHeight="391.0" prefWidth="454.0">
