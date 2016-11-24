@@ -47,7 +47,7 @@ public class FXMLMainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-
+        taConsol.setDisable(true);
     }
 
 
