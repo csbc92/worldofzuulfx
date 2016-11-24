@@ -6,10 +6,11 @@ import worldofzuulfx.Game;
 import worldofzuulfx.Inventory;
 import worldofzuulfx.Items.Drink;
 import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Layers;
 
 public class RockPaperScissors {
 
-    Inventory i = new Inventory(Game.objectsLayer);
+    Inventory i = new Inventory(Layers.objectsLayer);
     private RockPaperScissorsMoves computerMove;
     private RockPaperScissorsMoves playerMove;
     private int moveComparison;

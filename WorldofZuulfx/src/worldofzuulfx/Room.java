@@ -34,7 +34,7 @@ public class Room {
         this.Locked = false;
         // Create HashMap containing exit-String and a Room
         exits = new HashMap<>();
-        roomInventory = new Inventory(Game.objectsLayer);
+        roomInventory = new Inventory(Layers.objectsLayer);
         npcList = new ArrayList<>();
         this.background = layer;
         this.tileLayout = tileLayout;
@@ -144,7 +144,7 @@ public class Room {
     public void draw() {
         tileMap.draw(background);
         for (Item item : roomInventory.getItemList()) {
-            item.setLayer(Game.objectsLayer);
+            item.setLayer(Layers.objectsLayer);
             item.addToLayer();
             item.updateUI();
         }
