@@ -22,27 +22,27 @@ public class ItemFactory {
         return new Drink("beer", "Beer", 1, 1, true);
     }
 
-    public static Drink makeCoffee(Pane layer) {
+    public static Drink makeCoffee() {
 
         return new Drink("coffee", "Coffee", 1, 10, false);
     }
 
-    public static Computer makeComputer(Pane layer) {
+    public static Computer makeComputer() {
 
         return new Computer("computer", "Computer", 10);
     }
 
-    public static CoffeeVoucher makeCoffeeVoucher(Pane layer) {
+    public static CoffeeVoucher makeCoffeeVoucher() {
 
         return new CoffeeVoucher("coffeeVoucher", "Coffee Voucher", 0, 10);
     }
 
-    public static Book makeBook(Pane layer, String description) {
+    public static Book makeBook(String description) {
 
         return new Book(description, description, 5);
     }
 
-    public static Note makeNote(Pane layer, String content) {
+    public static Note makeNote(String content) {
 
         return new Note("book", "Book", 5, content);
     }

@@ -9,8 +9,7 @@ import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Layers;
 
 public class RockPaperScissors {
-
-    Inventory i = new Inventory(Layers.objectsLayer);
+    
     private RockPaperScissorsMoves computerMove;
     private RockPaperScissorsMoves playerMove;
     private int moveComparison;
@@ -34,7 +33,7 @@ public class RockPaperScissors {
             case 1:
                 ConsoleInfo.setConsoleData("You won because " + playerMove + " defeats " + computerMove);
                 // TODO Skal tilføjes til Player's inventory
-                i.addItem(ItemFactory.makeBeer());
+                //i.addItem(ItemFactory.makeBeer());
                 break;
             case -1:
                 ConsoleInfo.setConsoleData("You lost: " + computerMove + " defeats " + playerMove);

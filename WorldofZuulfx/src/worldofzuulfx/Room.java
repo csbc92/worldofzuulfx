@@ -18,28 +18,28 @@ import worldofzuulfx.tiles.TileMap;
 public class Room {
 
     private String description;
-    private String ID;
-    private boolean Locked;
+    private String id;
+    private boolean locked;
     private HashMap<String, Room> exits;
     private Inventory roomInventory;
     private ArrayList<NPC> npcList;
-    private Pane background;
-    private final TileMap tileMap;
-    private final int[][] tileLayout;
+    private Pane groundLayer;
+    private Pane objectLayer;
+    private final TileMap groundTiles;
 
-    public Room(String ID, String description, Pane layer, HashMap<Integer, Tile> tiles, int[][] tileLayout) {
+    public Room(String ID, String description, Pane groundLayer, Pane objectLayer, HashMap<Integer, Tile> tiles, int[][] groundLayout) {
         // Constructor - defines the description of the room.
-        this.ID = ID;
+        this.id = ID;
         this.description = description;
-        this.Locked = false;
+        this.locked = false;
         // Create HashMap containing exit-String and a Room
-        exits = new HashMap<>();
-        roomInventory = new Inventory(Layers.objectsLayer);
-        npcList = new ArrayList<>();
-        this.background = layer;
-        this.tileLayout = tileLayout;
+        this.exits = new HashMap<>();
+        this.roomInventory = new Inventory(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        this.npcList = new ArrayList<>();
+        this.groundLayer = groundLayer;
+        this.objectLayer = objectLayer;
         
-        tileMap = new TileMap(this.tileLayout, tiles);
+        this.groundTiles = new TileMap(groundLayout, tiles);
     }
 
     public void setExit(String direction, Room neighbor) {
@@ -85,18 +85,18 @@ public class Room {
      * @return the ID
      */
     public String getID() {
-        return ID;
+        return id;
     }
 
     public boolean isLocked() {
-        return this.Locked;
+        return this.locked;
     }
 
     /**
      * @param Locked the Locked to set
      */
     public void setLocked(boolean Locked) {
-        this.Locked = Locked;
+        this.locked = Locked;
     }
 
     public ArrayList<NPC> getNPCList() {
@@ -138,23 +138,31 @@ public class Room {
         return null;
     }
        public TileMap getTileMap() {
-        return this.tileMap;
+        return this.groundTiles;
     }
     
     public void draw() {
-        tileMap.draw(background);
+        groundTiles.draw(groundLayer);
+        
+        // Draw Items in the room.
         for (Item item : roomInventory.getItemList()) {
-            item.setLayer(Layers.objectsLayer);
+            item.setLayer(objectLayer);
             item.addToLayer();
             item.updateUI();
         }
         
+        // Draw NPCs in the room.
+        for (NPC npc : this.npcList) {
+            npc.setLayer(objectLayer);
+            npc.addToLayer();
+            npc.updateUI();
+        }
     }
 
     /**
      * @return the background
      */
     public Pane getBackground() {
-        return background;
+        return groundLayer;
     }
 }

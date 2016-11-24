@@ -31,28 +31,29 @@ public class Game implements NavigateListener {
 //    private HashMap<String, Quest> allGameQuests;
     private ArrayList<String> RPSCommands;
     private Player player;
-    private TileMap tileMap;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
    
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
+    private Layers layers;
 
     private double nextPosX;
     private double nextPosY;
 
-    public Game() // Constructor - ingen argumenter
+    public Game(Layers layers) // Constructor - ingen argumenter
     {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
         tiles = tLoader.getTiles();
+        this.layers = layers;
 
         roomHandler = new RoomHandler();
-        roomHandler.setRooms(RoomFactory.createRooms(tiles));
+        roomHandler.setRooms(RoomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
         
         questInventory = new QuestInventory();
         
-        player = new Player("Player-name", Layers.spritesLayer, new Image("http://i.imgur.com/zLwFeje.png"),
-                Layers.backgroundLayer.getLayoutX() + 65.0, Layers.backgroundLayer.getLayoutY() + 65.0);
+        player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
+                layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
         player.setCanCollide(true);
         player.setDx(32);
         player.setDy(16);
@@ -133,7 +134,8 @@ public class Game implements NavigateListener {
     
 
     private void initPartyGuy() {
-        partyguy = new PartyGuy("PartyGuy", "Den festlige ven");
+        // TODO: Change image on partyguy
+        partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(88).getImageView().getImage());
         partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
     }
 
@@ -411,8 +413,9 @@ public class Game implements NavigateListener {
 
     private void initNPCs() {
         Room u163 = getRoomHandler().getRoom("U163");
-        NPC anders = new Lector("Anders", "Anders");
-        NPC daniel = new Lector("Daniel", "Daniel");
+        // TODO: Change image on NPCs
+        NPC anders = new NPC("Anders", "Anders", Game.tiles.get(132).getImageView().getImage());
+        NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(146).getImageView().getImage());
         u163.addNPC(daniel);
         u163.addNPC(anders);
     }

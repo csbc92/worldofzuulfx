@@ -13,9 +13,25 @@ import javafx.scene.layout.Pane;
  */
 public class Layers {
 
-    public static Pane backgroundLayer;
-    public static Pane spritesLayer;
-    public static Pane objectsLayer;
-    public static Pane inventorysLayer;
+    private Pane backgroundLayer;
+    private Pane objectsLayer;
+    private Pane playerLayer;
     
+    public Layers(Pane backgroundLayer, Pane objectsLayer, Pane playerLayer) {
+        this.backgroundLayer = backgroundLayer;
+        this.objectsLayer = objectsLayer;
+        this.playerLayer = playerLayer;
+    }
+    
+    public Pane getBackgoundLayer() {
+        return this.backgroundLayer;
+    }
+    
+    public Pane getObjectsLayer() {
+        return this.objectsLayer;
+    }
+    
+    public Pane getPlayerLayer() {
+        return this.playerLayer;
+    }
 }

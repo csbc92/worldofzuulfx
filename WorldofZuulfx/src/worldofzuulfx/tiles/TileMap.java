@@ -21,8 +21,6 @@ public class TileMap {
     private ArrayList<Tile> tileTerrain;
     private int[][] tileTerrainLayout;
     private int[] collideableTilesIDs;
-    private final static int mapWidth = 512;
-    public final static int mapHeight = 384;
     private final static int tileWidth = 32;
     private final static int tileHeight = 32;
 
@@ -62,10 +60,10 @@ public class TileMap {
                 tile.setY(yOffset);
                 tile.updateUI();
 
-                xOffset += 32;
+                xOffset += TileMap.tileWidth;
             }
             xOffset = 0;
-            yOffset += 32;
+            yOffset += TileMap.tileHeight;
         }
     }
 

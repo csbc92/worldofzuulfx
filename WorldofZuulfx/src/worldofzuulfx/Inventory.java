@@ -21,15 +21,15 @@ public class Inventory {
     private Pane layer;
     private ArrayList<Item> itemList;
 
-    public Inventory(Pane layer, int maxWeight, int capacity) {
+    public Inventory(int maxWeight, int capacity) {
         this.maxWeight = maxWeight;
         this.capacity = capacity;
-        this.layer = layer;
         this.itemList = new ArrayList<>();
     }
-
-    public Inventory(Pane layer) {
-        this(layer, 10000, 20);
+    
+    public Inventory(Pane layer, int maxWeight, int capacity) {
+        this(maxWeight, capacity);
+        this.layer = layer;
     }
 
     /**

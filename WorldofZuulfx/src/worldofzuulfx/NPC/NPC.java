@@ -1,27 +1,31 @@
 
 package worldofzuulfx.NPC;
 
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.Game;
 import worldofzuulfx.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Layers;
 import worldofzuulfx.Room;
+import worldofzuulfx.sprites.SpriteBase;
 
 /**
  * Class for Non Playable Characters like lectors and fellow students.
  * 
  * @author hjaltefromholtrindom
  */
-public abstract class NPC {
+public class NPC extends SpriteBase {
     private final String ID;
     private final String name;
     private final Inventory inventory;
     private Room currentRoom;
     
-    public NPC(String ID, String name){ // Constructor for NPC class
+    public NPC(String ID, String name, Image img){ // Constructor for NPC class
+        super(img);
         this.ID = ID;
         this.name = name;
-        this.inventory = new Inventory(Layers.spritesLayer,5000, 100);
+        this.inventory = new Inventory(5000, 100);
     }
     
     public String getID() {

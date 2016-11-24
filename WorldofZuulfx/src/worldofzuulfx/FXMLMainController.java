@@ -88,12 +88,9 @@ public class FXMLMainController implements Initializable {
     private void onClickNewGame(ActionEvent event) {
 
         butNewGame.setVisible(false);
-        Layers.backgroundLayer = pBackground;
-        Layers.spritesLayer = pSprites;
-        Layers.objectsLayer = pObjects;
-        Layers.inventorysLayer = pInventory;
+        Layers layers = new Layers(pBackground, pObjects, pSprites);
         addInputControls(pBackground.getScene());
-        game = new Game(); //En instans af spillet oprettes.
+        game = new Game(layers); //En instans af spillet oprettes.
     }
 
 }

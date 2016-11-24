@@ -5,6 +5,7 @@ import worldofzuulfx.Player;
 import worldofzuulfx.Room;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.image.Image;
 import worldofzuulfx.Game;
 import worldofzuulfx.Quest.Quest;
 
@@ -16,13 +17,13 @@ public class PartyGuy extends NPC{
     int[] partyRNG = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     private int random;
     
-    public PartyGuy (String ID, String name){
-        super(ID, name);
+    public PartyGuy (String ID, String name, Image img){
+        super(ID, name, img);
     }
     /**
     * teleports the player to the designated room
     */
-    public void partyTime(Player with,Room room, ArrayList<Room> rooms, HashMap<String, Quest> q){
+    public void partyTime(Player with, Room room, ArrayList<Room> rooms, HashMap<String, Quest> q){
         if(this.getCurrentRoom() == with.getCurrentRoom()){
             with.navigateTo(room);
         }

@@ -7,6 +7,7 @@ package worldofzuulfx;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.layout.Pane;
 import worldofzuulfx.tiles.Tile;
 
 /**
@@ -19,12 +20,12 @@ public class RoomFactory {
         
     }
     
-    public static ArrayList<Room> createRooms(HashMap<Integer, Tile> tiles) {
+    public static ArrayList<Room> createRooms(HashMap<Integer, Tile> tiles, Pane backgroundLayer, Pane objectLayer) {
         Room outside, exam, campus, downunder, bookstore, hutten, canteen, knoldene, u163, u170, u180; // Varibler af typen Room
 
         ArrayList<Room> rooms = new ArrayList<>();
 
-        outside = new Room("outside", "outside", Layers.backgroundLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 214, 12, 0},
+        outside = new Room("outside", "outside", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 214, 12, 0},
         {0, 12, 13, 13, 13, 13, 13, 13, 13, 215, 12, 0},
         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
@@ -38,7 +39,7 @@ public class RoomFactory {
         {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0}
         });
 
-        exam = new Room("exam", "exam", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        exam = new Room("exam", "exam", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -51,7 +52,7 @@ public class RoomFactory {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
 
-        campus = new Room("campus", "campus", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        campus = new Room("campus", "campus", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -63,7 +64,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        downunder = new Room("downunder", "downunder", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        downunder = new Room("downunder", "downunder", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -75,7 +76,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        bookstore = new Room("bookstore", "bookstore", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        bookstore = new Room("bookstore", "bookstore", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 49, 57, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -87,7 +88,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        hutten = new Room("hutten", "hutten", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        hutten = new Room("hutten", "hutten", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -99,7 +100,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        canteen = new Room("Canteen", "Canteen", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        canteen = new Room("Canteen", "Canteen", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -111,7 +112,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        knoldene = new Room("knoldene", "knoldene", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        knoldene = new Room("knoldene", "knoldene", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 49, 57, 13, 117, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -123,7 +124,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        u163 = new Room("u163", "u163", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        u163 = new Room("u163", "u163", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 117, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -135,7 +136,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        u170 = new Room("u170", "u170", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        u170 = new Room("u170", "u170", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 13, 13, 13, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
@@ -147,7 +148,7 @@ public class RoomFactory {
         {0, 7, 15, 15, 15, 15, 15, 15, 23, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         });
-        u180 = new Room("u180", "u180", Layers.backgroundLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
+        u180 = new Room("u180", "u180", backgroundLayer, objectLayer, tiles, new int[][]{{0, 0, 0, 0, 0, 0, 0, 116, 0, 0},
         {0, 5, 17, 49, 57, 13, 13, 117, 21, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
         {0, 6, 14, 14, 14, 14, 14, 14, 22, 0},
