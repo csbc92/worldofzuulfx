@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import javafx.scene.layout.Pane;
+import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.tiles.Tile;
@@ -20,7 +21,7 @@ public class Room {
     private String description;
     private String ID;
     private boolean Locked;
-    private HashMap<String, Room> exits;
+    private HashMap<String, NavigateEvent> exits;
     private Inventory roomInventory;
     private ArrayList<NPC> npcList;
     private Pane background;
@@ -42,9 +43,10 @@ public class Room {
         tileMap = new TileMap(this.tileLayout, tiles);
     }
 
-    public void setExit(String direction, Room neighbor) {
+    public void setExit(String pos, Room room, Tile tile ) {
         // Insert key and value into HashMap.
-        exits.put(direction, neighbor);
+  //      exits.put(pos, event);
+        tileMap.getTile(pos).setTeleport(room, tile.getX(),tile.getY());
     }
 
     public String getShortDescription() {
@@ -68,9 +70,9 @@ public class Room {
         return returnString;
     }
 
-    public Room getExit(String direction) {
+    public NavigateEvent getExit(String pos) {
         // Get neighbor room
-        return getExitsList().get(direction);
+        return getExitsList().get(pos);
     }
 
     public void addNPC(NPC p) {
@@ -116,7 +118,7 @@ public class Room {
     /**
      * @return the exits
      */
-    public HashMap<String, Room> getExitsList() {
+    public HashMap<String, NavigateEvent> getExitsList() {
         return new HashMap<>(exits);
     }
 
@@ -147,8 +149,7 @@ public class Room {
             item.setLayer(Layers.objectsLayer);
             item.addToLayer();
             item.updateUI();
-        }
-        
+        }   
     }
 
     /**

@@ -45,7 +45,7 @@ public class Player extends SpriteBase implements BarValueListener {
         hp = new Bar(0, 3, 3);
         drunk = false;
 
-        inventory = new Inventory(Layers.spritesLayer,5000, 15);
+        inventory = new Inventory(Layers.spritesLayer, 5000, 15);
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
@@ -60,8 +60,8 @@ public class Player extends SpriteBase implements BarValueListener {
     public int getEnergy() {
         return energy.getValue();
     }
-    
-    public Bar getEnergyBar(){
+
+    public Bar getEnergyBar() {
         return energy;
     }
 
@@ -197,8 +197,7 @@ public class Player extends SpriteBase implements BarValueListener {
 
         // Decrease the players energy each time he navigates between rooms.
         energy.setValue(energy.getValue() - 2);
-        
-        
+
         notifyChangeRoomListeners(oldRoom, currentRoom);
     }
 
@@ -379,7 +378,7 @@ public class Player extends SpriteBase implements BarValueListener {
     public void setDrunk() {
         if (alcoCounter == alcoTolerance) {
             this.drunk = true;
-        } else{
+        } else {
             this.drunk = false;
         }
     }
@@ -401,11 +400,10 @@ public class Player extends SpriteBase implements BarValueListener {
     public boolean isDrunk() {
         return this.drunk;
     }
-    
+
 //     public SpriteBase getSprite() {
 //        return this.sprite;
 //    }
-
     /**
      * Checks if the player reached minimum energy after energy change, or if
      * player reached it's alcoTolerance.
@@ -418,7 +416,7 @@ public class Player extends SpriteBase implements BarValueListener {
             // TODO - Håndter blackout!
             this.blackout(Main.getGame().getRoomHandler().getRooms(false));
             ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
-            
+
             if (hp.getValue() > 0) {
                 bar.setValue(bar.getMax());
                 hp.setValue(hp.getValue() - 1);
@@ -431,8 +429,9 @@ public class Player extends SpriteBase implements BarValueListener {
             }
         }
     }
+
     @Override
-    public void updateUI(){
+    public void updateUI() {
         super.updateUI();
         getImageView().relocate(getBounds().getX(), getBounds().getY() - 16);
     }

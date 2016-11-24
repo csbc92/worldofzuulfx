@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Rectangle;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.NavigateListener;
 
@@ -34,23 +35,19 @@ public class Game implements NavigateListener {
     private TileMap tileMap;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-   
+
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
 
-    private double nextPosX;
-    private double nextPosY;
-
-    public Game() // Constructor - ingen argumenter
-    {
+    public Game() {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
         tiles = tLoader.getTiles();
 
         roomHandler = new RoomHandler();
         roomHandler.setRooms(RoomFactory.createRooms(tiles));
-        
+
         questInventory = new QuestInventory();
-        
+
         player = new Player("Player-name", Layers.spritesLayer, new Image("http://i.imgur.com/zLwFeje.png"),
                 Layers.backgroundLayer.getLayoutX() + 65.0, Layers.backgroundLayer.getLayoutY() + 65.0);
         player.setCanCollide(true);
@@ -59,9 +56,7 @@ public class Game implements NavigateListener {
         player.getBounds().setHeight(14);
         player.getBounds().setWidth(30);
         player.addNavigateListener(this);
-        nextPosX = player.getBounds().getX();
-        nextPosY = player.getBounds().getY();
-        
+
         //TODO
         initNPCs();
         questInventory.initQuests(roomHandler, player);
@@ -105,32 +100,42 @@ public class Game implements NavigateListener {
         for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
 
             if (tile.getCanCollide()) {
-                if (tile.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
+                if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
-                    setNextPosX(player.getX());
-                    setNextPosY(player.getY());
+                    
+                    if (tile.canTeleport()) {
+
+                        player.navigateTo(tile.getNextRoom());
+                        player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() +1);
+                    }
+                    
+                    player.setNextPosX(player.getX());
+                    player.setNextPosY(player.getY());
                     return;
                 }
             }
         }
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
-                if (item.getBounds().getBoundsInLocal().intersects(nextPosX, nextPosY, player.getBounds().getWidth(), player.getBounds().getHeight())) {
+                if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
-                    setNextPosX(player.getX());
-                    setNextPosY(player.getY());
+                    if (item.canTeleport()) {
+                        player.navigateTo(item.getNextRoom());
+                    } else {
+                        player.setNextPosX(player.getX());
+                        player.setNextPosY(player.getY());
+                    }
                     return;
                 }
             }
         }
 
-        player.move(nextPosX, nextPosY);
+        player.move(player.getNextPosX(), player.getNextPosY());
     }
 
     public void cleanupSprites() {
 
     }
-    
 
     private void initPartyGuy() {
         partyguy = new PartyGuy("PartyGuy", "Den festlige ven");
@@ -287,8 +292,9 @@ public class Game implements NavigateListener {
         }
 
         String direction = command.getSecondWord();
-
-        Room nextRoom = getPlayer().getCurrentRoom().getExit(direction);
+        // TODO
+        Room nextRoom = null;
+        //getPlayer().getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
             // Hvis der er en ingen dør
@@ -434,19 +440,5 @@ public class Game implements NavigateListener {
      */
     public QuestInventory getQuestInventory() {
         return questInventory;
-    }
-
-    /**
-     * @param nextPosX the nextPosX to set
-     */
-    public void setNextPosX(double nextPosX) {
-        this.nextPosX = nextPosX;
-    }
-
-    /**
-     * @param nextPosY the nextPosY to set
-     */
-    public void setNextPosY(double nextPosY) {
-        this.nextPosY = nextPosY;
     }
 }

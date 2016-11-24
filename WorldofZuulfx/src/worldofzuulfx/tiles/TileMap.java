@@ -30,42 +30,18 @@ public class TileMap {
         this.tileTerrainLayout = tileTerrainLayout;
         this.tileSet = new HashMap<>(tileSet);
         this.tileTerrain = new ArrayList<>();
-        this.collideableTilesIDs = new int[] { 0, 12, 13, 214 };
+        this.collideableTilesIDs = new int[]{0, 12, 13, 214};
+        load();
     }
 
     public void draw(Pane pane) {
 
-        int xOffset = 0;
-        int yOffset = 0;
         pane.getChildren().clear();
-        for (int row = 0; row < tileTerrainLayout.length; row++) {
-            for (int column = 0; column < tileTerrainLayout[row].length; column++) {
+        for (Tile tile : tileTerrain) {
+            tile.setLayer(pane);
+            pane.getChildren().add(tile.getImageView());
+            tile.updateUI();
 
-                int tileId = tileTerrainLayout[row][column];
-                Tile tile = this.tileSet.get(tileId).clone();
-                tile.setCanCollide(false);
-                
-                // Set collision
-                for (int i = 0; i < this.collideableTilesIDs.length; i++) {
-                    if (tile.getID() == this.collideableTilesIDs[i]) {
-                        tile.setCanCollide(true);
-                    }
-                }
-                
-                tile.setLayer(pane);
-
-                tileTerrain.add(tile);
-
-                // This line draws the tile on the pane
-                pane.getChildren().add(tile.getImageView());
-                tile.setX(xOffset);
-                tile.setY(yOffset);
-                tile.updateUI();
-
-                xOffset += 32;
-            }
-            xOffset = 0;
-            yOffset += 32;
         }
     }
 
@@ -74,6 +50,48 @@ public class TileMap {
      */
     public ArrayList<Tile> getTileTerrain() {
         return tileTerrain;
+    }
+
+    private void load() {
+        int xOffset = 0;
+        int yOffset = 0;
+        for (int row = 0; row < tileTerrainLayout.length; row++) {
+            for (int column = 0; column < tileTerrainLayout[row].length; column++) {
+
+                int tileId = tileTerrainLayout[row][column];
+                Tile tile = this.tileSet.get(tileId).clone();
+                tile.setCanCollide(false);
+
+                tile.setPos(column, row);
+
+                tileTerrain.add(tile);
+
+                // This line draws the tile on the pane
+                tile.setX(xOffset);
+                tile.setY(yOffset);
+
+                xOffset += tileWidth;
+            }
+            xOffset = 0;
+            yOffset += tileHeight;
+        }
+        // Set collision
+        for (Tile tile : tileTerrain) {
+            for (int i = 0; i < this.collideableTilesIDs.length; i++) {
+                if (tile.getID() == this.collideableTilesIDs[i]) {
+                    tile.setCanCollide(true);
+                }
+            }
+        }
+    }
+
+    public Tile getTile(String pos) {
+        for (Tile tile : tileTerrain) {
+            if (tile.getPos().equals(pos)) {
+                return tile;
+            }
+        }
+        return null;
     }
 
 }
