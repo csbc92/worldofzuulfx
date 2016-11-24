@@ -25,6 +25,7 @@ public class NPC extends SpriteBase {
         super(img);
         this.ID = ID;
         this.name = name;
+        this.setCanCollide(true);
         this.inventory = new Inventory(5000, 100);
     }
     

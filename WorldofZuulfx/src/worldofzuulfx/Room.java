@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import javafx.scene.layout.Pane;
+import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.tiles.Tile;
@@ -42,9 +43,10 @@ public class Room {
         this.groundTiles = new TileMap(groundLayout, tiles);
     }
 
-    public void setExit(String direction, Room neighbor) {
+    public void setExit(String pos, Room room, Tile tile ) {
         // Insert key and value into HashMap.
-        exits.put(direction, neighbor);
+  //      exits.put(pos, event);
+        groundTiles.getTile(pos).setTeleport(room, tile.getX(),tile.getY());
     }
 
     public String getShortDescription() {
@@ -68,9 +70,9 @@ public class Room {
         return returnString;
     }
 
-    public Room getExit(String direction) {
+    public Room getExit(String pos) {
         // Get neighbor room
-        return getExitsList().get(direction);
+        return getExitsList().get(pos);
     }
 
     public void addNPC(NPC p) {
@@ -144,6 +146,8 @@ public class Room {
     public void draw() {
         groundTiles.draw(groundLayer);
         
+        // Clear the object layer before drawing new objects.
+        objectLayer.getChildren().clear();
         // Draw Items in the room.
         for (Item item : roomInventory.getItemList()) {
             item.setLayer(objectLayer);

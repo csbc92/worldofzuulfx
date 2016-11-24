@@ -12,6 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import worldofzuulfx.Events.NavigateEvent;
+import worldofzuulfx.Room;
 
 /**
  *
@@ -30,6 +32,15 @@ public abstract class SpriteBase {
 
     private boolean removable = false;
     private boolean canCollide = false;
+    private boolean canTeleport = false;
+
+    private Room nextRoom;
+    private double nextPosX;
+    private double nextPosY;
+    
+    private double nextTelePosX;
+    private double nextTelePosY;
+    
 
     private double w;
     private double h;
@@ -70,7 +81,10 @@ public abstract class SpriteBase {
         this.imageView.relocate(x, y);
         this.actions = new HashMap<>();
         bounds = new Rectangle(x, y, this.w, this.h);
-        bounds.setFill(Color.TRANSPARENT);
+        bounds.setFill(Color.RED);
+        nextPosX = getBounds().getX();
+        nextPosY = getBounds().getY();
+
         resetActions();
         addToLayer();
     }
@@ -148,11 +162,10 @@ public abstract class SpriteBase {
         if (!canMove) {
             return;
         }
-            this.getBounds().setX(x);
-            this.getBounds().setY(y);
+        // Important to add 1 pixel. Without it the player can not collides with other objects.
+        this.getBounds().setX(x);
+        this.getBounds().setY(y);
     }
-
-   
 
     public void updateUI() {
 
@@ -213,7 +226,7 @@ public abstract class SpriteBase {
 //                i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
 //                l = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
 
-                // Player either hits a tile with its top or bottom
+        // Player either hits a tile with its top or bottom
 //                if (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()) > 0
 //                        && (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()))/2 < 35) {
 //                    // Top
@@ -254,7 +267,6 @@ public abstract class SpriteBase {
 //                    actions.put(spriteActions.RIGHT, false);
 //                    System.out.println("Right");
 //                }
-
         return collides;
     }
 
@@ -276,7 +288,7 @@ public abstract class SpriteBase {
      * @return the imageView
      */
     public ImageView getImageView() {
-        
+
         return imageView;
     }
 
@@ -286,7 +298,7 @@ public abstract class SpriteBase {
     public void setCanCollide(boolean canCollide) {
         this.canCollide = canCollide;
     }
-    
+
     public boolean getCanCollide() {
         return this.canCollide;
     }
@@ -302,6 +314,90 @@ public abstract class SpriteBase {
      */
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    /**
+     * @return the canTeleport
+     */
+    public boolean canTeleport() {
+        return canTeleport;
+    }
+
+    /**
+     * @param canTeleport the canTeleport to set
+     */
+    public void setCanTeleport(boolean canTeleport) {
+        this.canTeleport = canTeleport;
+    }
+
+    public void setTeleport(Room room, double x, double y) {
+        nextRoom = room;
+        nextTelePosX = x;
+        nextTelePosY = y;
+        canTeleport = true;
+    }
+
+    /**
+     * @return the nextRoom
+     */
+    public Room getNextRoom() {
+        return nextRoom;
+    }
+
+    /**
+     * @param nextPosX the nextPosX to set
+     */
+    public void setNextPosX(double nextPosX) {
+        this.nextPosX = nextPosX;
+    }
+
+    /**
+     * @param nextPosY the nextPosY to set
+     */
+    public void setNextPosY(double nextPosY) {
+        this.nextPosY = nextPosY;
+    }
+
+    /**
+     * @return the nextPosY
+     */
+    public double getNextPosY() {
+        return nextPosY;
+    }
+
+    /**
+     * @return the nextPosX
+     */
+    public double getNextPosX() {
+        return nextPosX;
+    }
+
+    /**
+     * @return the nextTelePosX
+     */
+    public double getNextTelePosX() {
+        return nextTelePosX;
+    }
+
+    /**
+     * @param nextTelePosX the nextTelePosX to set
+     */
+    public void setNextTelePosX(double nextTelePosX) {
+        this.nextTelePosX = nextTelePosX;
+    }
+
+    /**
+     * @return the nextTelePosY
+     */
+    public double getNextTelePosY() {
+        return nextTelePosY;
+    }
+
+    /**
+     * @param nextTelePosY the nextTelePosY to set
+     */
+    public void setNextTelePosY(double nextTelePosY) {
+        this.nextTelePosY = nextTelePosY;
     }
 
     public enum spriteActions {

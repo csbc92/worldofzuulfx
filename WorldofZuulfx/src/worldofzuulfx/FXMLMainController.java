@@ -59,18 +59,18 @@ public class FXMLMainController implements Initializable {
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.RIGHT) {
-                game.setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
+                game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
             }
             if (key.getCode() == KeyCode.LEFT) {
-                game.setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
+                game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
 
             }
             if (key.getCode() == KeyCode.UP) {
-                game.setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
+                game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
 
             }
             if (key.getCode() == KeyCode.DOWN) {
-                game.setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
+                game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
             }
 
         });
