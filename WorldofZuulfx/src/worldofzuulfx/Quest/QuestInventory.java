@@ -62,6 +62,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
             // Navigate the player out of the exam room
             Room campus = roomHandler.getRoom("Campus");
+            // TODO
             player.navigateSilentlyTo(campus);
             roomHandler.getRoom("Exam").setLocked(true); // Lock the exam room again
 

@@ -300,6 +300,7 @@ public class Player extends SpriteBase implements BarValueListener {
                 listener.navigated(new NavigateEvent(oldRoom, newRoom, this));
             }
         }
+        System.out.println(newRoom.getID());
     }
 
     /**
