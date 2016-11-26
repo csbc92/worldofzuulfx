@@ -23,6 +23,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import worldofzuulfx.Items.ItemFactory;
 
 /**
  *
@@ -77,6 +78,25 @@ public class FXMLMainController implements Initializable {
             if (key.getCode() == KeyCode.DOWN) {
                 game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
             }
+            
+            if (key.getCode() == KeyCode.A) {
+                game.getPlayer().getInventory().nextItem();
+                game.getPlayer().getInventory().draw(false);
+            }
+            if (key.getCode() == KeyCode.Z) {
+                game.getPlayer().getInventory().previousItem();
+                game.getPlayer().getInventory().draw(false);
+            }
+            
+            if (key.getCode() == KeyCode.S) {
+                game.getPlayer().pickupItem(ItemFactory.makeBeer());
+                
+            }
+             if (key.getCode() == KeyCode.D) {
+                game.getPlayer().useItem(item);
+                
+            }
+           
 
         });
     }

@@ -51,7 +51,7 @@ public class Game implements NavigateListener {
         player.getBounds().setHeight(14);
         player.getBounds().setWidth(30);
         player.addNavigateListener(this);
-
+        player.getInventory().setLayer(layers.getInventoryLayer());
         //TODO
         initNPCs();
         questInventory.initQuests(roomHandler, player);
@@ -59,11 +59,6 @@ public class Game implements NavigateListener {
         gameLoop();
 
         player.navigateTo(roomHandler.getRoom("outside"));
-        player.getInventory().addItem(ItemFactory.makeBeer());
-        player.getInventory().addItem(ItemFactory.makeBeer());
-        player.getInventory().addItem(ItemFactory.makeBeer());
-        player.getInventory().setLayer(layers.getInventoryLayer());
-        player.getInventory().draw();
         play();
     }
 
