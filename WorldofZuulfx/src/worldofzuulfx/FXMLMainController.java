@@ -93,7 +93,7 @@ public class FXMLMainController implements Initializable {
                 
             }
              if (key.getCode() == KeyCode.D) {
-                game.getPlayer().useItem(item);
+                game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
                 
             }
            

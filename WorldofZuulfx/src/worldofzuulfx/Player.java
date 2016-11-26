@@ -134,8 +134,6 @@ public class Player extends SpriteBase implements BarValueListener {
         if (this.inventory.contains(item.getClass())) {
             item.use(this);
         }
-        //TODO
-        Main.getGame().showInfo();
     }
 
     /**

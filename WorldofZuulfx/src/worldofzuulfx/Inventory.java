@@ -27,7 +27,7 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
     private Pane layer;
     
     private ArrayList<Item> itemList;
-    private Item selected;
+    private Item selectedItem;
     private Rectangle selectionRect;
     
     public Inventory(int maxWeight, int capacity) {
@@ -165,9 +165,9 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
                 }
             }
         }
-        if (selected != null) {
+        if (getSelectedItem() != null) {
             getLayer().getChildren().remove(selectionRect);
-            selectionRect = new Rectangle(selected.getX(), selected.getY(), selected.getHeight(), selected.getWidth());
+            selectionRect = new Rectangle(getSelectedItem().getX(), getSelectedItem().getY(), getSelectedItem().getHeight(), getSelectedItem().getWidth());
             selectionRect.setFill(Color.TRANSPARENT);
             selectionRect.setStroke(Color.WHITESMOKE);
             selectionRect.setStrokeWidth(2);
@@ -176,12 +176,12 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
     }
     
     public void selectItem(Item i) {
-        selected = i;
+        selectedItem = i;
     }
     
     public void nextItem() {
-        if (selected != null) {
-            int i = itemList.indexOf(selected) + 1;
+        if (getSelectedItem() != null) {
+            int i = itemList.indexOf(getSelectedItem()) + 1;
             if (i < itemList.size()) {
                 selectItem(itemList.get(i));
             } else {
@@ -191,8 +191,8 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
     }
     
     public void previousItem() {
-        if (selected != null) {
-            int i = itemList.indexOf(selected) - 1;
+        if (getSelectedItem() != null) {
+            int i = itemList.indexOf(getSelectedItem()) - 1;
             if (i > -1) {
                 selectItem(itemList.get(i));
             } else {
@@ -218,20 +218,27 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
     @Override
     public void itemUsed(ItemUseEvent event) {
         if (itemList.isEmpty()) {
-            selected = null;
+            selectedItem = null;
         } else {
-            selected = itemList.get(0);
+            selectedItem = itemList.get(0);
         }
         draw(true);
     }
     
     @Override
     public void itemPickedUp(ItemPickupEvent event) {
-        if (selected == null) {
-            selected = event.getItem();
+        if (getSelectedItem() == null) {
+            selectedItem = event.getItem();
         }
         draw(true);
         
+    }
+
+    /**
+     * @return the selectedItem
+     */
+    public Item getSelectedItem() {
+        return selectedItem;
     }
     
 }
