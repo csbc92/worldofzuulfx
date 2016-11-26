@@ -25,6 +25,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private Bar hp;
     private boolean drunk;
     private Inventory inventory;
+    // TODO skal dette flyttes ind i QuestInventory, så alt er samlet et sted?
     private Quest activeQuest;
     private ArrayList<Quest> inactiveQuests;
     private Room currentRoom;
@@ -44,7 +45,7 @@ public class Player extends SpriteBase implements BarValueListener {
         energy.addBarValueListener(this);
         hp = new Bar(0, 3, 3);
         drunk = false;
-        inventory = new Inventory(5000, 15);
+        inventory = new Inventory(5000, 6);
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();

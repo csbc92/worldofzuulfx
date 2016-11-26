@@ -26,7 +26,7 @@ public class Inventory {
         this.capacity = capacity;
         this.itemList = new ArrayList<>();
     }
-    
+
     public Inventory(Pane layer, int maxWeight, int capacity) {
         this(maxWeight, capacity);
         this.layer = layer;
@@ -141,6 +141,33 @@ public class Inventory {
             //TODO: Handle nullpointer
         }
         return null;
+    }
+
+    public void draw() {
+        int i = 0;
+        if (getLayer() != null) {
+            getLayer().getChildren().clear();
+            for (Item item : itemList) {
+                item.move(i*50 + 20, 0);
+                item.updateUI();
+                getLayer().getChildren().add(item.getImageView());
+                i++;   
+            }
+        }
+    }
+
+    /**
+     * @return the layer
+     */
+    public Pane getLayer() {
+        return layer;
+    }
+
+    /**
+     * @param layer the layer to set
+     */
+    public void setLayer(Pane layer) {
+        this.layer = layer;
     }
 
 }

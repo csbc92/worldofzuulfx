@@ -6,22 +6,11 @@
 package worldofzuulfx;
 
 
-import java.util.ArrayList;
-
-import java.util.HashMap;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import worldofzuulfx.sprites.SpriteBase.spriteActions;
-import worldofzuulfx.tiles.Tile;
-import worldofzuulfx.tiles.TileLoader;
-import worldofzuulfx.tiles.TileMap;
 
 /**
  *

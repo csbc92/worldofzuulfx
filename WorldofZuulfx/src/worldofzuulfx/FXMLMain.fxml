@@ -9,27 +9,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
+<GridPane fx:id="gpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="434.0" minHeight="10.0" prefHeight="397.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="184.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="466.0" minHeight="10.0" prefHeight="464.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane fx:id="apConsole" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <AnchorPane fx:id="apConsole" prefHeight="178.0" prefWidth="694.0" GridPane.rowIndex="1">
          <children>
-            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="18.0" layoutY="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" />
+            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="19.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" />
          </children>
       </AnchorPane>
       <Pane prefHeight="391.0" prefWidth="454.0">
          <children>
             <Pane fx:id="pBackground" prefHeight="400.0" prefWidth="454.0" />
-            <Pane fx:id="pObjects" prefHeight="200.0" prefWidth="200.0" />
-            <Pane fx:id="pSprites" layoutX="-1.0" layoutY="2.0" prefHeight="400.0" prefWidth="455.0" />
-            <Button fx:id="butNewGame" layoutX="271.0" layoutY="138.0" mnemonicParsing="false" onAction="#onClickNewGame" prefHeight="98.0" prefWidth="156.0" text="New Game" />
-            <Pane fx:id="pInventory" layoutX="456.0" layoutY="2.0" prefHeight="387.0" prefWidth="235.0" />
+            <Pane fx:id="pObjects" prefHeight="396.0" prefWidth="454.0" />
+            <Pane fx:id="pSprites" layoutX="-1.0" layoutY="2.0" prefHeight="400.0" prefWidth="454.0" />
+            <Pane fx:id="pInventory" layoutX="14.0" layoutY="402.0" prefHeight="55.0" prefWidth="448.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="pMenu" visible="false">
+         <children>
+            <Button fx:id="butNewGame" layoutX="269.0" layoutY="149.0" mnemonicParsing="false" onAction="#onClickNewGame" prefHeight="98.0" prefWidth="156.0" text="New Game" />
          </children>
       </Pane>
    </children>

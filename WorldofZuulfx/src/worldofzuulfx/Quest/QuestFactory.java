@@ -83,7 +83,8 @@ public class QuestFactory {
     /**
      * Creates a new quest that is completed when the NPC carries a certain
      * Item in the NPC's inventory.
-     * @param item The type of Item the player has to carry.
+     * @param ID The specific Item the NPC has to carry.
+     * @param npc The NPC who has to carry the item.
      * @param questDescription The description of the quest, e.g. Pick up a Coffee.
      * @param reward The reward of the quest.
      * @return Returns the Quest.

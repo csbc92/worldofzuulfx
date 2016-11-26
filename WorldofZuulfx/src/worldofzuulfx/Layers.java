@@ -16,11 +16,13 @@ public class Layers {
     private Pane backgroundLayer;
     private Pane objectsLayer;
     private Pane playerLayer;
+    private Pane inventoryLayer;
     
-    public Layers(Pane backgroundLayer, Pane objectsLayer, Pane playerLayer) {
+    public Layers(Pane backgroundLayer, Pane objectsLayer, Pane playerLayer, Pane inventoryLayer) {
         this.backgroundLayer = backgroundLayer;
         this.objectsLayer = objectsLayer;
         this.playerLayer = playerLayer;
+        this.inventoryLayer = inventoryLayer;
     }
     
     public Pane getBackgoundLayer() {
@@ -33,5 +35,12 @@ public class Layers {
     
     public Pane getPlayerLayer() {
         return this.playerLayer;
+    }
+
+    /**
+     * @return the inventoryLayer
+     */
+    public Pane getInventoryLayer() {
+        return inventoryLayer;
     }
 }

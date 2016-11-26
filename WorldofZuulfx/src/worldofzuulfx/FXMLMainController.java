@@ -10,14 +10,19 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -42,12 +47,16 @@ public class FXMLMainController implements Initializable {
     private Pane pObjects;
     @FXML
     private Pane pInventory;
+    @FXML
+    private Pane pMenu;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
         taConsol.setDisable(true);
+        pMenu.setVisible(true);
     }
 
     private void addInputControls(Scene scene) {
@@ -83,8 +92,12 @@ public class FXMLMainController implements Initializable {
     @FXML
     private void onClickNewGame(ActionEvent event) {
 
-        butNewGame.setVisible(false);
-        Layers layers = new Layers(pBackground, pObjects, pSprites);
+        pMenu.setVisible(false);
+        pBackground.setVisible(true);
+        pObjects.setVisible(true);
+        pSprites.setVisible(true);
+        
+        Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
         addInputControls(pBackground.getScene());
         game = new Game(layers); //En instans af spillet oprettes.
     }

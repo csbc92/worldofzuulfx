@@ -22,9 +22,7 @@ import worldofzuulfx.tiles.TileLoader;
 public class Game implements NavigateListener {
 
     private boolean finished;
-//    private QuestHandler questHandler;
     private PartyGuy partyguy;
-//    private HashMap<String, Quest> allGameQuests;
     private ArrayList<String> RPSCommands;
     private Player player;
     private RoomHandler roomHandler;
@@ -34,17 +32,16 @@ public class Game implements NavigateListener {
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
-    public Game(Layers layers)
-    {
+    public Game(Layers layers) {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
 
         roomHandler = new RoomHandler();
         roomHandler.setRooms(RoomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
-        
+
         questInventory = new QuestInventory();
-        
+
         player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
 
@@ -62,6 +59,11 @@ public class Game implements NavigateListener {
         gameLoop();
 
         player.navigateTo(roomHandler.getRoom("outside"));
+        player.getInventory().addItem(ItemFactory.makeBeer());
+        player.getInventory().addItem(ItemFactory.makeBeer());
+        player.getInventory().addItem(ItemFactory.makeBeer());
+        player.getInventory().setLayer(layers.getInventoryLayer());
+        player.getInventory().draw();
         play();
     }
 
@@ -98,13 +100,13 @@ public class Game implements NavigateListener {
             if (tile.getCanCollide()) {
                 if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
-                    
+
                     if (tile.canTeleport()) {
 
                         player.navigateTo(tile.getNextRoom());
-                        player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() +1);
+                        player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
                     }
-                    
+
                     player.setNextPosX(player.getX());
                     player.setNextPosY(player.getY());
                     return;
@@ -125,7 +127,7 @@ public class Game implements NavigateListener {
                 }
             }
         }
-        
+
         for (NPC npc : currentRoom.getNPCList()) {
             if (npc.getCanCollide()) {
                 if (npc.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {

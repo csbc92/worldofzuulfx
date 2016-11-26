@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 
 /**
  *
- * @author JV
+ * 
  */
 public final class ConsoleInfo {
 
@@ -23,11 +23,7 @@ public final class ConsoleInfo {
     }
 
     public static void setConsoleData(String data) {
-//        if (info.getValue().equals("")) {
-//            info.set( data + "\n");
-//        } else {
             info.set(info.get() + data + "\n");
- //       }
 
     }
 
