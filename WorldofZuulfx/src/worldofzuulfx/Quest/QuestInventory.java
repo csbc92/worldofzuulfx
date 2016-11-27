@@ -9,6 +9,7 @@ import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
 
 import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Items.Note;
 import worldofzuulfx.Layers;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.NPC.PartyGuy;
@@ -140,12 +141,39 @@ public class QuestInventory {
         returnToU163.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
                     + "\n\"Now that you have the book, the course can begin.\"";
-
+    
             ConsoleInfo.setConsoleData(postCompleteMessage);
             //TODO Spawn af PartyGuy skal håndteres
            // initPartyGuy();
         });
-
+        
+        Note oopNote = ItemFactory.makeNote("OOP Lecture notes."
+                + "\nInt are whole numbers, such as 1, 2 and 3."
+                + "\nDouble which support dicimals such as 1,2 or 3,4"
+                + "\nBoolean can only be \'true\' or \'false\'"
+                + "\nString is use for text based information."
+                + "\nA Class always start with a capital letters like \'class Dog\'"
+                + "\nA class con contain some fields, contructors and some method declarations."
+                + "\nfields are where we link datatypes to a name such as legs = int;, in a class called Dog"
+                + "\nA Contructor is where you can create objects "
+                + "from a class blueprint, a contructor looks a lot like a method"
+                + "but they use the name of the class and got no return type"
+                + "\nexample"
+                + "\nPublic Dog (int legs, string race, string name, boolean vaccine){"
+                + "\n     Leg = legs;"
+                + "\n     Race = race;"
+                + "\n     Name = name;"
+                + "\n     det IsItHealthy = vaccine"
+                + "\n}");
+                
+        Quest oopLecture = qFactory.roomQuest("U163", "Participate in OOP lecture", new Reward(oopNote, 10));
+        oopLecture.setPostAction(() -> {
+            String postCompleteMessage = "You have now completed the OOPLecture"
+                    + "\nLook in your inventory for your notes";
+            
+            ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+       
         Quest u170Lecture = qFactory.roomQuest("U170", "Participate in lecture", null);
         u170Lecture.setPostAction(() -> {
             String postCompleteMessage = "Lone:"
@@ -173,7 +201,22 @@ public class QuestInventory {
                     + "\nThe lecture can now begin\"";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
-
+        
+        Note iseNote = ItemFactory.makeNote("The Waterfall model, a model with different phases where you follow a specific pattern, "
+                + "where each phase must be executed before moving on to the next"
+                + "\nSpiral model, a model that can be considered a linear model but it isn’t, "
+                + "you are going through all the phases repeated in a spiral motion, until you have the finished project"
+                + "The first step of a new project is to figure out the requirements and needs for the project, "
+                + "if your project is for a customer then he needs to be involved in this"
+                + "\n1: Listen to the requirement the customer asks for, it is important."
+                + "\n2: Give the customer advices, is there something you can add or is the idea already created."
+                + "\n3: Go thought the steps of each model");
+        Quest iseLecture = qFactory.roomQuest("U170", "Participate in ISE lecture", new Reward(iseNote, 10));
+        iseLecture.setPostAction(() -> {
+            String postCompleteMessage = "";
+            ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+        
         Quest u180Lecture = qFactory.roomQuest("U180", "Participate in lecture", null);
         u180Lecture.setPostAction(() -> {
             String postCompleteMessage = "Erik:"
@@ -191,7 +234,6 @@ public class QuestInventory {
             String postCompleteMessage = "Search for the COS Book";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
-
         });
 
         Quest returnToU180 = qFactory.roomQuest("u180", "Return to U180", null);
@@ -201,8 +243,37 @@ public class QuestInventory {
                     + "\nThe lecture can now begin\"";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
-
         });
+        
+        Note cosNote = ItemFactory.makeNote("Everyhing you do is 1's and 0's, also known as Binary."
+                + "\nA sequence of four 1's or 0's is also known as a bite - for example \'1101\'"
+                + "\nA byte is a sequence of two bites, so a sequence of 8 binary numbers like \'11011011\'"
+                + "you can also add or subtract in binary - for example:"
+                + "\nAddition:"
+                + "\n1101 -> in decimal = 9"
+                + "\n0011 -> in decimal = 3"
+                + "\n1100 -> in decimal = 12"
+                + "\nSubstation:"
+                + "\n1001 -> in decimal = 9"
+                + "\n0011 -> in decimal = 3"
+                + "\n0110 -> in decimal = 6"
+                + "\n Datamanipulation is when we do something to a set of data, "
+                + "can be moving it from one part of the memory to another."
+                + "\nWe have a set of instruction, also know as a Op-code."
+                + "\nOperand which will tell us how, where and what to do with a set of data."
+                + "\nAn example could be:"
+                + "\n156C: load register 5 iwth the bit pattern found in the memory cell at address 6C."
+                + "\nOr"
+                + "\n40A4 where we move the bit pattern found in register A and copy it to register 4)");
+        
+        Quest cosLecture = qFactory.roomQuest("u180", "Participate in COS lecture", new Reward(cosNote, 10));
+        cosLecture.setPostAction(() -> {
+            String postCompleteMessage = "";
+            
+            ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+        
+        
 
         // Give the player an initial quest
         player.setActiveQuest(goToCampusQ, true);
@@ -216,13 +287,16 @@ public class QuestInventory {
         deliverCoffeeQ.setChainQuest(leaveU163Q);
         leaveU163Q.setChainQuest(goToBookStoreQ);
         goToBookStoreQ.setChainQuest(returnToU163);
+        returnToU163.setChainQuest(oopLecture);
 
         // Chain the rest of the quests together in the game
         u170Lecture.setChainQuest(bookstoreIse);
         bookstoreIse.setChainQuest(returnToU170);
+        returnToU170.setChainQuest(iseLecture);
 
         u180Lecture.setChainQuest(bookstoreCos);
         bookstoreCos.setChainQuest(returnToU180);
+        returnToU180.setChainQuest(cosLecture);
 
         // Save a reference to the rest of the quests
         this.allGameQuests.put("goToCampusQ", goToCampusQ);
