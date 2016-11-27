@@ -94,12 +94,14 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
 
     public Boolean addItem(Item item) {
         // Cannot add an item that already exists
-        if (itemList.contains(item)) {
-            return false;
-        } //Check if inventory has space to a additional item and if the current weight exceeds maxWeight.
-        else if (itemList.size() != capacity && (item.getWeight() + this.currentWeight) < maxWeight) {
-            itemList.add(item);
-            return true;
+        if (item != null) {
+            if (itemList.contains(item)) {
+                return false;
+            } //Check if inventory has space to a additional item and if the current weight exceeds maxWeight.
+            else if (itemList.size() != capacity && (item.getWeight() + this.currentWeight) < maxWeight) {
+                itemList.add(item);
+                return true;
+            }
         }
         return false;
     }
@@ -196,19 +198,19 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
             }
             if (i instanceof CoffeeVoucher) {
                 if (player.getCurrentRoom().getID().equalsIgnoreCase("canteen")) {
-                    txt.append("Use the voucher");
+                    txt.append("Use the voucher " + "(" + ((CoffeeVoucher) i).getVoucherAmount()+")");
                 } else {
-                    txt.append("You can only the voucher in the canteen");
+                    txt.append("The voucher can only be used in the canteen");
                 }
             }
             if (i instanceof Note) {
                 txt.append("Look through your notes");
             }
             if (i instanceof Computer) {
-                txt.append("Use the computer ");
+                txt.append("Use the computer");
             }
             if (i instanceof Book) {
-                txt.append("Use the book ");
+                txt.append("Use the book");
             }
             ConsoleInfo.setItemData(txt.toString());
         } else {

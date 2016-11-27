@@ -220,6 +220,31 @@ public class RoomFactory {
         item.updateUI();
         campus.getRoomInventory().addItem(item);
         
+         Item item2 = ItemFactory.makeComputer();
+        item2.move(64, 128);
+        item2.updateUI();
+        campus.getRoomInventory().addItem(item2);
+        
+        Item item3 = ItemFactory.makeBeer();
+        item3.move(128, 128);
+        item3.updateUI();
+        campus.getRoomInventory().addItem(item3);
+        
+         Item item4 = ItemFactory.makeBeer();
+        item4.move(128, 256);
+        item4.updateUI();
+        campus.getRoomInventory().addItem(item4);
+        
+         Item item5 = ItemFactory.makeBeer();
+        item5.move(256, 128);
+        item5.updateUI();
+        campus.getRoomInventory().addItem(item5);
+        
+        Item item6 = ItemFactory.makeCoffeeVoucher();
+        item6.move(256, 256);
+        item6.updateUI();
+        campus.getRoomInventory().addItem(item6);
+        
                 
         rooms.add(canteen);
         rooms.add(outside);

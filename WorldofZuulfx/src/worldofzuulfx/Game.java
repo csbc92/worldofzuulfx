@@ -90,6 +90,7 @@ public class Game implements NavigateListener, ItemPickupListener{
 
     public void updateSprites() {
         player.updateUI();
+        player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
     public void checkCollisions() {
@@ -148,7 +149,6 @@ public class Game implements NavigateListener, ItemPickupListener{
                     }
                     return;
                 }
-                //player.setNearNPC(null);
             }
         }
 
@@ -457,7 +457,9 @@ public class Game implements NavigateListener, ItemPickupListener{
     @Override
     public void itemPickedUp(ItemPickupEvent event) {
         Item item = event.getItem();
-        item.removeFromLayer();
+        if (item != null) {
+            item.removeFromLayer();
+        }    
     }
 
     /**

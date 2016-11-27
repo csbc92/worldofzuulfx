@@ -34,10 +34,9 @@ public class CoffeeVoucher extends Item {
      *
      * @return true if the voucher amount is greater than 0.
      */
-    public Boolean decrementAmount() {
+    public Boolean checkAmount() {
 
         if (voucherAmount > 0) {
-            voucherAmount--;
             return true;
         }
         return false;
@@ -46,14 +45,14 @@ public class CoffeeVoucher extends Item {
     @Override
     public void use(Player player) {
         if (player.getCurrentRoom().getID().equalsIgnoreCase("Canteen")) {
-            if (this.decrementAmount()) {
-                player.pickupItem(ItemFactory.makeBeer());
+            if (this.checkAmount()) {
+                if (player.getInventory().addItem(ItemFactory.makeCoffee())) {
+                 voucherAmount--;   
+                }         
             } else {
                 ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
                 player.getInventory().removeItem(this);
             }
-        } else {
-            ConsoleInfo.setConsoleData("The Coffee Voucher can be used in the canteen.");
         }
     }
 }
