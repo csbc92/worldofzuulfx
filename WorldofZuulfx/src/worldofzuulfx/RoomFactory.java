@@ -215,7 +215,12 @@ public class RoomFactory {
         u170.setExit("1106", knoldene, knoldene.getTileMap().getTile("0106"));
         u180.setExit("0006", knoldene, knoldene.getTileMap().getTile("1006"));
         
+        Item item = ItemFactory.makeBeer();
+        item.move(64, 64);
+        item.updateUI();
+        campus.getRoomInventory().addItem(item);
         
+                
         rooms.add(canteen);
         rooms.add(outside);
         rooms.add(exam);

@@ -71,17 +71,21 @@ public class FXMLMainController implements Initializable, BarValueListener{
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.RIGHT) {
+                game.getPlayer().setNearNPC(null);
                 game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
             }
             if (key.getCode() == KeyCode.LEFT) {
+                game.getPlayer().setNearNPC(null);
                 game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
 
             }
             if (key.getCode() == KeyCode.UP) {
+                game.getPlayer().setNearNPC(null);
                 game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
 
             }
             if (key.getCode() == KeyCode.DOWN) {
+                game.getPlayer().setNearNPC(null);
                 game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
             }
 
@@ -94,11 +98,11 @@ public class FXMLMainController implements Initializable, BarValueListener{
                 game.getPlayer().getInventory().draw(false);
             }
 
-            if (key.getCode() == KeyCode.S) {
-                game.getPlayer().pickupItem(ItemFactory.makeBeer());
+            if (key.getCode() == KeyCode.D) {
+                // TODO drop item in current room
 
             }
-            if (key.getCode() == KeyCode.D) {
+            if (key.getCode() == KeyCode.U) {
                 game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
 
             }

@@ -131,10 +131,11 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     public void useItem(Item item) {
-
-        if (this.inventory.contains(item.getClass())) {
-            item.use(this);
-            notifyItemUseListeners(item);
+        if (item != null) {
+            if (this.inventory.contains(item.getClass())) {
+                item.use(this);
+                notifyItemUseListeners(item);
+            }
         }
     }
 
@@ -157,9 +158,9 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Pick up the specified item from the player's current room
-     * and add it to the player's inventory. 
-     * The same item cannot be added multiple times.
+     * Pick up the specified item from the player's current room and add it to
+     * the player's inventory. The same item cannot be added multiple times.
+     *
      * @param item
      */
     public void pickupItem(Item item) {
