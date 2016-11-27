@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Room;
 
 /**
@@ -46,7 +44,6 @@ public abstract class SpriteBase {
     private double h;
 
     private boolean canMove = true;
-    private HashMap<spriteActions, Boolean> actions;
     private Rectangle bounds;
 
     /**
@@ -79,13 +76,12 @@ public abstract class SpriteBase {
         this.dy = 0;
         this.dr = 0;
         this.imageView.relocate(x, y);
-        this.actions = new HashMap<>();
+
         bounds = new Rectangle(x, y, this.w, this.h);
-        bounds.setFill(Color.RED);
+        bounds.setFill(Color.TRANSPARENT);
         nextPosX = getBounds().getX();
         nextPosY = getBounds().getY();
 
-        resetActions();
         addToLayer();
     }
 
@@ -303,12 +299,6 @@ public abstract class SpriteBase {
         return this.canCollide;
     }
 
-    public void resetActions() {
-        for (spriteActions action : spriteActions.values()) {
-            actions.put(action, true);
-        }
-    }
-
     /**
      * @return the bounds
      */
@@ -400,7 +390,4 @@ public abstract class SpriteBase {
         this.nextTelePosY = nextTelePosY;
     }
 
-    public enum spriteActions {
-        UP, DOWN, LEFT, RIGHT
-    }
 }

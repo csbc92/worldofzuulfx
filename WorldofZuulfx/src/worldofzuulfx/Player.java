@@ -7,12 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
+import worldofzuulfx.Events.ItemUseEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.BarValueListener;
 import worldofzuulfx.Interfaces.ItemDeliveredListener;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Interfaces.ItemPickupListener;
+import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Quest.Reward;
 import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.sprites.SpriteBase;
@@ -25,16 +27,19 @@ public class Player extends SpriteBase implements BarValueListener {
     private Bar hp;
     private boolean drunk;
     private Inventory inventory;
+    // TODO skal dette flyttes ind i QuestInventory, så alt er samlet et sted?
     private Quest activeQuest;
     private ArrayList<Quest> inactiveQuests;
     private Room currentRoom;
     private int alcoTolerance;
     private int alcoCounter;
+    private NPC nearNPC;
     private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
-    private ArrayList<Room> roomRandom;
+    private ArrayList<ItemUseListener> itemUseListeners;
     private ArrayList<NavigateListener> navigateListener;
+    private ArrayList<Room> roomRandom;
 
     public Player(String name, Pane layer, Image image, double posX, double posY) {
         super(layer, image, posX, posY);
@@ -44,12 +49,16 @@ public class Player extends SpriteBase implements BarValueListener {
         energy.addBarValueListener(this);
         hp = new Bar(0, 3, 3);
         drunk = false;
-        inventory = new Inventory(5000, 15);
+        inventory = new Inventory(5000, 6);
+        inventory.setPlayer(this);
+
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
+        itemUseListeners = new ArrayList<>();
         inactiveQuests = new ArrayList<>();
-        //sprite = new SpriteBase(layer, image, posX, posY) {};
+        addItemUseListener(inventory);
+        addItemPickupListener(inventory);
     }
 
     public int getECTS() {
@@ -125,9 +134,8 @@ public class Player extends SpriteBase implements BarValueListener {
 
         if (this.inventory.contains(item.getClass())) {
             item.use(this);
+            notifyItemUseListeners(item);
         }
-        //TODO
-        Main.getGame().showInfo();
     }
 
     /**
@@ -248,6 +256,17 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
+     * Subscribe to the event when a player uses an item.
+     *
+     * @param listener
+     */
+    public void addItemUseListener(ItemUseListener listener) {
+        if (!this.itemUseListeners.contains(listener)) {
+            this.itemUseListeners.add(listener);
+        }
+    }
+
+    /**
      * Unsubscribe to the event when a player picks up an Item.
      *
      * @param listener
@@ -255,6 +274,17 @@ public class Player extends SpriteBase implements BarValueListener {
     public void removeItemPickupListener(ItemPickupListener listener) {
         if (this.itemPickupListeners.contains(listener)) {
             this.itemPickupListeners.remove(listener);
+        }
+    }
+
+    /**
+     * Unsubscribe to the event when a player uses an item.
+     *
+     * @param listener
+     */
+    public void removeItemUseListener(ItemUseListener listener) {
+        if (this.itemUseListeners.contains(listener)) {
+            this.itemUseListeners.remove(listener);
         }
     }
 
@@ -304,17 +334,32 @@ public class Player extends SpriteBase implements BarValueListener {
                 listener.navigated(new NavigateEvent(oldRoom, newRoom, this));
             }
         }
+        System.out.println(newRoom.getID());
     }
 
     /**
      * Method used to notify ItemDeliveredListeners
      *
+     * @param receiver
      * @param item
      */
     public void notifyItemDeliveredListeners(NPC receiver, Item item) {
         if (this.itemDeliveredListeners != null) {
             for (ItemDeliveredListener listener : this.itemDeliveredListeners) {
                 listener.itemDelivered(new ItemDeliveredEvent(this, receiver, item));
+            }
+        }
+    }
+
+    /**
+     * Method used to notify ItemUseListeners
+     *
+     * @param item
+     */
+    public void notifyItemUseListeners(Item item) {
+        if (this.itemUseListeners != null) {
+            for (ItemUseListener listener : this.itemUseListeners) {
+                listener.itemUsed(new ItemUseEvent(item, this));
             }
         }
     }
@@ -437,5 +482,23 @@ public class Player extends SpriteBase implements BarValueListener {
     public void updateUI() {
         super.updateUI();
         getImageView().relocate(getBounds().getX(), getBounds().getY() - 16);
+    }
+
+    /**
+     * Get the NPC who is touched by the Player.
+     *
+     * @return the nearNPC
+     */
+    public NPC getNearNPC() {
+        return nearNPC;
+    }
+
+    /**
+     * Set the NPC who is touched by the Player.
+     *
+     * @param nearNPC the nearNPC to set
+     */
+    public void setNearNPC(NPC nearNPC) {
+        this.nearNPC = nearNPC;
     }
 }
