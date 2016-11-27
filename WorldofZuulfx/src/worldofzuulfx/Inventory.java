@@ -187,7 +187,6 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
         selectedItem = i;
         StringBuilder txt = new StringBuilder("");
         if (i != null) {
-            //TODO Hånter om man skal give Item til en NPC eller man Player skal bruge den.
             if (i instanceof Drink) {
                 if (player.getNearNPC() != null) {
                     txt.append("Give the " + i.getDescription() + " to " + player.getNearNPC().getName());

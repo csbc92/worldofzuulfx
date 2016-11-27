@@ -52,7 +52,7 @@ public class RockPaperScissors {
     public RockPaperScissorsMoves getPlayerMove() {
         ConsoleInfo.setConsoleData("Rock, Paper or Scissors");
         
-        //TODO
+        //TODO RPS
         String playerInput = "Get input";
 
         // Checks if the input is legit

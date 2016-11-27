@@ -21,7 +21,7 @@ import worldofzuulfx.Quest.QuestInventory;
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileLoader;
 
-public class Game implements NavigateListener, ItemPickupListener{
+public class Game implements NavigateListener, ItemPickupListener {
 
     private boolean finished;
     private PartyGuy partyguy;
@@ -57,7 +57,6 @@ public class Game implements NavigateListener, ItemPickupListener{
 
         player.getInventory().setLayer(layers.getInventoryLayer());
 
-        //TODO
         initNPCs();
         questInventory.initQuests(roomHandler, player);
 
@@ -115,12 +114,12 @@ public class Game implements NavigateListener, ItemPickupListener{
                 }
             }
         }
-        
+
         // Check item collision
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    
+
                     // Pick up the item
                     player.pickupItem(item);
                     // Reset the nextPos since a collision was detected
@@ -134,7 +133,7 @@ public class Game implements NavigateListener, ItemPickupListener{
                 }
             }
         }
-        
+
         // Check NPC collision
         for (NPC npc : currentRoom.getNPCList()) {
             if (npc.getCanCollide()) {
@@ -204,73 +203,6 @@ public class Game implements NavigateListener, ItemPickupListener{
         showInfo();
     }
 
-    private boolean processCommand(Command command) {
-        // Starter med at sætte variablen WantToQuit lig False. 
-        // På denne måde sikre vi os, at vi vil få en værdien False retur, hvis ingen af if-sætningerne er sande.
-        boolean wantToQuit = false;
-
-        // Dette er en midlertidig variable, da den kun bruges i IF-sætningerne. Dette gør, at det ikke er nødvendigt at benytte getCommandWord().
-        CommandWord commandWord = command.getCommandWord();
-        // Tjek om det er en ukendt command
-        if (null != commandWord) {
-            switch (commandWord) {
-                case UNKNOWN: {
-                    ConsoleInfo.setConsoleData("I don't know what you mean...");
-                    break;
-                }
-                case HELP: {
-                    printHelp();
-                    break;
-                }
-                case GO: {
-                    ConsoleInfo.clearData();
-                    goRoom(command);
-                    break;
-                }
-                case USE: {
-                    use(command);
-                    break;
-                }
-                case SEARCH: {
-                    search(command);
-                    break;
-                }
-                case TAKE: {
-                    take(command);
-                    break;
-                }
-                case QUEST: {
-                    Quest activeQuest = this.player.getActiveQuest();
-                    if (activeQuest != null) {
-                        ConsoleInfo.setConsoleData(activeQuest.toString());
-                    } else {
-                        ConsoleInfo.setConsoleData("You have no quests!");
-                    }
-                    break;
-                }
-                case INFO: {
-                    ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription());
-                    break;
-                }
-                case QUIT: {
-                    wantToQuit = quit(command);
-                    break;
-                }
-                case CHALLENGE: {
-                    challenge(command);
-                }
-            }
-        }
-        return wantToQuit;
-    }
-
-    private void printHelp() {
-        ConsoleInfo.setConsoleData("You are lost. You are alone. You wander");
-        ConsoleInfo.setConsoleData("around at the university.");
-        ConsoleInfo.setConsoleData("");
-        ConsoleInfo.setConsoleData("Your command words are:");
-    }
-
     /**
      * The command to start the minigame if the player is within downunder
      *
@@ -306,40 +238,6 @@ public class Game implements NavigateListener, ItemPickupListener{
         }
     }
 
-    private void goRoom(Command command) {
-        // Tjekker om der er to ord - f.eks. "go east"
-        if (!command.hasSecondWord()) {
-            ConsoleInfo.setConsoleData("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-        // TODO
-        Room nextRoom = null;
-        //getPlayer().getCurrentRoom().getExit(direction);
-
-        if (nextRoom == null) {
-            // Hvis der er en ingen dør
-            ConsoleInfo.setConsoleData("There is no door!");
-        } else if (!nextRoom.isLocked()) {
-            // Hvis der er en dør, så
-            getPlayer().navigateTo(nextRoom);
-            showInfo();
-            getPlayer().barValueChanged(getPlayer().getEnergyBar());
-            if (questInventory.getAllGameQuests().get("returnToU163").isCompleted()) {
-                if (getPlayer().getCurrentRoom() == getPartyGuy().getCurrentRoom()) {
-                    ConsoleInfo.clearData();
-                    ConsoleInfo.setConsoleData("You met your good ol' buddy ol' pal the Partyguy who took you to 'FredagsBaren' but where did he go?");
-                    getPartyGuy().partyTime(getPlayer(), getRoomHandler().getRoom("FredagsBar"), getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
-                    showInfo();
-                }
-            }
-        } else {
-            showInfo();
-            ConsoleInfo.setConsoleData("The door to this room is locked. Try another door.");
-        }
-    }
-
     public boolean quit(Command command) {
         // Dette tjekker om brugeren skriver to ord - f.eks. "quit game". Dette vil resultere i "Quit what?"
         // Hvis nej, så sendes en True retur.
@@ -350,70 +248,7 @@ public class Game implements NavigateListener, ItemPickupListener{
             return true;
         }
     }
-
-    private void use(Command command) {
-        String items;
-        String input;
-
-        if (!command.hasSecondWord()) {
-
-            ConsoleInfo.setConsoleData("Use one of the following items:");
-            items = Util.arrayToString(getPlayer().getInventory().getStringList());
-            ConsoleInfo.setConsoleData(items);
-            ConsoleInfo.setConsoleData(">");
-            input = "Get input";
-            //The For-each loop iterates through the items (e.g Drink   Øl   Coffee)
-            for (Item item : getPlayer().getInventory().getItemList()) {
-                // Then checks if the item's description equals the userInput.
-                if (item.getDescription().equalsIgnoreCase(input)) {
-                    getPlayer().useItem(item);
-                    return;
-                }
-            }
-        } else {
-            ConsoleInfo.setConsoleData("Just type 'use' - no need for a second word");
-        }
-
-    }
-
-    public void search(Command command) {
-        String itemString;
-        itemString = "";
-        ArrayList<Item> itemList;
-        itemList = getPlayer().getCurrentRoom().getRoomInventory().getItemList();
-        if (itemList.isEmpty()) {
-            ConsoleInfo.setConsoleData("   You found nothing in this room");
-            return;
-        }
-
-        try {
-            for (Item item : itemList) {
-                itemString += "  " + item.getDescription();
-            }
-            ConsoleInfo.setConsoleData(itemString);
-        } catch (NullPointerException e) {
-
-        }
-    }
-
-    public void take(Command command) {
-        Item item;
-        if (!command.hasSecondWord()) {
-            ConsoleInfo.setConsoleData("Take what?");
-            return;
-        }
-        try {
-            item = getPlayer().getCurrentRoom().getRoomInventory().find(command.getSecondWord());
-            if (item != null) {
-                getPlayer().pickupItem(item);
-                getPlayer().getCurrentRoom().getRoomInventory().removeItem(item);
-            } else {
-                ConsoleInfo.setConsoleData("");
-            }
-        } catch (NullPointerException e) {
-        }
-    }
-
+    
     public void showInfo() {
         // TODO skal muligvis slettes
         ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
@@ -453,13 +288,13 @@ public class Game implements NavigateListener, ItemPickupListener{
         event.getNewRoom().draw();
         ConsoleInfo.setConsoleData("Location: " + event.getNewRoom().getShortDescription());
     }
-    
+
     @Override
     public void itemPickedUp(ItemPickupEvent event) {
         Item item = event.getItem();
         if (item != null) {
             item.removeFromLayer();
-        }    
+        }
     }
 
     /**

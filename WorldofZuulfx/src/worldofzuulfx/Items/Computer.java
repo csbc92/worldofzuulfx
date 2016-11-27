@@ -22,7 +22,7 @@ public class Computer extends Item {
 
     @Override
     public void use(Player player) {
-        //TODO
+        //TODO Computer
        
         if (player.getNearNPC() == null) {
             // Deliver the item to NPC.  

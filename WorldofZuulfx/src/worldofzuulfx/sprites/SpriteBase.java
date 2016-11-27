@@ -188,8 +188,7 @@ public abstract class SpriteBase {
     public double getCenterY() {
         return getBounds().getY() + getBounds().getHeight() / 2;
     }
-
-    // TODO: per-pixel-collision
+    // TODO Slet CollidesWith
     public boolean collidesWith(SpriteBase otherSprite) {
         boolean collides = false;
 //        double i;

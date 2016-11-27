@@ -15,7 +15,7 @@ public class Book extends Item {
 
     @Override
     public void use(Player player) {
-        //TODO
+        //TODO Use book
        
         if (player.getNearNPC() == null) {
             // Deliver the item to NPC.  

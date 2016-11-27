@@ -30,9 +30,7 @@ public class RoomHandler {
 
     public ArrayList<Room> getRooms(Boolean lockedRooms) {
         ArrayList<Room> roomsToReturn = new ArrayList<>();
-        //TODO Kan checkes
         for (Room room : this.getRooms()) {
-
             if (room.isLocked() == lockedRooms) {
                 roomsToReturn.add(room);
             }

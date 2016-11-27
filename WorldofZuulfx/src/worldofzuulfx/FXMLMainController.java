@@ -59,7 +59,6 @@ public class FXMLMainController implements Initializable, BarValueListener{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         initializeConsole();
         gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());

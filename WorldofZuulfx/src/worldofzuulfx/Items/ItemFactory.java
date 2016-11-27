@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 public class ItemFactory {
 
     public ItemFactory() {
-
+        //TODO Skifte image på samtlige items.
     }
 
     public static Drink makeBeer() {
