@@ -149,14 +149,18 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Adds the specified item to the player's inventory. The same item cannot
-     * be added multiple times.
-     *
+     * Pick up the specified item from the player's current room
+     * and add it to the player's inventory. 
+     * The same item cannot be added multiple times.
      * @param item
      */
     public void pickupItem(Item item) {
-        if (this.inventory.addItem(item)) {
-            this.notifyItemPickupListeners(item);
+        Inventory roomInventory = this.getCurrentRoom().getRoomInventory();
+        if (roomInventory.contains(item.getID())) {
+            if (this.inventory.addItem(item)) {
+                roomInventory.removeItem(item);
+                this.notifyItemPickupListeners(item);
+            }
         }
     }
 
@@ -414,7 +418,7 @@ public class Player extends SpriteBase implements BarValueListener {
         if (bar.getValue() <= 0 || isDrunk() == true) {
             // TODO - Håndter blackout!
             this.blackout(Main.getGame().getRoomHandler().getRooms(false));
-            ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
+            //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
             if (hp.getValue() > 0) {
                 bar.setValue(bar.getMax());

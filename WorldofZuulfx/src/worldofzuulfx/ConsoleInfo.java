@@ -15,7 +15,7 @@ import javafx.beans.property.StringProperty;
 public final class ConsoleInfo {
 
     private static StringProperty info = new SimpleStringProperty();
-    // methods that set/format logData based on changes from your UI
+//    // methods that set/format logData based on changes from your UI
 
     // provide public access to the property
     public static StringProperty consoleProperty() {
@@ -23,11 +23,11 @@ public final class ConsoleInfo {
     }
 
     public static void setConsoleData(String data) {
-//        if (info.getValue().equals("")) {
-//            info.set( data + "\n");
-//        } else {
-            info.set(info.get() + data + "\n");
- //       }
+        //if (info.getValue().equals("")) {
+        //    info.set( data + "\n");
+        //} else {
+           info.set(info.get() + data + "\n");
+       //}
 
     }
 

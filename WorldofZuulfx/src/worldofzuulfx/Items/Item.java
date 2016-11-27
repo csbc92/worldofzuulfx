@@ -19,12 +19,13 @@ public abstract class Item extends SpriteBase{
     private int weight; 
     protected String description;
     private Boolean isLocked;
-    private String ID;
+    private String id;
 
 
-    public Item( Image image, String ID, String description, int weight) {
+    public Item(Image image, String id, String description, int weight) {
         super(image);
         super.setCanCollide(true);
+        this.id = id;
         this.description = description;
         this.weight = weight;
         isLocked = false;
@@ -62,7 +63,7 @@ public abstract class Item extends SpriteBase{
      * @return the ID
      */
     public String getID() {
-        return ID;
+        return id;
     }
 }
 

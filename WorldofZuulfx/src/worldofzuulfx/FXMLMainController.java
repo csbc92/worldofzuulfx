@@ -7,6 +7,8 @@ package worldofzuulfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -22,12 +25,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextFlow;
 import sun.plugin.javascript.navig4.Layer;
+import worldofzuulfx.Interfaces.BarValueListener;
 
 /**
  *
  * @author JV
  */
-public class FXMLMainController implements Initializable {
+public class FXMLMainController implements Initializable, BarValueListener{
 
     @FXML
     private TextArea taConsol;
@@ -50,8 +54,7 @@ public class FXMLMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-        taConsol.setDisable(true);
+        initializeConsole();
     }
 
     private void addInputControls(Scene scene) {
@@ -75,7 +78,7 @@ public class FXMLMainController implements Initializable {
 
         });
     }
-
+    
     public void write(String s) {
         taConsol.appendText(s);
     }
@@ -91,6 +94,27 @@ public class FXMLMainController implements Initializable {
         Layers layers = new Layers(pBackground, pObjects, pSprites);
         addInputControls(pBackground.getScene());
         game = new Game(layers); //En instans af spillet oprettes.
+        
+        // Listen for when the players energy changes.
+        game.getPlayer().getEnergyBar().addBarValueListener(this);
+    }
+
+    private void initializeConsole() {
+        taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
+        
+        taConsol.textProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                //TODO: Scroll to the bottom
+                taConsol.positionCaret(Integer.MAX_VALUE);
+            }
+        });
+    }
+
+    @Override
+    public void barValueChanged(Bar bar) {
+        // TODO: Update the UI with the new energyvalue
+        int val = bar.getValue();
     }
 
 }

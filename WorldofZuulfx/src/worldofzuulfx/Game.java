@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
+import worldofzuulfx.Events.ItemPickupEvent;
 import worldofzuulfx.Events.NavigateEvent;
+import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Interfaces.NavigateListener;
 
 import worldofzuulfx.Items.Item;
@@ -19,7 +21,7 @@ import worldofzuulfx.Quest.QuestInventory;
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileLoader;
 
-public class Game implements NavigateListener {
+public class Game implements NavigateListener, ItemPickupListener{
 
     private boolean finished;
 //    private QuestHandler questHandler;
@@ -54,6 +56,7 @@ public class Game implements NavigateListener {
         player.getBounds().setHeight(14);
         player.getBounds().setWidth(30);
         player.addNavigateListener(this);
+        player.addItemPickupListener(this);
 
         //TODO
         initNPCs();
@@ -93,6 +96,7 @@ public class Game implements NavigateListener {
     public void checkCollisions() {
         Room currentRoom = this.player.getCurrentRoom();
 
+        // Check tile collision
         for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
 
             if (tile.getCanCollide()) {
@@ -111,9 +115,14 @@ public class Game implements NavigateListener {
                 }
             }
         }
+        
+        // Check item collision
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
+                    
+                    // Pick up the item
+                    player.pickupItem(item);
                     // Reset the nextPos since a collision was detected
                     if (item.canTeleport()) {
                         player.navigateTo(item.getNextRoom());
@@ -126,6 +135,7 @@ public class Game implements NavigateListener {
             }
         }
         
+        // Check NPC collision
         for (NPC npc : currentRoom.getNPCList()) {
             if (npc.getCanCollide()) {
                 if (npc.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
@@ -186,7 +196,6 @@ public class Game implements NavigateListener {
 
     private void printWelcome() {
         // Velkomst
-
         ConsoleInfo.setConsoleData("Welcome " + getPlayer().getName() + ", to the World of Zuul!");
         ConsoleInfo.setConsoleData("World of Zuul is a new, incredibly boring adventure game.");
         ConsoleInfo.setConsoleData("Type '" + CommandWord.HELP + "' if you need help.");
@@ -441,6 +450,14 @@ public class Game implements NavigateListener {
     @Override
     public void navigated(NavigateEvent event) {
         event.getNewRoom().draw();
+        ConsoleInfo.setConsoleData("Location: " + event.getNewRoom().getShortDescription());
+    }
+    
+    @Override
+    public void itemPickedUp(ItemPickupEvent event) {
+        Item item = event.getItem();
+        item.removeFromLayer();
+        ConsoleInfo.setConsoleData("You've picked up a " + item.getDescription());
     }
 
     /**
