@@ -33,6 +33,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private Room currentRoom;
     private int alcoTolerance;
     private int alcoCounter;
+    private NPC nearNPC;
     private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
@@ -49,7 +50,8 @@ public class Player extends SpriteBase implements BarValueListener {
         hp = new Bar(0, 3, 3);
         drunk = false;
         inventory = new Inventory(5000, 6);
-        
+        inventory.setPlayer(this);
+
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
@@ -57,7 +59,6 @@ public class Player extends SpriteBase implements BarValueListener {
         inactiveQuests = new ArrayList<>();
         addItemUseListener(inventory);
         addItemPickupListener(inventory);
-        //sprite = new SpriteBase(layer, image, posX, posY) {};
     }
 
     public int getECTS() {
@@ -133,6 +134,7 @@ public class Player extends SpriteBase implements BarValueListener {
 
         if (this.inventory.contains(item.getClass())) {
             item.use(this);
+            notifyItemUseListeners(item);
         }
     }
 
@@ -248,9 +250,10 @@ public class Player extends SpriteBase implements BarValueListener {
             this.itemPickupListeners.add(listener);
         }
     }
-    
+
     /**
      * Subscribe to the event when a player uses an item.
+     *
      * @param listener
      */
     public void addItemUseListener(ItemUseListener listener) {
@@ -269,9 +272,10 @@ public class Player extends SpriteBase implements BarValueListener {
             this.itemPickupListeners.remove(listener);
         }
     }
-    
+
     /**
      * Unsubscribe to the event when a player uses an item.
+     *
      * @param listener
      */
     public void removeItemUseListener(ItemUseListener listener) {
@@ -342,13 +346,13 @@ public class Player extends SpriteBase implements BarValueListener {
             }
         }
     }
-    
+
     /**
      * Method used to notify ItemUseListeners
      *
      * @param item
      */
-     public void notifyItemUseListeners(Item item) {
+    public void notifyItemUseListeners(Item item) {
         if (this.itemUseListeners != null) {
             for (ItemUseListener listener : this.itemUseListeners) {
                 listener.itemUsed(new ItemUseEvent(item, this));
@@ -474,5 +478,23 @@ public class Player extends SpriteBase implements BarValueListener {
     public void updateUI() {
         super.updateUI();
         getImageView().relocate(getBounds().getX(), getBounds().getY() - 16);
+    }
+
+    /**
+     * Get the NPC who is touched by the Player.
+     *
+     * @return the nearNPC
+     */
+    public NPC getNearNPC() {
+        return nearNPC;
+    }
+
+    /**
+     * Set the NPC who is touched by the Player.
+     *
+     * @param nearNPC the nearNPC to set
+     */
+    public void setNearNPC(NPC nearNPC) {
+        this.nearNPC = nearNPC;
     }
 }

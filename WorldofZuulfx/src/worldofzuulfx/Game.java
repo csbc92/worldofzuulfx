@@ -132,9 +132,11 @@ public class Game implements NavigateListener {
                     } else {
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
+                        player.setNearNPC(npc);
                     }
                     return;
                 }
+                //player.setNearNPC(null);
             }
         }
 

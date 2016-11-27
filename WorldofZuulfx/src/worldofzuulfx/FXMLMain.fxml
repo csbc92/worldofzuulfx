@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
@@ -14,13 +15,13 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="466.0" minHeight="10.0" prefHeight="464.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="482.0" minHeight="10.0" prefHeight="482.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <AnchorPane fx:id="apConsole" prefHeight="178.0" prefWidth="694.0" GridPane.rowIndex="1">
          <children>
-            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="19.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" />
+            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="19.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" />
          </children>
       </AnchorPane>
       <Pane prefHeight="391.0" prefWidth="454.0">
@@ -28,7 +29,8 @@
             <Pane fx:id="pBackground" prefHeight="400.0" prefWidth="454.0" />
             <Pane fx:id="pObjects" prefHeight="396.0" prefWidth="454.0" />
             <Pane fx:id="pSprites" layoutX="-1.0" layoutY="2.0" prefHeight="400.0" prefWidth="454.0" />
-            <Pane fx:id="pInventory" layoutX="14.0" layoutY="402.0" prefHeight="55.0" prefWidth="448.0" />
+            <Pane fx:id="pInventory" layoutX="14.0" layoutY="402.0" prefHeight="78.0" prefWidth="448.0" />
+            <Text fx:id="tItemInfo" fill="WHITE" layoutX="27.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
          </children>
       </Pane>
       <Pane fx:id="pMenu" visible="false">

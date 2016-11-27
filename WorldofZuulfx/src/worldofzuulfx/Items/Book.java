@@ -15,7 +15,12 @@ public class Book extends Item {
 
     @Override
     public void use(Player player) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //TODO
+       
+        if (player.getNearNPC() == null) {
+            // Deliver the item to NPC.  
+            player.deliverItem(player.getNearNPC(), this);
+        }
     }
 
 }

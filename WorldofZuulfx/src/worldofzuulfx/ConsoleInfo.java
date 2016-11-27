@@ -10,25 +10,38 @@ import javafx.beans.property.StringProperty;
 
 /**
  *
- * 
+ *
  */
 public final class ConsoleInfo {
 
-    private static StringProperty info = new SimpleStringProperty();
+    private static StringProperty conInfo = new SimpleStringProperty();
+
+    private static StringProperty itemInfo = new SimpleStringProperty();
     // methods that set/format logData based on changes from your UI
 
     // provide public access to the property
     public static StringProperty consoleProperty() {
-        return info;
+        return conInfo;
     }
 
     public static void setConsoleData(String data) {
-            info.set(info.get() + data + "\n");
-
+        conInfo.set(conInfo.get() + data + "\n");
     }
 
     public static String getConsoleData() {
-        return info.get();
+        return conInfo.get();
+    }
+
+    public static StringProperty itemProperty() {
+        return itemInfo;
+    }
+
+    public static void setItemData(String data) {
+        itemInfo.set(data);
+    }
+
+    public static String getItemData() {
+        return itemInfo.get();
     }
 
     public static void clearData() {
