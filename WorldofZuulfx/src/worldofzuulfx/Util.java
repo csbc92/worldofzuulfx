@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,15 +21,15 @@ import java.util.logging.Logger;
  */
 public class Util {
 
-    public static Properties prop;
-    public static OutputStream output = null;
-    public static InputStream input;
+    private static Properties prop;
+    private static OutputStream output = null;
+    private static InputStream input;
 
-    public static void storeFile(String filename) throws FileNotFoundException {
+    public static void storeFile(String filename) {
         try {
-            if (prop != null) {
+            if (getPropFile() != null) {
                 output = new FileOutputStream(filename);
-                prop.store(output, null);
+                getPropFile().store(output, null);
             }
         } catch (IOException io) {
             io.printStackTrace();
@@ -39,10 +38,10 @@ public class Util {
 
     public static void loadFile(String filename) {
         try {
-            input = new FileInputStream("config.properties");
-            
+            input = new FileInputStream(filename);
+
             // load a properties file
-            prop.load(input);
+            getPropFile().load(input);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -56,14 +55,22 @@ public class Util {
         prop = new Properties();
 
     }
-    
-    public static void setProp(String name, String data){
-        prop.setProperty(name, data);
-     
+
+    public static void setProp(String name, String data) {
+        getPropFile().setProperty(name, data);
+
     }
-    
-    public static void getProp (String name){
-           prop.getProperty(name, "null");
+
+    public static String getProp(String name) {
+        return getPropFile().getProperty(name, "null");
+
+    }
+
+    /**
+     * @return the prop
+     */
+    public static Properties getPropFile() {
+        return prop;
     }
 
 }

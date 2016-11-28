@@ -29,7 +29,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Player player;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-
+    
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
@@ -169,7 +169,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         return list;
     }
-    
+
     public void initPlayer() {
         player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
@@ -184,6 +184,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         player.getInventory().setLayer(layers.getInventoryLayer());
     }
+
     public void play() {
         printWelcome(); //En velkomst 
 
@@ -252,7 +253,7 @@ public class Game implements NavigateListener, ItemPickupListener {
             return true;
         }
     }
-    
+
     public void showInfo() {
         // TODO skal muligvis slettes
         ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
