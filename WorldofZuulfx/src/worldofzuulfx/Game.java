@@ -35,7 +35,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Layers layers;
 
     public Game(Layers layers) {
-        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
+        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
 
@@ -279,9 +279,9 @@ public class Game implements NavigateListener, ItemPickupListener {
     private void initNPCs() {
         Room u163 = getRoomHandler().getRoom("U163");
         // TODO: Change image on NPCs
-        NPC anders = new NPC("Anders", "Anders", Game.tiles.get(132).getImageView().getImage());
+        NPC anders = new NPC("Anders", "Anders", Game.tiles.get(124).getImageView().getImage());
         anders.move(96, 96);
-        NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(146).getImageView().getImage());
+        NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(125).getImageView().getImage());
         daniel.move(128, 128);
         u163.addNPC(daniel);
         u163.addNPC(anders);

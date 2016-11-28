@@ -28,7 +28,7 @@ public class TileMap {
         this.tileTerrainLayout = tileTerrainLayout;
         this.tileSet = new HashMap<>(tileSet);
         this.tileTerrain = new ArrayList<>();
-        this.collideableTilesIDs = new int[]{0, 12, 13, 214};
+        this.collideableTilesIDs = new int[]{0, 12, 13, 85, 99, 214};
         load();
     }
 
