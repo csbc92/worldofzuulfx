@@ -6,11 +6,13 @@ import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Events.ItemDeliveredEvent;
+import worldofzuulfx.Events.ItemDropEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
 import worldofzuulfx.Events.ItemUseEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.BarValueListener;
 import worldofzuulfx.Interfaces.ItemDeliveredListener;
+import worldofzuulfx.Interfaces.ItemDropListener;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Interfaces.ItemPickupListener;
@@ -34,8 +36,10 @@ public class Player extends SpriteBase implements BarValueListener {
     private int alcoTolerance;
     private int alcoCounter;
     private NPC nearNPC;
+    private boolean droppedItem;
     private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
+    private ArrayList<ItemDropListener> itemDropListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
     private ArrayList<ItemUseListener> itemUseListeners;
     private ArrayList<NavigateListener> navigateListener;
@@ -57,8 +61,11 @@ public class Player extends SpriteBase implements BarValueListener {
         itemDeliveredListeners = new ArrayList<>();
         itemUseListeners = new ArrayList<>();
         inactiveQuests = new ArrayList<>();
+        itemDropListeners = new ArrayList<>();
+        droppedItem = false;
         addItemUseListener(inventory);
         addItemPickupListener(inventory);
+        addItemDropListener(inventory);
     }
 
     public int getECTS() {
@@ -164,11 +171,13 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param item
      */
     public void pickupItem(Item item) {
-        Inventory roomInventory = this.getCurrentRoom().getRoomInventory();
-        if (roomInventory.contains(item.getID())) {
-            if (this.inventory.addItem(item)) {
-                roomInventory.removeItem(item);
-                this.notifyItemPickupListeners(item);
+        if (!droppedItem) {   
+            Inventory roomInventory = this.getCurrentRoom().getRoomInventory();
+            if (roomInventory.contains(item.getID())) {
+                if (this.inventory.addItem(item)) {
+                    roomInventory.removeItem(item);
+                    this.notifyItemPickupListeners(item);
+                }
             }
         }
     }
@@ -242,6 +251,27 @@ public class Player extends SpriteBase implements BarValueListener {
     public void removeNavigateListener(NavigateListener listener) {
         if (this.navigateListener.contains(listener)) {
             this.navigateListener.remove(listener);
+        }
+    }
+    /**
+     * Subscribe to the event when a player drops an item.
+     *
+     * @param listener
+     */
+    public void addItemDropListener(ItemDropListener listener) {
+        if (!this.itemDropListeners.contains(listener)) {
+            this.itemDropListeners.add(listener);
+        }
+    }
+
+    /**
+     * Unsubscribe to the event when a player drops an item.
+     *
+     * @param listener
+     */
+    public void removeItemDropListener(ItemDropListener listener) {
+        if (this.itemDropListeners.contains(listener)) {
+            this.itemDropListeners.remove(listener);
         }
     }
 
@@ -323,6 +353,19 @@ public class Player extends SpriteBase implements BarValueListener {
             }
         }
     }
+    
+    /**
+     * Method used to notify ItemPickupListeners
+     *
+     * @param item
+     */
+    private void notifyItemDropListeners(Item item) {
+        if (this.itemDropListeners != null) {
+            for (ItemDropListener listener : this.itemDropListeners) {
+                listener.ItemDropped(new ItemDropEvent(item, this));
+            }
+        }
+    }
 
     /**
      * Method used to notify ChangeRoomListeners
@@ -335,7 +378,6 @@ public class Player extends SpriteBase implements BarValueListener {
                 listener.navigated(new NavigateEvent(oldRoom, newRoom, this));
             }
         }
-        System.out.println(newRoom.getID());
     }
 
     /**
@@ -374,7 +416,11 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void drop(Item i) {
         if (this.inventory.removeItem(i)) {
+            i.move(this.getX()-1, this.getY()-1);
             this.currentRoom.getRoomInventory().addItem(i);
+            this.currentRoom.drawItems();
+            setDroppedItem(true);
+            notifyItemDropListeners(i);
         }
     }
 
@@ -501,5 +547,12 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void setNearNPC(NPC nearNPC) {
         this.nearNPC = nearNPC;
+    }
+
+    /**
+     * @param DroppedItem the DroppedItem to set
+     */
+    public void setDroppedItem(boolean DroppedItem) {
+        this.droppedItem = DroppedItem;
     }
 }
