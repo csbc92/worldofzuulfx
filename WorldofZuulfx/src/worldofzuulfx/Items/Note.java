@@ -15,7 +15,7 @@ public class Note extends Item {
     protected String content;
 
     public Note(String description, String ID, int weight, String contentString) {
-        super(Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight );
+        super(Game.tiles.get(142).clone().getImageView().getImage(), ID, description, weight );
         
         content = contentString;
     }

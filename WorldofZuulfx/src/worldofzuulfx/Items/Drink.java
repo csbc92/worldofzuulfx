@@ -29,7 +29,7 @@ public class Drink extends Item {
     private boolean alcoholDrink;
 
     public Drink(String ID, String description, int weight, int energyValueVar, boolean alcoholicBeverage) {
-        super(Game.tiles.get(86).clone().getImageView().getImage(), ID, description, weight);
+        super(Game.tiles.get(158).clone().getImageView().getImage(), ID, description, weight);
         this.energyValue = energyValueVar;
         this.alcoholDrink = alcoholicBeverage;
 
