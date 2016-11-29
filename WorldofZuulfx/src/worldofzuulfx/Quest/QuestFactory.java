@@ -4,7 +4,7 @@ import worldofzuulfx.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
-import worldofzuulfx.Quest.Quest.Questtype;
+import worldofzuulfx.Quest.Quest.QuestType;
 
 /**
  * The QuestFactory is responsible for creating new quest.
@@ -36,7 +36,7 @@ public class QuestFactory {
      */
     public Quest roomQuest(String roomID, String questDescription, Reward reward) {
         // Create the quest without any reward.
-        Quest roomQuest = new Quest(questDescription, reward, Questtype.STATIC);
+        Quest roomQuest = new Quest(questDescription, reward, QuestType.STATIC);
 
         roomQuest.setRequirement(() -> {
             String currentRoomID = player.getCurrentRoom().getID();
@@ -64,7 +64,7 @@ public class QuestFactory {
      */
     public Quest pickupItemQuest(String ID, String questDescription, Reward reward) {
         // Create the quest without any reward.
-        Quest pickupQuest = new Quest(questDescription, reward, Questtype.DYNAMIC);
+        Quest pickupQuest = new Quest(questDescription, reward, QuestType.DYNAMIC);
 
         pickupQuest.setRequirement(() -> {
             Inventory inventory = player.getInventory();
@@ -91,7 +91,7 @@ public class QuestFactory {
      */
     public Quest deliveryQuest(String ID, NPC npc, String questDescription, Reward reward) {
         
-        Quest deliverQuest = new Quest(questDescription, reward, Questtype.STATIC);
+        Quest deliverQuest = new Quest(questDescription, reward, QuestType.STATIC);
         
         deliverQuest.setRequirement(() -> {
             // Check if NPC has the required item in inventory.
