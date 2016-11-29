@@ -29,14 +29,19 @@
             <Pane fx:id="pBackground" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
             <Pane fx:id="pObjects" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
             <Pane fx:id="pSprites" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
-            <Pane fx:id="pInventory" layoutX="14.0" layoutY="402.0" prefHeight="78.0" prefWidth="442.0" />
-            <Text fx:id="tItemInfo" fill="WHITE" layoutX="27.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
+            <Pane fx:id="pInventory" layoutX="72.0" layoutY="402.0" prefHeight="78.0" prefWidth="367.0" />
+            <Text fx:id="tItemInfo" fill="WHITE" layoutX="85.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
             <Pane fx:id="pInfo" layoutX="460.0" layoutY="-3.0" prefHeight="493.0" prefWidth="234.0">
                <children>
-                  <ProgressBar fx:id="progTime" layoutX="17.0" layoutY="49.0" prefWidth="200.0" progress="1.0" />
-                  <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="90.0" prefWidth="200.0" progress="1.0" />
-                  <Text fill="WHITE" layoutX="17.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy" />
-                  <Text fill="WHITE" layoutX="17.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+                  <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="111.0" prefWidth="200.0" progress="1.0" />
+                  <Text fill="WHITE" layoutX="17.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <Text fx:id="tfTimeLeft" fill="WHITE" layoutX="17.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.0">
+                     <font>
+                        <Font size="34.0" />
+                     </font></Text>
                </children>
             </Pane>
          </children>

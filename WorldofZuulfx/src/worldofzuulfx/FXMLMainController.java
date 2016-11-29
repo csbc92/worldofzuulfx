@@ -7,6 +7,8 @@ package worldofzuulfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -35,7 +37,7 @@ import worldofzuulfx.Highscores.Score;
  *
  * @author JV
  */
-public class FXMLMainController implements Initializable, BarValueListener{
+public class FXMLMainController implements Initializable, BarValueListener {
 
     @FXML
     private TextArea taConsol;
@@ -60,14 +62,15 @@ public class FXMLMainController implements Initializable, BarValueListener{
     private Text tItemInfo;
     @FXML
     private ListView<Score> lvHighscore;
-    
+
     private Highscores highscores;
+    private int interval;
     @FXML
     private Pane pInfo;
     @FXML
-    private ProgressBar progTime;
-    @FXML
     private ProgressBar progEnergy;
+    @FXML
+    private Text tfTimeLeft;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,11 +78,12 @@ public class FXMLMainController implements Initializable, BarValueListener{
         highscores = new Highscores(5);
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
-        
+
         gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         pMenu.setVisible(true);
         pInfo.setVisible(false);
+        interval = (60 * 10);
     }
 
     private void addInputControls(Scene scene) {
@@ -87,31 +91,31 @@ public class FXMLMainController implements Initializable, BarValueListener{
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (!game.isFinished()) {
-                
+
                 if (key.getCode() == KeyCode.RIGHT) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
-                    
+
                 }
                 if (key.getCode() == KeyCode.LEFT) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
-                    
+
                 }
                 if (key.getCode() == KeyCode.UP) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
-                    
+
                 }
                 if (key.getCode() == KeyCode.DOWN) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
                 }
-                
+
                 if (key.getCode() == KeyCode.A) {
                     game.getPlayer().getInventory().nextItem();
                     game.getPlayer().getInventory().draw(false);
@@ -120,26 +124,18 @@ public class FXMLMainController implements Initializable, BarValueListener{
                     game.getPlayer().getInventory().previousItem();
                     game.getPlayer().getInventory().draw(false);
                 }
-                
+
                 if (key.getCode() == KeyCode.D) {
                     game.getPlayer().drop(game.getPlayer().getInventory().getSelectedItem());
-                    
+
                 }
                 if (key.getCode() == KeyCode.U) {
                     game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
-                    
+
                 }
             }
 
         });
-    }
-    
-    public void write(String s) {
-        taConsol.appendText(s);
-    }
-
-    public void writeln(String s) {
-        write(s + "\n");
     }
 
     @FXML
@@ -154,16 +150,29 @@ public class FXMLMainController implements Initializable, BarValueListener{
         Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
         addInputControls(pBackground.getScene());
         game = new Game(layers); //En instans af spillet oprettes.
-        
+
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
+        progEnergy.setProgress(1);
+
+        Timer gameTimer = new Timer();
+        gameTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (interval == 1) {
+                    gameTimer.cancel();
+                    game.setFinished();
+                }
+                --interval;
+                tfTimeLeft.setText(interval + " sec");
+            }
+        }, 1000, 1000);
+
     }
 
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-        
-        
-        
+
         taConsol.textProperty().addListener(new ChangeListener<Object>() {
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
@@ -176,7 +185,7 @@ public class FXMLMainController implements Initializable, BarValueListener{
     @Override
     public void barValueChanged(Bar bar) {
         // TODO: Update the UI with the new energyvalue
-        progEnergy.setProgress((double)bar.getValue()/100);
+        progEnergy.setProgress((double) bar.getValue() / 100);
     }
 
 }
