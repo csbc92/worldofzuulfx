@@ -5,12 +5,9 @@
  */
 package worldofzuulfx;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -100,6 +97,8 @@ public class Highscores {
             Util.setProp(score.getName(), (score.getHighscore().toString()));
         }
         Util.storeFile("highscore.data");
+        
+        
     }
 
     public void loadHighscores() {

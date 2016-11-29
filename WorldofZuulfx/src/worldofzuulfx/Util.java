@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,15 +44,14 @@ public class Util {
             // load a properties file
             getPropFile().load(input);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } catch (IOException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }
 
     public static void newPropFile() {
-
         prop = new Properties();
 
     }
@@ -70,7 +70,26 @@ public class Util {
      * @return the prop
      */
     public static Properties getPropFile() {
+        
+        
+        
+        
         return prop;
     }
+    
+    public static int [][] to2d (String source, String outerdelim, String innerdelim) {
+
+    int [][] result = new int [source.trim().replaceAll ( "[^" + outerdelim + "]", "").length () + 1][]; 
+    int count = 0;
+    for (String line : source.split ("[" + outerdelim + "]"))
+    {   
+        String subString = line.replaceAll("\n", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
+        String [] subStringResult = subString.split(innerdelim);
+        int [] subIntResult = Arrays.stream(subStringResult).mapToInt(Integer::parseInt).toArray();
+        result [count++] = subIntResult;
+    }
+    return result;
+}
+
 
 }

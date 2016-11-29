@@ -281,9 +281,9 @@ public class Game implements NavigateListener, ItemPickupListener {
         Room u163 = getRoomHandler().getRoom("U163");
         // TODO: Change image on NPCs
         NPC anders = new NPC("Anders", "Anders", Game.tiles.get(124).getImageView().getImage());
-        anders.move(96, 96);
+        anders.move(96, 64);
         NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(125).getImageView().getImage());
-        daniel.move(128, 128);
+        daniel.move(256, 64);
         u163.addNPC(daniel);
         u163.addNPC(anders);
     }
