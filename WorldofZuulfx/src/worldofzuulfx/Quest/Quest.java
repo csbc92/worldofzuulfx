@@ -58,14 +58,14 @@ public class Quest {
 
     private final String description;
     private final Reward reward;
-    private final Questtype questType;
+    private final QuestType questType;
     private Boolean isCompleted;
     private Boolean requirementOK;
     private Quest chainQuest;
     private Requirement requirement;
     private Action postAction;
     
-    public Quest(String description, Reward reward, Questtype type) {
+    public Quest(String description, Reward reward, QuestType type) {
         this.description = description;
         this.reward = reward;
         this.questType = type;
@@ -212,7 +212,7 @@ public class Quest {
      * 2. A Static quest where the Requirement has to be completed just once, thus
      *    setting a flag, that indicates that the requirement is OK.
      */
-    public enum Questtype {
+    public enum QuestType {
         DYNAMIC, STATIC
     }
 }
