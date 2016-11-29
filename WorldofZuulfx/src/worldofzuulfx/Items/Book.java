@@ -8,7 +8,7 @@ import worldofzuulfx.Player;
 public class Book extends Item {
 
     public Book(String ID, String description, int weight) {
-        super(Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
+        super(Game.tiles.get(86).clone().getImageView().getImage(), ID, description, weight);
     }
 
     ;

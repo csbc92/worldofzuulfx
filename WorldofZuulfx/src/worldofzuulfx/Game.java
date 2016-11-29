@@ -29,13 +29,13 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Player player;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-
+    
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
     public Game(Layers layers) {
-        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
+        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
 
@@ -44,18 +44,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         questInventory = new QuestInventory();
 
-        player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
-                layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
-
-        player.setCanCollide(true);
-        player.setDx(32);
-        player.setDy(16);
-        player.getBounds().setHeight(14);
-        player.getBounds().setWidth(30);
-        player.addNavigateListener(this);
-        player.addItemPickupListener(this);
-
-        player.getInventory().setLayer(layers.getInventoryLayer());
+        initPlayer();
 
         initNPCs();
         questInventory.initQuests(roomHandler, player);
@@ -105,6 +94,7 @@ public class Game implements NavigateListener, ItemPickupListener {
                     if (tile.canTeleport()) {
 
                         player.navigateTo(tile.getNextRoom());
+                        // The Player needs to moved with the offset 1.
                         player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
                     }
 
@@ -180,6 +170,21 @@ public class Game implements NavigateListener, ItemPickupListener {
         return list;
     }
 
+    public void initPlayer() {
+        player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
+                layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
+
+        player.setCanCollide(true);
+        player.setDx(32);
+        player.setDy(16);
+        player.getBounds().setHeight(14);
+        player.getBounds().setWidth(30);
+        player.addNavigateListener(this);
+        player.addItemPickupListener(this);
+
+        player.getInventory().setLayer(layers.getInventoryLayer());
+    }
+
     public void play() {
         printWelcome(); //En velkomst 
 
@@ -248,7 +253,7 @@ public class Game implements NavigateListener, ItemPickupListener {
             return true;
         }
     }
-    
+
     public void showInfo() {
         // TODO skal muligvis slettes
         ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
@@ -275,9 +280,9 @@ public class Game implements NavigateListener, ItemPickupListener {
     private void initNPCs() {
         Room u163 = getRoomHandler().getRoom("U163");
         // TODO: Change image on NPCs
-        NPC anders = new NPC("Anders", "Anders", Game.tiles.get(132).getImageView().getImage());
+        NPC anders = new NPC("Anders", "Anders", Game.tiles.get(124).getImageView().getImage());
         anders.move(96, 96);
-        NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(146).getImageView().getImage());
+        NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(125).getImageView().getImage());
         daniel.move(128, 128);
         u163.addNPC(daniel);
         u163.addNPC(anders);

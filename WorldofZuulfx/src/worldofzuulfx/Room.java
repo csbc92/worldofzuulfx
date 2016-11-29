@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import javafx.scene.layout.Pane;
+import worldofzuulfx.Events.ItemDropEvent;
 import worldofzuulfx.Events.NavigateEvent;
+import worldofzuulfx.Interfaces.ItemDropListener;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.tiles.Tile;
@@ -39,14 +41,14 @@ public class Room {
         this.npcList = new ArrayList<>();
         this.groundLayer = groundLayer;
         this.objectLayer = objectLayer;
-        
+
         this.groundTiles = new TileMap(groundLayout, tiles);
     }
 
-    public void setExit(String pos, Room room, Tile tile ) {
+    public void setExit(String pos, Room room, Tile tile) {
         // Insert key and value into HashMap.
-  //      exits.put(pos, event);
-        groundTiles.getTile(pos).setTeleport(room, tile.getX(),tile.getY());
+        //      exits.put(pos, event);
+        groundTiles.getTile(pos).setTeleport(room, tile.getX(), tile.getY());
     }
 
     public String getShortDescription() {
@@ -130,22 +132,20 @@ public class Room {
     }
 
     public NPC getNPC(String ID) {
-        
+
         for (NPC npc : this.npcList) {
             if (npc.getID().equalsIgnoreCase(ID)) {
                 return npc;
             }
         }
-        
+
         return null;
     }
-       public TileMap getTileMap() {
+
+    public TileMap getTileMap() {
         return this.groundTiles;
     }
-    
-    public void draw() {
-        groundTiles.draw(groundLayer);
-        
+    public void drawItems() {
         // Clear the object layer before drawing new objects.
         objectLayer.getChildren().clear();
         // Draw Items in the room.
@@ -154,7 +154,12 @@ public class Room {
             item.addToLayer();
             item.updateUI();
         }
-        
+    }
+    public void draw() {
+        groundTiles.draw(groundLayer);
+
+        drawItems();
+
         // Draw NPCs in the room.
         for (NPC npc : this.npcList) {
             npc.setLayer(objectLayer);

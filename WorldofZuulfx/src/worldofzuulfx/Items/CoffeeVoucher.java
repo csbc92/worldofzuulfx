@@ -20,7 +20,7 @@ public class CoffeeVoucher extends Item {
     private int voucherAmount;
 
     public CoffeeVoucher(String ID, String description, int weight, int voucherAmountVar) {
-        super(Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
+        super(Game.tiles.get(172).clone().getImageView().getImage(), ID, description, weight);
         voucherAmount = voucherAmountVar;
 
     }

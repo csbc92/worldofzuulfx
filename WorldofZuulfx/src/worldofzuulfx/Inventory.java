@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import worldofzuulfx.Events.ItemDropEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
 import worldofzuulfx.Events.ItemUseEvent;
+import worldofzuulfx.Interfaces.ItemDropListener;
 import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Items.Book;
@@ -24,7 +26,7 @@ import worldofzuulfx.Items.Note;
  *
  *
  */
-public class Inventory implements ItemUseListener, ItemPickupListener {
+public class Inventory implements ItemUseListener, ItemPickupListener, ItemDropListener {
 
     private final int capacity;
     private final int maxWeight;
@@ -40,6 +42,7 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
         this.maxWeight = maxWeight;
         this.capacity = capacity;
         this.itemList = new ArrayList<>();
+        
     }
 
     public Inventory(Pane layer, int maxWeight, int capacity) {
@@ -197,7 +200,7 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
             }
             if (i instanceof CoffeeVoucher) {
                 if (player.getCurrentRoom().getID().equalsIgnoreCase("canteen")) {
-                    txt.append("Use the voucher " + "(" + ((CoffeeVoucher) i).getVoucherAmount()+")");
+                    txt.append("Use the voucher " + "(" + ((CoffeeVoucher) i).getVoucherAmount() + ")");
                 } else {
                     txt.append("The voucher can only be used in the canteen");
                 }
@@ -292,6 +295,16 @@ public class Inventory implements ItemUseListener, ItemPickupListener {
      */
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    @Override
+    public void itemDropped(ItemDropEvent event) {
+        if (itemList.isEmpty()) {
+            selectItem(null);
+        } else {
+            selectItem(itemList.get(0));
+        }
+        draw(true);
     }
 
 }
