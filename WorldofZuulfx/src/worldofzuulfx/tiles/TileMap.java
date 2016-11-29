@@ -53,10 +53,10 @@ public class TileMap {
     private void load() {
         int xOffset = 0;
         int yOffset = 0;
-        for (int row = 0; row < tileTerrainLayout.length; row++) {
-            for (int column = 0; column < tileTerrainLayout[row].length; column++) {
+        for (int row = 0; row < getTileTerrainLayout().length; row++) {
+            for (int column = 0; column < getTileTerrainLayout()[row].length; column++) {
 
-                int tileId = tileTerrainLayout[row][column];
+                int tileId = getTileTerrainLayout()[row][column];
                 Tile tile = this.tileSet.get(tileId).clone();
                 tile.setCanCollide(false);
 
@@ -92,6 +92,13 @@ public class TileMap {
             }
         }
         return null;
+    }
+
+    /**
+     * @return the tileTerrainLayout
+     */
+    public int[][] getTileTerrainLayout() {
+        return tileTerrainLayout;
     }
 
 }
