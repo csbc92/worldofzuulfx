@@ -17,7 +17,7 @@ import worldofzuulfx.Player;
  */
 public class CoffeeVoucher extends Item {
 
-    protected int voucherAmount;
+    private int voucherAmount;
 
     public CoffeeVoucher(String ID, String description, int weight, int voucherAmountVar) {
         super(Game.tiles.get(60).clone().getImageView().getImage(), ID, description, weight);
