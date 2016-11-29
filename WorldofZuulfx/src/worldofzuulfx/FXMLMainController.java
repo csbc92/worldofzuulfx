@@ -83,7 +83,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         pMenu.setVisible(true);
         pInfo.setVisible(false);
-        interval = (60 * 10);
+        
     }
 
     private void addInputControls(Scene scene) {
@@ -159,12 +159,13 @@ public class FXMLMainController implements Initializable, BarValueListener {
         gameTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (interval == 1) {
+                int value = game.getPlayer().getTimeLeft();
+                if (value == 1) {
                     gameTimer.cancel();
                     game.setFinished();
                 }
-                --interval;
-                tfTimeLeft.setText(interval + " sec");
+                game.getPlayer().setTimeLeft(--value);
+                tfTimeLeft.setText(value + " sec");
             }
         }, 1000, 1000);
 
@@ -184,7 +185,6 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
     @Override
     public void barValueChanged(Bar bar) {
-        // TODO: Update the UI with the new energyvalue
         progEnergy.setProgress((double) bar.getValue() / 100);
     }
 

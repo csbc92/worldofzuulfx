@@ -16,6 +16,7 @@ import worldofzuulfx.Interfaces.ItemDropListener;
 import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Items.Book;
+import worldofzuulfx.Items.Clock;
 import worldofzuulfx.Items.CoffeeVoucher;
 import worldofzuulfx.Items.Computer;
 import worldofzuulfx.Items.Drink;
@@ -213,6 +214,9 @@ public class Inventory implements ItemUseListener, ItemPickupListener, ItemDropL
             }
             if (i instanceof Book) {
                 txt.append("Use the book");
+            }
+             if (i instanceof Clock) {
+                txt.append("Use the clock");
             }
             ConsoleInfo.setItemData(txt.toString());
         } else {

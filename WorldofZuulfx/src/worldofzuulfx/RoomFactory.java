@@ -138,6 +138,11 @@ public class RoomFactory {
         item6.move(256, 256);
         item6.updateUI();
         campus.getRoomInventory().addItem(item6);
+        
+         Item item7 = ItemFactory.makeClock(10);
+        item7.move(256, 256);
+        item7.updateUI();
+        outside.getRoomInventory().addItem(item7);
 
         rooms.add(canteen);
         rooms.add(outside);

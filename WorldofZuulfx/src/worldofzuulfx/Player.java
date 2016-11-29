@@ -37,6 +37,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private int alcoCounter;
     private NPC nearNPC;
     private boolean droppedItem;
+    private int timeLeft;
     private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
     private ArrayList<ItemDropListener> itemDropListeners;
@@ -59,6 +60,7 @@ public class Player extends SpriteBase implements BarValueListener {
         ects.setValue(0);
         energy.setValue(100);
         hp.setValue(3);
+        timeLeft = (60 * 10);
 
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
@@ -558,5 +560,19 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void setDroppedItem(boolean DroppedItem) {
         this.droppedItem = DroppedItem;
+    }
+
+    /**
+     * @return the timeLeft
+     */
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    /**
+     * @param timeLeft the timeLeft to set
+     */
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 }

@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package worldofzuulfx.Items;
-
-import javafx.scene.layout.Pane;
 import worldofzuulfx.Game;
 import worldofzuulfx.tiles.Tile;
 
@@ -16,7 +14,6 @@ import worldofzuulfx.tiles.Tile;
 public class ItemFactory {
 
     public ItemFactory() {
-        //TODO Skifte image på samtlige items.
     }
 
     public static Drink makeBeer() {
@@ -51,6 +48,11 @@ public class ItemFactory {
     public static Note makeNote(String content) {
 
         return new Note("book", "Book", 5, content);
+    }
+    
+    public static Clock makeClock(int time) {
+
+        return new Clock("clock", "Clock", 300, time);
     }
 
 }
