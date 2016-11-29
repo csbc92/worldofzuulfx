@@ -43,15 +43,14 @@ public class Util {
             // load a properties file
             getPropFile().load(input);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } catch (IOException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }
 
     public static void newPropFile() {
-
         prop = new Properties();
 
     }
@@ -70,6 +69,10 @@ public class Util {
      * @return the prop
      */
     public static Properties getPropFile() {
+        
+        
+        
+        
         return prop;
     }
 

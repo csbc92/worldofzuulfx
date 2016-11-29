@@ -6,7 +6,9 @@
 package worldofzuulfx;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
@@ -18,7 +20,43 @@ import worldofzuulfx.tiles.Tile;
  */
 public class RoomFactory {
     
+    private static int[][] layout;
     public RoomFactory (){
+        
+    }
+    
+    public static void loadRooms(){
+        Util.newPropFile();
+        
+        Util.loadFile("rooms.data");
+        
+    }
+    
+    public static void StoreRooms(){
+        Util.newPropFile();
+        layout = new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
+                                                                                                    {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                                    {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                    };
+        String result = Arrays
+        .stream(layout)
+        .map(Arrays::toString) 
+        .collect(Collectors.joining(System.lineSeparator()));
+        // What to store
+        Util.setProp("outside", result);
+        Util.storeFile("rooms.data");
+        
+        
         
     }
     
