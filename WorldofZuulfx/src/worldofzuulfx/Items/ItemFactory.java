@@ -6,6 +6,8 @@
 package worldofzuulfx.Items;
 
 import javafx.scene.layout.Pane;
+import worldofzuulfx.Game;
+import worldofzuulfx.tiles.Tile;
 
 /**
  *
@@ -18,8 +20,12 @@ public class ItemFactory {
     }
 
     public static Drink makeBeer() {
-
-        return new Drink("beer", "Beer", 1, 1, true);
+        Drink drink = new Drink("beer", "Beer", 1, 1, true);
+        // Get the image that represents a beer.
+        Tile tile = Game.tiles.get(171);
+        //
+        drink.getImageView().imageProperty().set(tile.getImageView().getImage());
+        return drink;
     }
 
     public static Drink makeCoffee() {

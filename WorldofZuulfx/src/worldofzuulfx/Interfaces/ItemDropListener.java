@@ -12,6 +12,6 @@ import worldofzuulfx.Events.ItemDropEvent;
  * @author JV
  */
 public interface ItemDropListener {
-    public void ItemDropped(ItemDropEvent event);
+    public void itemDropped(ItemDropEvent event);
     
 }

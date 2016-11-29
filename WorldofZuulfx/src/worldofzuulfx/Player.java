@@ -362,7 +362,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private void notifyItemDropListeners(Item item) {
         if (this.itemDropListeners != null) {
             for (ItemDropListener listener : this.itemDropListeners) {
-                listener.ItemDropped(new ItemDropEvent(item, this));
+                listener.itemDropped(new ItemDropEvent(item, this));
             }
         }
     }

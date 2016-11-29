@@ -298,7 +298,7 @@ public class Inventory implements ItemUseListener, ItemPickupListener, ItemDropL
     }
 
     @Override
-    public void ItemDropped(ItemDropEvent event) {
+    public void itemDropped(ItemDropEvent event) {
         if (itemList.isEmpty()) {
             selectItem(null);
         } else {

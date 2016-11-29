@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,7 +28,7 @@ import javafx.scene.layout.Pane;
 import worldofzuulfx.Interfaces.BarValueListener;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Highscores.Score;
 
 /**
  *
@@ -56,10 +57,18 @@ public class FXMLMainController implements Initializable, BarValueListener{
     private Pane pMenu;
     @FXML
     private Text tItemInfo;
+    @FXML
+    private ListView<Score> lvHighscore;
+    
+    private Highscores highscores;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeConsole();
+        highscores = new Highscores(5);
+        highscores.loadHighscores();
+        lvHighscore.itemsProperty().set(highscores.getHighscoreList());
+        
         gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         pMenu.setVisible(true);
@@ -140,6 +149,8 @@ public class FXMLMainController implements Initializable, BarValueListener{
 
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
+        
+        
         
         taConsol.textProperty().addListener(new ChangeListener<Object>() {
             @Override

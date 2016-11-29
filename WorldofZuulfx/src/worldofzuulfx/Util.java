@@ -5,7 +5,15 @@
  */
 package worldofzuulfx;
 
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,16 +21,56 @@ import java.util.ArrayList;
  */
 public class Util {
 
-    /**
-     * 
-     * @param list
-     * @return
-     */
-    public static String arrayToString(ArrayList<String> list) {
-        String result = "";
-        for (String string : list) {
-            result += "  " + string;
+    private static Properties prop;
+    private static OutputStream output = null;
+    private static InputStream input;
+
+    public static void storeFile(String filename) {
+        try {
+            if (getPropFile() != null) {
+                output = new FileOutputStream(filename);
+                getPropFile().store(output, null);
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
         }
-        return result;
     }
+
+    public static void loadFile(String filename) {
+        try {
+            input = new FileInputStream(filename);
+
+            // load a properties file
+            getPropFile().load(input);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void newPropFile() {
+
+        prop = new Properties();
+
+    }
+
+    public static void setProp(String name, String data) {
+        getPropFile().setProperty(name, data);
+
+    }
+
+    public static String getProp(String name) {
+        return getPropFile().getProperty(name, "null");
+
+    }
+
+    /**
+     * @return the prop
+     */
+    public static Properties getPropFile() {
+        return prop;
+    }
+
 }

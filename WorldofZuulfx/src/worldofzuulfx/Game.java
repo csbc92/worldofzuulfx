@@ -29,13 +29,13 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Player player;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-
+    
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
     public Game(Layers layers) {
-        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/OaHgZsd.png"), 32, 32);
+        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
 
@@ -169,7 +169,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         return list;
     }
-    
+
     public void initPlayer() {
         player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
@@ -184,6 +184,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         player.getInventory().setLayer(layers.getInventoryLayer());
     }
+
     public void play() {
         printWelcome(); //En velkomst 
 
@@ -252,7 +253,7 @@ public class Game implements NavigateListener, ItemPickupListener {
             return true;
         }
     }
-    
+
     public void showInfo() {
         // TODO skal muligvis slettes
         ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
@@ -279,10 +280,17 @@ public class Game implements NavigateListener, ItemPickupListener {
     private void initNPCs() {
         Room u163 = getRoomHandler().getRoom("U163");
         // TODO: Change image on NPCs
+<<<<<<< HEAD
         NPC anders = new NPC("Anders", "Anders", Game.tiles.get(132).getImageView().getImage());
         anders.move(96, 64);
         NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(146).getImageView().getImage());
         daniel.move(256, 64);
+=======
+        NPC anders = new NPC("Anders", "Anders", Game.tiles.get(124).getImageView().getImage());
+        anders.move(96, 96);
+        NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(125).getImageView().getImage());
+        daniel.move(128, 128);
+>>>>>>> 96a930d48428e97e6d2c7bc416f7e7de52d87c01
         u163.addNPC(daniel);
         u163.addNPC(anders);
     }
