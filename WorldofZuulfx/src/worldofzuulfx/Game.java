@@ -61,12 +61,16 @@ public class Game implements NavigateListener, ItemPickupListener {
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-
+                
                 updateSprites();
 
                 checkCollisions();
 
                 cleanupSprites();
+                
+                if (isFinished()) {
+                    timer.stop();   
+                }
 
             }
 
@@ -314,5 +318,12 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     public QuestInventory getQuestInventory() {
         return questInventory;
+    }
+
+    /**
+     * @return the finished
+     */
+    public boolean isFinished() {
+        return finished;
     }
 }

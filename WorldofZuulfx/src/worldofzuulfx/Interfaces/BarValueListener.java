@@ -11,5 +11,5 @@ import worldofzuulfx.Bar;
  */
 public interface BarValueListener {
     public void barValueChanged(Bar bar);
-    
+        
 }

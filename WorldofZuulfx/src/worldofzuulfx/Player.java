@@ -48,13 +48,17 @@ public class Player extends SpriteBase implements BarValueListener {
     public Player(String name, Pane layer, Image image, double posX, double posY) {
         super(layer, image, posX, posY);
         this.name = name;
-        ects = new Bar(0, 30, 0);
-        energy = new Bar(0, 100, 100);
+        ects = new Bar(0, 10);
+        energy = new Bar(0, 100);
         energy.addBarValueListener(this);
-        hp = new Bar(0, 3, 3);
+        hp = new Bar(0, 3);
         drunk = false;
         inventory = new Inventory(5000, 6);
         inventory.setPlayer(this);
+        
+        ects.setValue(0);
+        energy.setValue(100);
+        hp.setValue(3);
 
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
@@ -509,7 +513,7 @@ public class Player extends SpriteBase implements BarValueListener {
     public void barValueChanged(Bar bar) {
         if (bar.getValue() <= 0 || isDrunk() == true) {
             // TODO - Håndter blackout!
-            this.blackout(Main.getGame().getRoomHandler().getRooms(false));
+        //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
             //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
             if (hp.getValue() > 0) {

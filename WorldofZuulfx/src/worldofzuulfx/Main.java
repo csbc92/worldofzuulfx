@@ -5,7 +5,6 @@
  */
 package worldofzuulfx;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,25 +32,20 @@ public class Main extends Application {
         //       initiate();
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show(); 
+        stage.show();
     }
-
-    
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        
+
         launch(args);
     }
 
     public static Game getGame() {
         return game;
     }
-
-
 
     /**
      * @return the controller
