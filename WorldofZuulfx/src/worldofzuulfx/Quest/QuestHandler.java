@@ -3,14 +3,16 @@ package worldofzuulfx.Quest;
 import java.util.ArrayList;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
+import worldofzuulfx.Events.ItemReceivedEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Player;
 import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.Interfaces.ItemDeliveredListener;
+import worldofzuulfx.Interfaces.ItemReceivedListener;
 
 
-public class QuestHandler implements NavigateListener, ItemPickupListener, ItemDeliveredListener{
+public class QuestHandler implements NavigateListener, ItemPickupListener, ItemDeliveredListener, ItemReceivedListener{
     
     private final Player player;
     
@@ -33,6 +35,11 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
     
     @Override
     public void itemDelivered(ItemDeliveredEvent event) {
+        this.completeQuest();
+    }
+    
+     @Override
+    public void itemReceived(ItemReceivedEvent event) {
         this.completeQuest();
     }
 
@@ -66,4 +73,6 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
             }            
         }
     }
+
+   
 }

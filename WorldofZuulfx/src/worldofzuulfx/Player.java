@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemDropEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
+import worldofzuulfx.Events.ItemReceivedEvent;
 import worldofzuulfx.Events.ItemUseEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.BarValueListener;
@@ -16,6 +17,7 @@ import worldofzuulfx.Interfaces.ItemDropListener;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Interfaces.ItemPickupListener;
+import worldofzuulfx.Interfaces.ItemReceivedListener;
 import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Quest.Reward;
 import worldofzuulfx.Interfaces.NavigateListener;
@@ -44,6 +46,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
     private ArrayList<ItemUseListener> itemUseListeners;
     private ArrayList<NavigateListener> navigateListener;
+    private ArrayList<ItemReceivedListener> itemReceivedListener;
     private ArrayList<Room> roomRandom;
 
     public Player(String name, Pane layer, Image image, double posX, double posY) {
@@ -341,12 +344,33 @@ public class Player extends SpriteBase implements BarValueListener {
      *
      * @param listener
      */
-    public void removeItemDeliveredListnerr(ItemDeliveredListener listener) {
+    public void removeItemDeliveredListener(ItemDeliveredListener listener) {
         if (this.itemDeliveredListeners.contains(listener)) {
             this.itemDeliveredListeners.remove(listener);
         }
     }
 
+     /**
+     * Subscribe to the event when a player receives an item.
+     *
+     * @param listener
+     */
+    public void addItemReceiveListener(ItemReceivedListener listener) {
+        if (!this.itemReceivedListener.contains(listener)) {
+            this.itemReceivedListener.add(listener);
+        }
+    }
+
+    /**
+     * Unsubscribe to the event when a player reveives an item.
+     *
+     * @param listener
+     */
+    public void removeItemReceiveListener(ItemReceivedListener listener) {
+        if (this.itemReceivedListener.contains(listener)) {
+            this.itemReceivedListener.remove(listener);
+        }
+    }
     /**
      * Method used to notify ItemPickupListeners
      *
@@ -409,6 +433,19 @@ public class Player extends SpriteBase implements BarValueListener {
         if (this.itemUseListeners != null) {
             for (ItemUseListener listener : this.itemUseListeners) {
                 listener.itemUsed(new ItemUseEvent(item, this));
+            }
+        }
+    }
+    
+    /**
+     * Method used to notify ItemReceivedListeners
+     *
+     * @param item
+     */
+    public void notifyItemReceivedListeners(Item item) {
+        if (this.itemReceivedListener != null) {
+            for (ItemReceivedListener listener : this.itemReceivedListener) {
+                listener.itemReceived(new ItemReceivedEvent(item));
             }
         }
     }
