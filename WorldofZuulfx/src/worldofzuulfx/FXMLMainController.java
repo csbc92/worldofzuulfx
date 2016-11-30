@@ -12,6 +12,7 @@ import java.util.TimerTask;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -31,6 +32,8 @@ import javafx.scene.layout.Pane;
 import worldofzuulfx.Interfaces.BarValueListener;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import worldofzuulfx.Highscores.Score;
 
 /**
@@ -71,6 +74,8 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private ProgressBar progEnergy;
     @FXML
     private Text tfTimeLeft;
+    private Stage stage;
+    private Timer gameTimer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,7 +88,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         pMenu.setVisible(true);
         pInfo.setVisible(false);
-        
+
     }
 
     private void addInputControls(Scene scene) {
@@ -154,13 +159,14 @@ public class FXMLMainController implements Initializable, BarValueListener {
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
         progEnergy.setProgress(1);
-
-        Timer gameTimer = new Timer();
+        
+        // Create a timer which keeps decreasing the timeleft
+        gameTimer = new Timer();
         gameTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 int value = game.getPlayer().getTimeLeft();
-                if (value == 1) {
+                if (value == 1 || game.isFinished()) {
                     gameTimer.cancel();
                     game.setFinished();
                 }
@@ -168,6 +174,13 @@ public class FXMLMainController implements Initializable, BarValueListener {
                 tfTimeLeft.setText(value + " sec");
             }
         }, 1000, 1000);
+        // Creates a listener which listens for onClose event.
+        stage = (Stage) pInfo.getScene().getWindow();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                gameTimer.cancel();
+            }
+        });
 
     }
 
@@ -187,5 +200,4 @@ public class FXMLMainController implements Initializable, BarValueListener {
     public void barValueChanged(Bar bar) {
         progEnergy.setProgress((double) bar.getValue() / 100);
     }
-
 }
