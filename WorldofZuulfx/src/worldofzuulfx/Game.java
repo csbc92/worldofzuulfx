@@ -87,9 +87,8 @@ public class Game implements NavigateListener, ItemPickupListener {
                 if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
 
-                    if (tile.canTeleport()) {
+                    if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
 
-                        player.navigateTo(tile.getNextRoom());
                         // The Player needs to moved with the offset 1.
                         player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
                     }
@@ -105,13 +104,13 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-
-                    // Pick up the item
-                    player.pickupItem(item);
+                    ;
                     // Reset the nextPos since a collision was detected
                     if (item.canTeleport()) {
                         player.navigateTo(item.getNextRoom());
                     } else {
+                        // Pick up the item
+                        player.pickupItem(item);
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                     }
@@ -217,19 +216,18 @@ public class Game implements NavigateListener, ItemPickupListener {
             ConsoleInfo.setConsoleData("");
 
 //            if (!command.hasSecondWord()) {
-
-                ConsoleInfo.setConsoleData("Use one of the following commands:");
-                ConsoleInfo.setConsoleData(">");
-                rpsMiniGame.play();
-                if (rpsMiniGame.getMoveComparison() == 1) {
-                    getPlayer().pickupItem(ItemFactory.makeBeer());
-                }
-                if (rpsMiniGame.getMoveComparison() == -1) {
-                    getPlayer().increaseEnergy(-5);
-                }
-                return;
+            ConsoleInfo.setConsoleData("Use one of the following commands:");
+            ConsoleInfo.setConsoleData(">");
+            rpsMiniGame.play();
+            if (rpsMiniGame.getMoveComparison() == 1) {
+                getPlayer().pickupItem(ItemFactory.makeBeer());
+            }
+            if (rpsMiniGame.getMoveComparison() == -1) {
+                getPlayer().increaseEnergy(-5);
+            }
+            return;
 //            }
- 
+
         }
         if (getPlayer().getCurrentRoom() != getRoomHandler().getRoom("Fredagsbar")) {
             ConsoleInfo.setConsoleData("There is a time and place for everything, and now is not time for a challenge.");

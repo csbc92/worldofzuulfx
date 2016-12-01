@@ -60,7 +60,7 @@ public class Player extends SpriteBase implements BarValueListener {
         drunk = false;
         inventory = new PlayerInventory(5000, 6);
         inventory.setPlayer(this);
-        
+
         ects.setValue(0);
         energy.setValue(100);
         hp.setValue(3);
@@ -172,10 +172,11 @@ public class Player extends SpriteBase implements BarValueListener {
             }
         }
     }
-    
+
     /**
      * The player will receive this item and notify listeners.
-     * @param item 
+     *
+     * @param item
      */
     public void receiveItem(Item item) {
         if (this.inventory.addItem(item)) {
@@ -190,7 +191,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param item
      */
     public void pickupItem(Item item) {
-        if (!droppedItem) {   
+        if (!droppedItem) {
             Inventory roomInventory = this.getCurrentRoom().getRoomInventory();
             if (roomInventory.contains(item.getID())) {
                 if (this.inventory.addItem(item)) {
@@ -223,21 +224,26 @@ public class Player extends SpriteBase implements BarValueListener {
     /**
      * Navigates the player to the specified room. This method notifies
      * ChangeRoomListeners.
-     *
+     * It checks if room is locked - if it is the case nothing happens.
      * @param room
+     * @return It will return true if it navigates,
      */
-    public void navigateTo(Room room) {
-        Random r = new Random();
-        Room oldRoom = currentRoom;
-        currentRoom = room;
-        alcoCounter = 0;
-        // Generates random number for alcoTolerance whenever the player changes room.
-        setAlcoTolerance(r.nextInt(5 - 2) + 2);
+    public boolean navigateTo(Room room) {
+        if (!room.isLocked()) {
+            Random r = new Random();
+            Room oldRoom = null;
+            oldRoom = currentRoom;
+            currentRoom = room;
+            alcoCounter = 0;
+            // Generates random number for alcoTolerance whenever the player changes room.
+            setAlcoTolerance(r.nextInt(5 - 2) + 2);
 
-        // Decrease the players energy each time he navigates between rooms.
-        energy.setValue(energy.getValue() - 2);
-
-        notifyChangeRoomListeners(oldRoom, currentRoom);
+            // Decrease the players energy each time he navigates between rooms.
+            energy.setValue(energy.getValue() - 2);
+            notifyChangeRoomListeners(oldRoom, currentRoom);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -271,6 +277,7 @@ public class Player extends SpriteBase implements BarValueListener {
             this.navigateListener.remove(listener);
         }
     }
+
     /**
      * Subscribe to the event when a player drops an item.
      *
@@ -359,7 +366,7 @@ public class Player extends SpriteBase implements BarValueListener {
         }
     }
 
-     /**
+    /**
      * Subscribe to the event when a player receives an item.
      *
      * @param listener
@@ -380,6 +387,7 @@ public class Player extends SpriteBase implements BarValueListener {
             this.itemReceivedListener.remove(listener);
         }
     }
+
     /**
      * Method used to notify ItemPickupListeners
      *
@@ -392,7 +400,7 @@ public class Player extends SpriteBase implements BarValueListener {
             }
         }
     }
-    
+
     /**
      * Method used to notify ItemPickupListeners
      *
@@ -445,7 +453,7 @@ public class Player extends SpriteBase implements BarValueListener {
             }
         }
     }
-    
+
     /**
      * Method used to notify ItemReceivedListeners
      *
@@ -468,7 +476,7 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void drop(Item i) {
         if (this.inventory.removeItem(i)) {
-            i.move(this.getX()-1, this.getY()-1);
+            i.move(this.getX() - 1, this.getY() - 1);
             this.currentRoom.getRoomInventory().addItem(i);
             this.currentRoom.draw();
             setDroppedItem(true);
@@ -561,7 +569,7 @@ public class Player extends SpriteBase implements BarValueListener {
     public void barValueChanged(Bar bar) {
         if (bar.getValue() <= 0 || isDrunk() == true) {
             // TODO - Håndter blackout!
-        //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
+            //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
             //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
             if (hp.getValue() > 0) {

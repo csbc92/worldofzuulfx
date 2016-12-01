@@ -5,17 +5,10 @@
  */
 package worldofzuulfx.Inventory;
 
-import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import worldofzuulfx.ConsoleInfo;
-import worldofzuulfx.Events.ItemDropEvent;
-import worldofzuulfx.Events.ItemPickupEvent;
-import worldofzuulfx.Events.ItemUseEvent;
-import worldofzuulfx.Interfaces.ItemDropListener;
-import worldofzuulfx.Interfaces.ItemPickupListener;
-import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Items.Book;
 import worldofzuulfx.Items.Clock;
 import worldofzuulfx.Items.CoffeeVoucher;

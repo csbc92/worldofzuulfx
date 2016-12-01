@@ -52,6 +52,7 @@ public class QuestInventory {
         });
 
         Quest goToExamnRoomQ = qFactory.roomQuest("Exam", "Go to the examn room.", null);
+        //TODO Quest skal laves om, så exam er låst.
         roomHandler.getRoom("Exam").setLocked(false); // Temporarily unlock so the player can navigate here
         goToExamnRoomQ.setPostAction(() -> {
 
