@@ -21,4 +21,8 @@ public class ItemReceivedEvent {
 
         this.item = item;
     }
+    
+    public Item getItem() {
+        return this.item;
+    }
 }

@@ -46,7 +46,8 @@ public class CoffeeVoucher extends Item {
     public void use(Player player) {
         if (player.getCurrentRoom().getID().equalsIgnoreCase("Canteen")) {
             if (this.checkAmount()) {
-                if (player.getInventory().addItem(ItemFactory.makeCoffee())) {
+                Item coffee = ItemFactory.makeCoffee();
+                if (player.getInventory().addItem(coffee)) {
                  voucherAmount--;   
                 }         
             } else {

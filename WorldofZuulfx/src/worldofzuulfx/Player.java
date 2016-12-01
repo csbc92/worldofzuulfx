@@ -71,6 +71,7 @@ public class Player extends SpriteBase implements BarValueListener {
         itemUseListeners = new ArrayList<>();
         inactiveQuests = new ArrayList<>();
         itemDropListeners = new ArrayList<>();
+        itemReceivedListener = new ArrayList<>();
         droppedItem = false;
         addItemUseListener(inventory);
         addItemPickupListener(inventory);
@@ -170,6 +171,16 @@ public class Player extends SpriteBase implements BarValueListener {
                 // Notify listeners that an item was delivered.
                 notifyItemDeliveredListeners(receiver, item);
             }
+        }
+    }
+    
+    /**
+     * The player will receive this item and notify listeners.
+     * @param item 
+     */
+    public void receiveItem(Item item) {
+        if (this.inventory.addItem(item)) {
+            this.notifyItemReceivedListeners(item);
         }
     }
 

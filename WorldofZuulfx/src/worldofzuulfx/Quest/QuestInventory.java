@@ -7,6 +7,7 @@ package worldofzuulfx.Quest;
 
 import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
+import worldofzuulfx.Items.Item;
 
 import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Items.Note;
@@ -72,7 +73,7 @@ public class QuestInventory {
             roomHandler.getRoom("Bookstore").setLocked(false);
         });
 
-        Quest goToU163RoomQ = qFactory.roomQuest("U163", "Go to teaching room U163.", null);
+        Quest goToU163RoomQ = qFactory.roomQuest("U163", "Go to teaching room U163.", new Reward(ItemFactory.makeCoffeeVoucher(), 0));
         goToU163RoomQ.setPostAction(() -> {
 
             String postCompleteMessage = "This is the teaching room for Object Oriented Programming."
@@ -84,7 +85,6 @@ public class QuestInventory {
                     + "You can exchange Coffee Vouchers for coffee in the canteen. "
                     + "\n\nHurry up! The lesson is about to begin!";
             ConsoleInfo.setConsoleData(postCompleteMessage);
-            player.getInventory().addItem(ItemFactory.makeCoffeeVoucher());
         });
 
         Quest goToCanteenQ = qFactory.roomQuest("Canteen", "Go to the Canteen.", null);
@@ -123,6 +123,11 @@ public class QuestInventory {
                     + "\n\nFind your way to the Book store and collect the book. "
                     + "Remember that you can use the map if you’re lost.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
+            
+            Item oopBook = ItemFactory.makeBook("OOP-book");
+            oopBook.setX(128);
+            oopBook.setY(128);
+            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(oopBook);
         });
 
         Quest goToBookStoreQ = qFactory.roomQuest("Bookstore", "Go to the Bookstore", null);
@@ -132,9 +137,7 @@ public class QuestInventory {
                     + "\n\nTo search a room for items type ‘search’ in the console. "
                     + "To collect an item type ‘take’ followed by the name of the item you want to collect. "
                     + "e.g. ‘take oopbook’ in the console.";
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-
-            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook("OOP-Book"));
+            ConsoleInfo.setConsoleData(postCompleteMessage);            
         });
 
         Quest returnToU163 = qFactory.roomQuest("U163", "Return to U163", null);
