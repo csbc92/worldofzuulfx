@@ -8,10 +8,6 @@ package worldofzuulfx.Inventory;
 import java.util.ArrayList;
 import worldofzuulfx.Items.Item;
 
-/**
- *
- * @author JV
- */
 public class Inventory {
 
     private final int capacity;

@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Game;
 import worldofzuulfx.Inventory.Inventory;
-import worldofzuulfx.Inventory.PInventory;
+import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Layers;
 import worldofzuulfx.Room;

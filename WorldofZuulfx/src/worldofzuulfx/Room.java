@@ -6,7 +6,7 @@ package worldofzuulfx;
  * the current room. Room can set exits and get them as well.
  *
  */
-import worldofzuulfx.Inventory.PInventory;
+import worldofzuulfx.Inventory.PlayerInventory;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;

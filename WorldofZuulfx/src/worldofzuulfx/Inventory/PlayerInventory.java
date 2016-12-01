@@ -29,7 +29,7 @@ import worldofzuulfx.Player;
  *
  *
  */
-public class PInventory extends Inventory implements ItemUseListener, ItemPickupListener, ItemDropListener {
+public class PlayerInventory extends Inventory {
 
 //    private final int capacity;
 //    private final int maxWeight;
@@ -41,7 +41,7 @@ public class PInventory extends Inventory implements ItemUseListener, ItemPickup
     private Item selectedItem;
     private Rectangle selectionRect;
 
-    public PInventory(int maxWeight, int capacity) {
+    public PlayerInventory(int maxWeight, int capacity) {
         super(maxWeight, capacity);
     }
 
@@ -96,7 +96,7 @@ public class PInventory extends Inventory implements ItemUseListener, ItemPickup
             if (i instanceof Book) {
                 txt.append("Use the book");
             }
-             if (i instanceof Clock) {
+            if (i instanceof Clock) {
                 txt.append("Use the clock");
             }
             ConsoleInfo.setItemData(txt.toString());
@@ -141,26 +141,6 @@ public class PInventory extends Inventory implements ItemUseListener, ItemPickup
     public void setLayer(Pane layer) {
         this.layer = layer;
     }
-
-    @Override
-    public void itemUsed(ItemUseEvent event) {
-        if (getItemList().isEmpty()) {
-            selectItem(null);
-        } else {
-            selectItem(getItemList().get(0));
-        }
-        draw(true);
-    }
-
-    @Override
-    public void itemPickedUp(ItemPickupEvent event) {
-        if (getSelectedItem() == null) {
-            selectedItem = event.getItem();
-        }
-        draw(true);
-
-    }
-
     /**
      * @return the selectedItem
      */
@@ -183,13 +163,30 @@ public class PInventory extends Inventory implements ItemUseListener, ItemPickup
     }
 
     @Override
-    public void itemDropped(ItemDropEvent event) {
-        if (getItemList().isEmpty()) {
-            selectItem(null);
-        } else {
-            selectItem(getItemList().get(0));
+    public Boolean addItem(Item item) {
+        if (super.addItem(item)) {
+            if (getItemList().isEmpty()) {
+                selectItem(null);
+            } else {
+                selectItem(getItemList().get(0));
+            }
+            draw(true);
+            return true;
         }
-        draw(true);
+        return false;
     }
-    
+
+    @Override
+    public Boolean removeItem(Item item) {
+        if (super.removeItem(item)) {
+            if (getItemList().isEmpty()) {
+                selectItem(null);
+            } else {
+                selectItem(getItemList().get(0));
+            }
+            draw(true);
+            return true;
+        }
+        return false;
+    }
 }

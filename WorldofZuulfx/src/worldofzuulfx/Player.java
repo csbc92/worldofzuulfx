@@ -1,6 +1,6 @@
 package worldofzuulfx;
 
-import worldofzuulfx.Inventory.PInventory;
+import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Quest.Quest;
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,7 +32,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private Bar energy;
     private Bar hp;
     private boolean drunk;
-    private PInventory inventory;
+    private PlayerInventory inventory;
     // TODO skal dette flyttes ind i QuestInventory, så alt er samlet et sted?
     private Quest activeQuest;
     private ArrayList<Quest> inactiveQuests;
@@ -59,7 +59,7 @@ public class Player extends SpriteBase implements BarValueListener {
         energy.addBarValueListener(this);
         hp = new Bar(0, 3);
         drunk = false;
-        inventory = new PInventory(5000, 6);
+        inventory = new PlayerInventory(5000, 6);
         inventory.setPlayer(this);
         
         ects.setValue(0);
@@ -75,9 +75,7 @@ public class Player extends SpriteBase implements BarValueListener {
         itemDropListeners = new ArrayList<>();
         itemReceivedListener = new ArrayList<>();
         droppedItem = false;
-        addItemUseListener(inventory);
-        addItemPickupListener(inventory);
-        addItemDropListener(inventory);
+
     }
 
     public int getECTS() {
@@ -113,7 +111,7 @@ public class Player extends SpriteBase implements BarValueListener {
         }
     }
 
-    public PInventory getInventory() {
+    public PlayerInventory getInventory() {
         return inventory;
     }
 
@@ -473,7 +471,7 @@ public class Player extends SpriteBase implements BarValueListener {
         if (this.inventory.removeItem(i)) {
             i.move(this.getX()-1, this.getY()-1);
             this.currentRoom.getRoomInventory().addItem(i);
-            this.currentRoom.drawItems();
+            this.currentRoom.draw();
             setDroppedItem(true);
             notifyItemDropListeners(i);
         }
