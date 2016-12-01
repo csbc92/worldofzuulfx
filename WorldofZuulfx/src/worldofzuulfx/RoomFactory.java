@@ -30,30 +30,22 @@ public class RoomFactory {
         Util.newPropFile();
 
         Util.loadFile("rooms.data");
-
-        return Util.to2d(Util.getProp(roomName), "\r", ", ");
+        int [][] tileLayout;
+        tileLayout = Util.strTo2d(Util.getProp(roomName), "\r", ", ");
+        return tileLayout;
     }
 
     public static void StoreRooms(ArrayList<Room> list) {
+        int counter = 0;
         Util.newPropFile();
-        layout = new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
-        {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
-        {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
-        {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
-
         for (Room room : list) {
             String result = Arrays.stream(room.getTileMap().getTileTerrainLayout()).map(Arrays::toString).collect(Collectors.joining(System.lineSeparator()));
-            Util.setProp(room.getID(), result);
+            String roomID = room.getID();
+            Util.setProp(roomID, result);
+            Util.setProp(roomID + "." +"description", room.getShortDescription());
+            Util.setProp("numItems", Integer.toString(room.getRoomInventory().getSize()));
+            
+            Util.setProp(roomID + "." + counter, result);
         }
         Util.storeFile("rooms.data");
     }

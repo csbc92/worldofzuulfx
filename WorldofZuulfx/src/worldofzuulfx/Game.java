@@ -4,22 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
-import worldofzuulfx.Events.ItemPickupEvent;
-import worldofzuulfx.Events.NavigateEvent;
-import worldofzuulfx.Interfaces.ItemPickupListener;
-import worldofzuulfx.Interfaces.NavigateListener;
-
-import worldofzuulfx.Items.Item;
-import worldofzuulfx.Items.ItemFactory;
-
+import worldofzuulfx.Events.*;
+import worldofzuulfx.Interfaces.*;
+import worldofzuulfx.Items.*;
 import worldofzuulfx.NPC.*;
-import worldofzuulfx.Quest.Quest;
-
 import worldofzuulfx.Minigame.RockPaperScissors;
 import worldofzuulfx.Quest.QuestInventory;
 
-import worldofzuulfx.tiles.Tile;
-import worldofzuulfx.tiles.TileLoader;
+import worldofzuulfx.tiles.*;
 
 public class Game implements NavigateListener, ItemPickupListener {
 
@@ -29,7 +21,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Player player;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-    
+
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
@@ -61,15 +53,15 @@ public class Game implements NavigateListener, ItemPickupListener {
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                
+
                 updateSprites();
 
                 checkCollisions();
 
                 cleanupSprites();
-                
+
                 if (isFinished()) {
-                    timer.stop();   
+                    timer.stop();
                 }
 
             }
@@ -207,8 +199,6 @@ public class Game implements NavigateListener, ItemPickupListener {
         // Velkomst
         ConsoleInfo.setConsoleData("Welcome " + getPlayer().getName() + ", to the World of Zuul!");
         ConsoleInfo.setConsoleData("World of Zuul is a new, incredibly boring adventure game.");
-        ConsoleInfo.setConsoleData("Type '" + CommandWord.HELP + "' if you need help.");
-        ConsoleInfo.setConsoleData("");
         showInfo();
     }
 
@@ -217,7 +207,7 @@ public class Game implements NavigateListener, ItemPickupListener {
      *
      * @param command
      */
-    private void challenge(Command command) {
+    private void challenge() {
         RockPaperScissors rpsMiniGame = new RockPaperScissors();
 
         if (getPlayer().getCurrentRoom() == getRoomHandler().getRoom("Fredagsbar")) {
@@ -226,7 +216,7 @@ public class Game implements NavigateListener, ItemPickupListener {
             ConsoleInfo.setConsoleData("Just kidding. If you win I will give you coffee, if you lose then your energy will drain");
             ConsoleInfo.setConsoleData("");
 
-            if (!command.hasSecondWord()) {
+//            if (!command.hasSecondWord()) {
 
                 ConsoleInfo.setConsoleData("Use one of the following commands:");
                 ConsoleInfo.setConsoleData(">");
@@ -238,23 +228,11 @@ public class Game implements NavigateListener, ItemPickupListener {
                     getPlayer().increaseEnergy(-5);
                 }
                 return;
-            }
-            ConsoleInfo.setConsoleData("Just type 'use' - no need for a second word");
-
+//            }
+ 
         }
         if (getPlayer().getCurrentRoom() != getRoomHandler().getRoom("Fredagsbar")) {
             ConsoleInfo.setConsoleData("There is a time and place for everything, and now is not time for a challenge.");
-        }
-    }
-
-    public boolean quit(Command command) {
-        // Dette tjekker om brugeren skriver to ord - f.eks. "quit game". Dette vil resultere i "Quit what?"
-        // Hvis nej, så sendes en True retur.
-        if (command.hasSecondWord()) {
-            ConsoleInfo.setConsoleData("Quit what?");
-            return false;
-        } else {
-            return true;
         }
     }
 

@@ -286,6 +286,10 @@ public class Inventory implements ItemUseListener, ItemPickupListener, ItemDropL
     public Item getSelectedItem() {
         return selectedItem;
     }
+    
+    public int getSize() {
+        return itemList.size();
+    }
 
     /**
      * @return the player
@@ -310,5 +314,5 @@ public class Inventory implements ItemUseListener, ItemPickupListener, ItemDropL
         }
         draw(true);
     }
-
+    
 }
