@@ -131,19 +131,18 @@ public class Room {
     }
 
     public NPC getNPC(String ID) {
-
         for (NPC npc : this.npcList) {
             if (npc.getID().equalsIgnoreCase(ID)) {
                 return npc;
             }
         }
-
         return null;
     }
 
     public TileMap getTileMap() {
         return this.groundTiles;
     }
+
     public void drawItems() {
         // Clear the object layer before drawing new objects.
         objectLayer.getChildren().clear();
@@ -154,6 +153,7 @@ public class Room {
             item.updateUI();
         }
     }
+
     public void draw() {
         groundTiles.draw(groundLayer);
 

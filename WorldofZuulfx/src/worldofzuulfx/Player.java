@@ -42,7 +42,6 @@ public class Player extends SpriteBase implements BarValueListener {
     private NPC nearNPC;
     private boolean droppedItem;
     private int timeLeft;
-    private ArrayList<NavigateListener> changeRoomListeners;
     private ArrayList<ItemPickupListener> itemPickupListeners;
     private ArrayList<ItemDropListener> itemDropListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
