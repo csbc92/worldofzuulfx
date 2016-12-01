@@ -9,6 +9,7 @@ import worldofzuulfx.Interfaces.*;
 import worldofzuulfx.Items.*;
 import worldofzuulfx.NPC.*;
 import worldofzuulfx.Minigame.RockPaperScissors;
+import worldofzuulfx.Quest.Quest;
 import worldofzuulfx.Quest.QuestInventory;
 
 import worldofzuulfx.tiles.*;
@@ -39,6 +40,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         initPlayer();
 
         initNPCs();
+        initPartyGuy();
         questInventory.initQuests(roomHandler, player);
 
         gameLoop();
@@ -145,8 +147,8 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     private void initPartyGuy() {
         // TODO: Change image on partyguy
-        partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(88).getImageView().getImage());
-        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
+        partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(123).getImageView().getImage());
+//        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
     }
 
     /**
@@ -255,6 +257,17 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     @Override
     public void navigated(NavigateEvent event) {
+        Quest quest = player.getInactiveQuests().get("goToCampusQ");
+
+        if (quest != null && quest.isCompleted()) {
+            
+            if (!player.getCurrentRoom().getID().equals("downunder")) {
+                partyguy.move(256, 256);
+                partyguy.spawn(getRoomHandler().getRooms(false));
+            } else {
+                partyguy.navigateTo(getRoomHandler().getRoom("downunder"));
+            }
+        }
         event.getNewRoom().draw();
     }
 

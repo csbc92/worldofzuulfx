@@ -3,6 +3,7 @@ package worldofzuulfx;
 import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Quest.Quest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -35,7 +36,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private PlayerInventory inventory;
     // TODO skal dette flyttes ind i QuestInventory, så alt er samlet et sted?
     private Quest activeQuest;
-    private ArrayList<Quest> inactiveQuests;
+    private HashMap<String, Quest> inactiveQuests;
     private Room currentRoom;
     private int alcoTolerance;
     private int alcoCounter;
@@ -70,7 +71,7 @@ public class Player extends SpriteBase implements BarValueListener {
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
         itemUseListeners = new ArrayList<>();
-        inactiveQuests = new ArrayList<>();
+        inactiveQuests = new HashMap<>();
         itemDropListeners = new ArrayList<>();
         itemReceivedListener = new ArrayList<>();
         droppedItem = false;
@@ -133,7 +134,7 @@ public class Player extends SpriteBase implements BarValueListener {
 
     public void untrackQuest(Quest q) {
         if (activeQuest != null) {
-            inactiveQuests.add(q);
+            getInactiveQuests().put(q.getId(), q);
             activeQuest = null;
         }
     }
@@ -621,5 +622,12 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
+    }
+
+    /**
+     * @return the inactiveQuests
+     */
+    public HashMap<String, Quest> getInactiveQuests() {
+        return inactiveQuests;
     }
 }

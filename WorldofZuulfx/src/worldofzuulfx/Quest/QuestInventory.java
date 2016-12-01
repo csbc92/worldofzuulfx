@@ -42,14 +42,14 @@ public class QuestInventory {
         questHandler = new QuestHandler(player);
 
         // Create quests
-        Quest goToCampusQ = qFactory.roomQuest("Campus", "Go to Campus", null);
+        Quest goToCampusQ = qFactory.roomQuest("goToCampusQ", "Campus", "Go to Campus", null);
         goToCampusQ.setPostAction(() -> {
             String postCompleteMessage = "The final exam for the semester awaits, but you're not prepared. "
                     + "\nYou have spent your time on anything else than studying.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest goToExamnRoomQ = qFactory.roomQuest("Exam", "Go to the exam room.", null);
+        Quest goToExamnRoomQ = qFactory.roomQuest("goToExamnRoomQ", "Exam", "Go to the exam room.", null);
         //TODO Quest skal laves om, så exam er låst.
         roomHandler.getRoom("Exam").setLocked(false); // Temporarily unlock so the player can navigate here
         goToExamnRoomQ.setPostAction(() -> {
@@ -72,7 +72,7 @@ public class QuestInventory {
             roomHandler.getRoom("Bookstore").setLocked(false);
         });
 
-        Quest goToU163RoomQ = qFactory.roomQuest("U163", "Go to teaching room U163.", new Reward(ItemFactory.makeCoffeeVoucher(), 0));
+        Quest goToU163RoomQ = qFactory.roomQuest("goToU163RoomQ", "U163", "Go to teaching room U163.", new Reward(ItemFactory.makeCoffeeVoucher(), 0));
         goToU163RoomQ.setPostAction(() -> {
 
             String postCompleteMessage = "This is the teaching room for Object Oriented Programming."
@@ -86,14 +86,14 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest goToCanteenQ = qFactory.roomQuest("Canteen", "Go to the Canteen.", null);
+        Quest goToCanteenQ = qFactory.roomQuest("goToCanteenQ", "Canteen", "Go to the Canteen.", null);
         goToCanteenQ.setPostAction(() -> {
             String postCompleteMessage = "This is the canteen where you can exchange Coffee Vouchers for coffee"
                     + "\n\nUse the Coffee Voucher by typing 'use' followed by 'coffee voucher' in the console.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest coffeeQ = qFactory.pickupItemQuest("coffee", "Buy a coffee.", null);
+        Quest coffeeQ = qFactory.pickupItemQuest("coffeeQ", "coffee", "Buy a coffee.", null);
         coffeeQ.setPostAction(() -> {
             String postCompleteMessage = "Quickly! Bring the coffee to Anders in U163.";
 
@@ -101,7 +101,7 @@ public class QuestInventory {
         });
 
         NPC anders = roomHandler.getRoom("U163").getNPC("Anders");
-        Quest deliverCoffeeQ = qFactory.deliveryQuest("coffee", anders, "Deliver the coffee to Anders.", null);
+        Quest deliverCoffeeQ = qFactory.deliveryQuest("deliverCoffeeQ", "coffee", anders, "Deliver the coffee to Anders.", null);
         deliverCoffeeQ.setPostAction(() -> {
             String postCompleteMessage = "Anders:"
                     + "\n\"Coffee is the source for maintaining your energy-level. "
@@ -114,7 +114,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest leaveU163Q = qFactory.roomQuest("Knoldene", "Leave U163", null);
+        Quest leaveU163Q = qFactory.roomQuest("leaveU163Q", "Knoldene", "Leave U163", null);
         leaveU163Q.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
                     + "\n\"The OOP lesson has not finished yet. To attend to the course, you need your OOP book. "
@@ -129,7 +129,7 @@ public class QuestInventory {
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(oopBook);
         });
 
-        Quest goToBookStoreQ = qFactory.roomQuest("Bookstore", "Go to the Bookstore", null);
+        Quest goToBookStoreQ = qFactory.roomQuest("goToBookStoreQ", "Bookstore", "Go to the Bookstore", null);
         goToBookStoreQ.setPostAction(() -> {
             String postCompleteMessage = "This is the Book store. "
                     + "\nIn here you can collect books that are needed to attend to different courses at the university. "
@@ -139,14 +139,13 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);            
         });
 
-        Quest returnToU163 = qFactory.roomQuest("U163", "Return to U163", null);
+        Quest returnToU163 = qFactory.roomQuest("returnToU163", "U163", "Return to U163", null);
         returnToU163.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
                     + "\n\"Now that you have the book, the course can begin.\"";
     
             ConsoleInfo.setConsoleData(postCompleteMessage);
-            //TODO Spawn af PartyGuy skal håndteres
-           // initPartyGuy();
+            
         });
         
         Note oopNote = ItemFactory.makeNote("OOP Lecture notes."
@@ -168,7 +167,7 @@ public class QuestInventory {
                 + "\n     det IsItHealthy = vaccine"
                 + "\n}");
                 
-        Quest oopLecture = qFactory.roomQuest("U163", "Participate in OOP lecture", new Reward(oopNote, 10));
+        Quest oopLecture = qFactory.roomQuest("oopLecture", "U163", "Participate in OOP lecture", new Reward(oopNote, 10));
         oopLecture.setPostAction(() -> {
             String postCompleteMessage = "You have now completed the OOPLecture"
                     + "\nLook in your inventory for your notes";
@@ -176,7 +175,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
        
-        Quest u170Lecture = qFactory.roomQuest("U170", "Participate in lecture", null);
+        Quest u170Lecture = qFactory.roomQuest("u170Lecture", "U170", "Participate in lecture", null);
         u170Lecture.setPostAction(() -> {
             String postCompleteMessage = "Lone:"
                     + "\n\"Welcome to the ISE-lecture."
@@ -188,7 +187,7 @@ public class QuestInventory {
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook("ISE-Book"));
         });
 
-        Quest bookstoreIse = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
+        Quest bookstoreIse = qFactory.roomQuest("bookstoreIse", "Bookstore", "Go to Bookstore", null);
         bookstoreIse.setPostAction(() -> {
             String postCompleteMessage = "Bookstore"
                     + "\nSearch for the ISE-Book";
@@ -196,7 +195,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest returnToU170 = qFactory.roomQuest("U170", "Return to U170", null);
+        Quest returnToU170 = qFactory.roomQuest("returnToU170", "U170", "Return to U170", null);
         returnToU170.setPostAction(() -> {
             String postCompleteMessage = "Lone:"
                     + "\n\"Great! You've collected the book."
@@ -213,13 +212,13 @@ public class QuestInventory {
                 + "\n1: Listen to the requirement the customer asks for, it is important."
                 + "\n2: Give the customer advices, is there something you can add or is the idea already created."
                 + "\n3: Go thought the steps of each model");
-        Quest iseLecture = qFactory.roomQuest("U170", "Participate in ISE lecture", new Reward(iseNote, 10));
+        Quest iseLecture = qFactory.roomQuest("iseLecture", "U170", "Participate in ISE lecture", new Reward(iseNote, 10));
         iseLecture.setPostAction(() -> {
             String postCompleteMessage = "";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
-        Quest u180Lecture = qFactory.roomQuest("U180", "Participate in lecture", null);
+        Quest u180Lecture = qFactory.roomQuest("u180Lecture", "U180", "Participate in lecture", null);
         u180Lecture.setPostAction(() -> {
             String postCompleteMessage = "Erik:"
                     + "\n\"Welcome to the COS-lecture."
@@ -231,14 +230,14 @@ public class QuestInventory {
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook("COS-Book"));
         });
 
-        Quest bookstoreCos = qFactory.roomQuest("Bookstore", "Go to Bookstore", null);
+        Quest bookstoreCos = qFactory.roomQuest("bookstoreCos", "Bookstore", "Go to Bookstore", null);
         bookstoreCos.setPostAction(() -> {
             String postCompleteMessage = "Search for the COS Book";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest returnToU180 = qFactory.roomQuest("u180", "Return to U180", null);
+        Quest returnToU180 = qFactory.roomQuest("returnToU180", "u180", "Return to U180", null);
         returnToU180.setPostAction(() -> {
             String postCompleteMessage = "Erik:"
                     + "\n\"Great! You've collected the book."
@@ -268,7 +267,7 @@ public class QuestInventory {
                 + "\nOr"
                 + "\n40A4 where we move the bit pattern found in register A and copy it to register 4)");
         
-        Quest cosLecture = qFactory.roomQuest("u180", "Participate in COS lecture", new Reward(cosNote, 10));
+        Quest cosLecture = qFactory.roomQuest("cosLecture", "u180", "Participate in COS lecture", new Reward(cosNote, 10));
         cosLecture.setPostAction(() -> {
             String postCompleteMessage = "";
             
