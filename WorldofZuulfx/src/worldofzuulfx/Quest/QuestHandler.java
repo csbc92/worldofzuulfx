@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
 import worldofzuulfx.Events.ItemReceivedEvent;
+import worldofzuulfx.Events.ItemUseEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Player;
 import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.Interfaces.ItemDeliveredListener;
 import worldofzuulfx.Interfaces.ItemReceivedListener;
+import worldofzuulfx.Interfaces.ItemUseListener;
 
 
-public class QuestHandler implements NavigateListener, ItemPickupListener, ItemDeliveredListener, ItemReceivedListener{
+public class QuestHandler implements NavigateListener, ItemPickupListener, ItemDeliveredListener, ItemUseListener {
     
     private final Player player;
     
@@ -21,6 +23,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
         this.player.addNavigateListener(this);
         this.player.addItemPickupListener(this);
         this.player.addItemDeliveredListener(this);
+        this.player.addItemUseListener(this);
     }
    
     @Override
@@ -38,8 +41,8 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
         this.completeQuest();
     }
     
-     @Override
-    public void itemReceived(ItemReceivedEvent event) {
+    @Override
+    public void itemUsed(ItemUseEvent event) {
         this.completeQuest();
     }
 
@@ -72,7 +75,5 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
                 }
             }            
         }
-    }
-
-   
+    }   
 }

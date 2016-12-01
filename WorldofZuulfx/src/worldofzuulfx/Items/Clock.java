@@ -16,7 +16,7 @@ public class Clock extends Item {
     private int timeValue;
 
     public Clock(String ID, String description, int weight, int time) {
-        super(Game.tiles.get(56).clone().getImageView().getImage(), ID, description, weight);
+        super(Game.tiles.get(101).clone().getImageView().getImage(), ID, description, weight);
         this.timeValue = time;
 
     }
