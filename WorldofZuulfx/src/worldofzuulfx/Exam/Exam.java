@@ -5,19 +5,11 @@
  */
 package worldofzuulfx.Exam;
 
-import java.beans.XMLEncoder;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Properties;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Persistence.XMLSerial;
-import worldofzuulfx.Styles;
 
 public class Exam {
 
@@ -54,14 +46,14 @@ public class Exam {
      * answer the question. There are several options per question.
      */
     public void play() {
-
+        // TODO Exam
         ConsoleInfo.clearData();
         ConsoleInfo.setConsoleData("Welcome to your exam");
         ConsoleInfo.setConsoleData("");
         for (Question question : questionList) {
             ConsoleInfo.setConsoleData(question.getDescription());
             listOptions(question);
-            //TODO Giv en svar til eksamen
+            //TODO Giv et svar til eksamen
 //            question.setAnswer(Starter.gui.getTxt());
 
         }

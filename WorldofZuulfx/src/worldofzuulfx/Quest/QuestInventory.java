@@ -45,13 +45,11 @@ public class QuestInventory {
         Quest goToCampusQ = qFactory.roomQuest("Campus", "Go to Campus", null);
         goToCampusQ.setPostAction(() -> {
             String postCompleteMessage = "The final exam for the semester awaits, but you're not prepared. "
-                    + "\nYou have spent your time on anything else than studying."
-                    + "\n\nFind your way to the exam room by using the map. "
-                    + "Remember you can navigate using the go-command.";
+                    + "\nYou have spent your time on anything else than studying.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
-        Quest goToExamnRoomQ = qFactory.roomQuest("Exam", "Go to the examn room.", null);
+        Quest goToExamnRoomQ = qFactory.roomQuest("Exam", "Go to the exam room.", null);
         //TODO Quest skal laves om, så exam er låst.
         roomHandler.getRoom("Exam").setLocked(false); // Temporarily unlock so the player can navigate here
         goToExamnRoomQ.setPostAction(() -> {
@@ -66,7 +64,7 @@ public class QuestInventory {
             // Navigate the player out of the exam room
             Room campus = roomHandler.getRoom("Campus");
             // TODO 
-            player.navigateSilentlyTo(campus);
+    //        player.navigateSilentlyTo(campus);
             roomHandler.getRoom("Exam").setLocked(true); // Lock the exam room again
 
             // unlock rooms so the player can move further

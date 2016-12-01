@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
@@ -76,6 +77,8 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Text tfTimeLeft;
     private Stage stage;
     private Timer gameTimer;
+    @FXML
+    private Label lQuest;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,8 +87,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
 
-        gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+//        gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
+        lQuest.textProperty().bind(ConsoleInfo.questProperty());
         pMenu.setVisible(true);
         pInfo.setVisible(false);
 

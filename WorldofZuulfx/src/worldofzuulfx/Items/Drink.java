@@ -5,19 +5,9 @@
  */
 package worldofzuulfx.Items;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
-import worldofzuulfx.Main;
-import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
-import worldofzuulfx.Styles;
-import worldofzuulfx.Util;
 
 /**
  *

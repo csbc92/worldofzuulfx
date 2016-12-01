@@ -57,7 +57,7 @@ public class Room {
 
     public String getLongDescription() {
         // Get long description (Getter-methode)
-        return "You are " + description + ".\n" + getExitString();
+        return "You are " + description + ".\n";
     }
 
     private String getExitString() {

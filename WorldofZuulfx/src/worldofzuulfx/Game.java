@@ -44,7 +44,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         gameLoop();
 
         player.navigateTo(roomHandler.getRoom("outside"));
-        play();
+        printWelcome();
     }
 
     private void gameLoop() {
@@ -180,24 +180,11 @@ public class Game implements NavigateListener, ItemPickupListener {
         player.getInventory().setLayer(layers.getInventoryLayer());
     }
 
-    public void play() {
-        printWelcome(); //En velkomst 
-
-        // Nedensåtende håndter, at programmet hele tiden spørger efter user-input
-        // processCommand returner en Boolean - skal programmet forsætte eller ej.
-//        while (!finished) {
-//            Command command = parser.getCommand(); // Spørger efter user-input
-//            //TODO Der skal implementeres en ny måde at håndtere gameplayet på!
-//            // Starter.gui.clearTxt();
-//            finished = processCommand(command);
-//        }
-        ConsoleInfo.setConsoleData("Thank you for playing.  Good bye.");
-    }
-
     private void printWelcome() {
         // Velkomst
-        ConsoleInfo.setConsoleData("Welcome " + getPlayer().getName() + ", to the World of Zuul!");
-        ConsoleInfo.setConsoleData("World of Zuul is a new, incredibly boring adventure game.");
+        String welcome = "Welcome " + getPlayer().getName() + ", to the World of Zuul!"
+                + "\n World of Zuul is a new, incredibly boring adventure game.";
+        ConsoleInfo.setConsoleData(welcome);
         showInfo();
     }
 
@@ -207,13 +194,15 @@ public class Game implements NavigateListener, ItemPickupListener {
      * @param command
      */
     private void challenge() {
+        String txt;
         RockPaperScissors rpsMiniGame = new RockPaperScissors();
 
         if (getPlayer().getCurrentRoom() == getRoomHandler().getRoom("Fredagsbar")) {
-            ConsoleInfo.setConsoleData("I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*");
-            ConsoleInfo.setConsoleData("Sound trumpets! let our bloody colours wave! And either victory, or else a grave. ");
-            ConsoleInfo.setConsoleData("Just kidding. If you win I will give you coffee, if you lose then your energy will drain");
-            ConsoleInfo.setConsoleData("");
+            txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
+                    + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
+                    + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+
+            ConsoleInfo.setConsoleData(txt);
 
 //            if (!command.hasSecondWord()) {
             ConsoleInfo.setConsoleData("Use one of the following commands:");
@@ -236,10 +225,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     public void showInfo() {
         // TODO skal muligvis slettes
-        ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
-                + "\nPersons: " + getPlayer().getCurrentRoom().getPersonsString());
-        ConsoleInfo.setConsoleData("-----------------------------"
-                + "-----------------------------");
+        ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -270,7 +256,6 @@ public class Game implements NavigateListener, ItemPickupListener {
     @Override
     public void navigated(NavigateEvent event) {
         event.getNewRoom().draw();
-        ConsoleInfo.setConsoleData("Location: " + event.getNewRoom().getShortDescription());
     }
 
     @Override

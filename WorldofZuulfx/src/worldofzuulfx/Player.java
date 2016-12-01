@@ -96,18 +96,8 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param energyAmount
      */
     public void increaseEnergy(int energyAmount) {
-        if (energyAmount > 0) {
-            int currentEnergyVal = this.getEnergy();
-            int newEnergyVal = currentEnergyVal + energyAmount;
+        this.energy.increaseEnergy(energyAmount);
 
-            // Set the energy to max if the new value would otherwise
-            // be higher than what the Bar allows.
-            if (newEnergyVal > this.energy.getMax()) {
-                this.energy.setValue(this.energy.getMax());
-            } else {
-                this.energy.setValue(newEnergyVal);
-            }
-        }
     }
 
     public PlayerInventory getInventory() {
@@ -130,9 +120,11 @@ public class Player extends SpriteBase implements BarValueListener {
 
         if (overrideOldQuest) {
             this.activeQuest = quest;
+            ConsoleInfo.setQuestData(quest.getDescription());
             return true;
         } else if (this.activeQuest == null) {
             this.activeQuest = quest;
+            ConsoleInfo.setQuestData(quest.getDescription());
             return true;
         }
 
@@ -223,8 +215,9 @@ public class Player extends SpriteBase implements BarValueListener {
 
     /**
      * Navigates the player to the specified room. This method notifies
-     * ChangeRoomListeners.
-     * It checks if room is locked - if it is the case nothing happens.
+     * ChangeRoomListeners. It checks if room is locked - if it is the case
+     * nothing happens.
+     *
      * @param room
      * @return It will return true if it navigates,
      */

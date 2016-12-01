@@ -10,18 +10,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
+<GridPane fx:id="gpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="694.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="482.0" minHeight="10.0" prefHeight="482.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="482.0" minHeight="10.0" prefHeight="461.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="158.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <AnchorPane fx:id="apConsole" prefHeight="178.0" prefWidth="694.0" GridPane.rowIndex="1">
          <children>
-            <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="19.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" />
+            <TextArea fx:id="taConsol" disable="true" editable="false" focusTraversable="false" layoutX="19.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" wrapText="true">
+               <font>
+                  <Font size="10.0" />
+               </font></TextArea>
          </children>
       </AnchorPane>
       <Pane prefHeight="391.0" prefWidth="454.0">
@@ -29,19 +32,25 @@
             <Pane fx:id="pBackground" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
             <Pane fx:id="pObjects" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
             <Pane fx:id="pSprites" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
-            <Pane fx:id="pInventory" layoutX="72.0" layoutY="402.0" prefHeight="78.0" prefWidth="367.0" />
-            <Text fx:id="tItemInfo" fill="WHITE" layoutX="85.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
-            <Pane fx:id="pInfo" layoutX="460.0" layoutY="-3.0" prefHeight="493.0" prefWidth="234.0">
+            <Pane fx:id="pInventory" layoutX="72.0" layoutY="402.0" prefHeight="47.0" prefWidth="367.0" />
+            <Text fx:id="tItemInfo" fill="WHITE" layoutX="85.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
+            <Pane fx:id="pInfo" layoutX="464.0" layoutY="-9.0" prefHeight="469.0" prefWidth="234.0">
                <children>
                   <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="111.0" prefWidth="200.0" progress="1.0" />
                   <Text fill="WHITE" layoutX="17.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
                      <font>
-                        <Font size="15.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font></Text>
                   <Text fx:id="tfTimeLeft" fill="WHITE" layoutX="17.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.0">
                      <font>
                         <Font size="34.0" />
                      </font></Text>
+                  <Text fill="WHITE" layoutX="17.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="197.0" prefHeight="206.0" prefWidth="200.0" textFill="WHITE" wrapText="true" />
                </children>
             </Pane>
          </children>
