@@ -28,7 +28,7 @@ public class PartyGuy extends NPC{
             with.navigateTo(room);
         }
         this.getCurrentRoom().removePerson(this);
-        randomSpawn(rooms, q);
+        spawn(rooms, q);
     }    
     /**
     * adds partyguy to a random room
@@ -48,19 +48,5 @@ public class PartyGuy extends NPC{
     public int getRandom(){
         return random;
     }
-    /**
-     * Spawns the Partyguy randomly in a room which is not locked.
-     * @param rooms
-     * @param q 
-     */
-    public void randomSpawn(ArrayList<Room> rooms, HashMap<String, Quest> q){
-        int p;
-        p = (int)(Math.random()*12);
-        if(p==2){
-            if(q.get("goToBookStoreQ").isCompleted()){
-                setRandom((int)(Math.random()*rooms.size()));
-                this.navigateTo(rooms.get(getRandom()));
-            }
-        }
-    }
+
 }

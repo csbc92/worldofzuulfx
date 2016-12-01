@@ -30,7 +30,7 @@ public class RoomFactory {
         Util.newPropFile();
 
         Util.loadFile("rooms.data");
-        int [][] tileLayout;
+        int[][] tileLayout;
         tileLayout = Util.strTo2d(Util.getProp(roomName), "\r", ", ");
         return tileLayout;
     }
@@ -42,9 +42,9 @@ public class RoomFactory {
             String result = Arrays.stream(room.getTileMap().getTileTerrainLayout()).map(Arrays::toString).collect(Collectors.joining(System.lineSeparator()));
             String roomID = room.getID();
             Util.setProp(roomID, result);
-            Util.setProp(roomID + "." +"description", room.getShortDescription());
+            Util.setProp(roomID + "." + "description", room.getShortDescription());
             Util.setProp("numItems", Integer.toString(room.getRoomInventory().getSize()));
-            
+
             Util.setProp(roomID + "." + counter, result);
         }
         Util.storeFile("rooms.data");
@@ -130,8 +130,8 @@ public class RoomFactory {
         item6.move(256, 256);
         item6.updateUI();
         campus.getRoomInventory().addItem(item6);
-        
-         Item item7 = ItemFactory.makeClock(10);
+
+        Item item7 = ItemFactory.makeClock(10);
         item7.move(256, 256);
         item7.updateUI();
         outside.getRoomInventory().addItem(item7);

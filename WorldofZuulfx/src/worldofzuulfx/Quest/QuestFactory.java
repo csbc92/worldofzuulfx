@@ -1,6 +1,7 @@
 package worldofzuulfx.Quest;
 
-import worldofzuulfx.Inventory;
+import worldofzuulfx.Inventory.Inventory;
+import worldofzuulfx.Inventory.PInventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
@@ -67,7 +68,7 @@ public class QuestFactory {
         Quest pickupQuest = new Quest(questDescription, reward, QuestType.DYNAMIC);
 
         pickupQuest.setRequirement(() -> {
-            Inventory inventory = player.getInventory();
+            PInventory inventory = player.getInventory();
             
             if (inventory.contains(ID)) {
                 return true;

@@ -1,5 +1,6 @@
 package worldofzuulfx;
 
+import worldofzuulfx.Inventory.PInventory;
 import worldofzuulfx.Quest.Quest;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +22,7 @@ import worldofzuulfx.Interfaces.ItemReceivedListener;
 import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Quest.Reward;
 import worldofzuulfx.Interfaces.NavigateListener;
+import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.sprites.SpriteBase;
 
 public class Player extends SpriteBase implements BarValueListener {
@@ -30,7 +32,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private Bar energy;
     private Bar hp;
     private boolean drunk;
-    private Inventory inventory;
+    private PInventory inventory;
     // TODO skal dette flyttes ind i QuestInventory, så alt er samlet et sted?
     private Quest activeQuest;
     private ArrayList<Quest> inactiveQuests;
@@ -57,7 +59,7 @@ public class Player extends SpriteBase implements BarValueListener {
         energy.addBarValueListener(this);
         hp = new Bar(0, 3);
         drunk = false;
-        inventory = new Inventory(5000, 6);
+        inventory = new PInventory(5000, 6);
         inventory.setPlayer(this);
         
         ects.setValue(0);
@@ -111,7 +113,7 @@ public class Player extends SpriteBase implements BarValueListener {
         }
     }
 
-    public Inventory getInventory() {
+    public PInventory getInventory() {
         return inventory;
     }
 
@@ -214,7 +216,6 @@ public class Player extends SpriteBase implements BarValueListener {
             if (itemReward != null) {
                 this.inventory.addItem(itemReward);
             }
-
             int ectsReward = reward.getECTSPoints();
             int currentEcts = this.getECTS();
 
