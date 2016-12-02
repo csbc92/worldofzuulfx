@@ -1,6 +1,7 @@
 package worldofzuulfx.Quest;
 
 import java.util.ArrayList;
+import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
 import worldofzuulfx.Events.ItemReceivedEvent;
@@ -49,6 +50,8 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
     private void completeQuest() {
         
         Quest activeQuest = this.player.getActiveQuest();
+        
+        
         
         if (activeQuest != null ) {
 

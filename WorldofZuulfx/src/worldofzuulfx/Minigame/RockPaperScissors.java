@@ -3,7 +3,7 @@ package worldofzuulfx.Minigame;
 import java.util.Random;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
-import worldofzuulfx.Inventory;
+import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Items.Drink;
 import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Layers;

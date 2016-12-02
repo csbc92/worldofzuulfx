@@ -6,13 +6,12 @@ package worldofzuulfx;
  * the current room. Room can set exits and get them as well.
  *
  */
+import worldofzuulfx.Inventory.PlayerInventory;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import javafx.scene.layout.Pane;
-import worldofzuulfx.Events.ItemDropEvent;
-import worldofzuulfx.Events.NavigateEvent;
-import worldofzuulfx.Interfaces.ItemDropListener;
+import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.tiles.Tile;
@@ -58,7 +57,7 @@ public class Room {
 
     public String getLongDescription() {
         // Get long description (Getter-methode)
-        return "You are " + description + ".\n" + getExitString();
+        return "You are " + description + ".\n";
     }
 
     private String getExitString() {
@@ -132,19 +131,18 @@ public class Room {
     }
 
     public NPC getNPC(String ID) {
-
         for (NPC npc : this.npcList) {
             if (npc.getID().equalsIgnoreCase(ID)) {
                 return npc;
             }
         }
-
         return null;
     }
 
     public TileMap getTileMap() {
         return this.groundTiles;
     }
+
     public void drawItems() {
         // Clear the object layer before drawing new objects.
         objectLayer.getChildren().clear();
@@ -155,6 +153,7 @@ public class Room {
             item.updateUI();
         }
     }
+
     public void draw() {
         groundTiles.draw(groundLayer);
 

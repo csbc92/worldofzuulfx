@@ -4,22 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
-import worldofzuulfx.Events.ItemPickupEvent;
-import worldofzuulfx.Events.NavigateEvent;
-import worldofzuulfx.Interfaces.ItemPickupListener;
-import worldofzuulfx.Interfaces.NavigateListener;
-
-import worldofzuulfx.Items.Item;
-import worldofzuulfx.Items.ItemFactory;
-
+import worldofzuulfx.Events.*;
+import worldofzuulfx.Interfaces.*;
+import worldofzuulfx.Items.*;
 import worldofzuulfx.NPC.*;
-import worldofzuulfx.Quest.Quest;
-
 import worldofzuulfx.Minigame.RockPaperScissors;
+import worldofzuulfx.Quest.Quest;
 import worldofzuulfx.Quest.QuestInventory;
 
-import worldofzuulfx.tiles.Tile;
-import worldofzuulfx.tiles.TileLoader;
+import worldofzuulfx.tiles.*;
 
 public class Game implements NavigateListener, ItemPickupListener {
 
@@ -29,7 +22,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Player player;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
-    
+
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
@@ -47,12 +40,13 @@ public class Game implements NavigateListener, ItemPickupListener {
         initPlayer();
 
         initNPCs();
+        initPartyGuy();
         questInventory.initQuests(roomHandler, player);
 
         gameLoop();
 
         player.navigateTo(roomHandler.getRoom("outside"));
-        play();
+        printWelcome();
     }
 
     private void gameLoop() {
@@ -61,15 +55,15 @@ public class Game implements NavigateListener, ItemPickupListener {
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                
+
                 updateSprites();
 
                 checkCollisions();
 
                 cleanupSprites();
-                
+
                 if (isFinished()) {
-                    timer.stop();   
+                    timer.stop();
                 }
 
             }
@@ -95,9 +89,8 @@ public class Game implements NavigateListener, ItemPickupListener {
                 if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
                     // Reset the nextPos since a collision was detected
 
-                    if (tile.canTeleport()) {
+                    if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
 
-                        player.navigateTo(tile.getNextRoom());
                         // The Player needs to moved with the offset 1.
                         player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
                     }
@@ -113,13 +106,13 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-
-                    // Pick up the item
-                    player.pickupItem(item);
+                    ;
                     // Reset the nextPos since a collision was detected
                     if (item.canTeleport()) {
                         player.navigateTo(item.getNextRoom());
                     } else {
+                        // Pick up the item
+                        player.pickupItem(item);
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                     }
@@ -154,8 +147,8 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     private void initPartyGuy() {
         // TODO: Change image on partyguy
-        partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(88).getImageView().getImage());
-        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
+        partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(123).getImageView().getImage());
+//        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
     }
 
     /**
@@ -189,26 +182,11 @@ public class Game implements NavigateListener, ItemPickupListener {
         player.getInventory().setLayer(layers.getInventoryLayer());
     }
 
-    public void play() {
-        printWelcome(); //En velkomst 
-
-        // Nedensåtende håndter, at programmet hele tiden spørger efter user-input
-        // processCommand returner en Boolean - skal programmet forsætte eller ej.
-//        while (!finished) {
-//            Command command = parser.getCommand(); // Spørger efter user-input
-//            //TODO Der skal implementeres en ny måde at håndtere gameplayet på!
-//            // Starter.gui.clearTxt();
-//            finished = processCommand(command);
-//        }
-        ConsoleInfo.setConsoleData("Thank you for playing.  Good bye.");
-    }
-
     private void printWelcome() {
         // Velkomst
-        ConsoleInfo.setConsoleData("Welcome " + getPlayer().getName() + ", to the World of Zuul!");
-        ConsoleInfo.setConsoleData("World of Zuul is a new, incredibly boring adventure game.");
-        ConsoleInfo.setConsoleData("Type '" + CommandWord.HELP + "' if you need help.");
-        ConsoleInfo.setConsoleData("");
+        String welcome = "Welcome " + getPlayer().getName() + ", to the World of Zuul!"
+                + "\n World of Zuul is a new, incredibly boring adventure game.";
+        ConsoleInfo.setConsoleData(welcome);
         showInfo();
     }
 
@@ -217,29 +195,29 @@ public class Game implements NavigateListener, ItemPickupListener {
      *
      * @param command
      */
-    private void challenge(Command command) {
+    private void challenge() {
+        String txt;
         RockPaperScissors rpsMiniGame = new RockPaperScissors();
 
         if (getPlayer().getCurrentRoom() == getRoomHandler().getRoom("Fredagsbar")) {
-            ConsoleInfo.setConsoleData("I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*");
-            ConsoleInfo.setConsoleData("Sound trumpets! let our bloody colours wave! And either victory, or else a grave. ");
-            ConsoleInfo.setConsoleData("Just kidding. If you win I will give you coffee, if you lose then your energy will drain");
-            ConsoleInfo.setConsoleData("");
+            txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
+                    + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
+                    + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
 
-            if (!command.hasSecondWord()) {
+            ConsoleInfo.setConsoleData(txt);
 
-                ConsoleInfo.setConsoleData("Use one of the following commands:");
-                ConsoleInfo.setConsoleData(">");
-                rpsMiniGame.play();
-                if (rpsMiniGame.getMoveComparison() == 1) {
-                    getPlayer().pickupItem(ItemFactory.makeBeer());
-                }
-                if (rpsMiniGame.getMoveComparison() == -1) {
-                    getPlayer().increaseEnergy(-5);
-                }
-                return;
+//            if (!command.hasSecondWord()) {
+            ConsoleInfo.setConsoleData("Use one of the following commands:");
+            ConsoleInfo.setConsoleData(">");
+            rpsMiniGame.play();
+            if (rpsMiniGame.getMoveComparison() == 1) {
+                getPlayer().pickupItem(ItemFactory.makeBeer());
             }
-            ConsoleInfo.setConsoleData("Just type 'use' - no need for a second word");
+            if (rpsMiniGame.getMoveComparison() == -1) {
+                getPlayer().increaseEnergy(-5);
+            }
+            return;
+//            }
 
         }
         if (getPlayer().getCurrentRoom() != getRoomHandler().getRoom("Fredagsbar")) {
@@ -247,23 +225,9 @@ public class Game implements NavigateListener, ItemPickupListener {
         }
     }
 
-    public boolean quit(Command command) {
-        // Dette tjekker om brugeren skriver to ord - f.eks. "quit game". Dette vil resultere i "Quit what?"
-        // Hvis nej, så sendes en True retur.
-        if (command.hasSecondWord()) {
-            ConsoleInfo.setConsoleData("Quit what?");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public void showInfo() {
         // TODO skal muligvis slettes
-        ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription()
-                + "\nPersons: " + getPlayer().getCurrentRoom().getPersonsString());
-        ConsoleInfo.setConsoleData("-----------------------------"
-                + "-----------------------------");
+        ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -293,8 +257,18 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     @Override
     public void navigated(NavigateEvent event) {
+        Quest quest = player.getInactiveQuests().get("goToCampusQ");
+
+        if (quest != null && quest.isCompleted()) {
+            
+            if (!player.getCurrentRoom().getID().equals("downunder")) {
+                partyguy.move(256, 256);
+                partyguy.spawn(getRoomHandler().getRooms(false));
+            } else {
+                partyguy.navigateTo(getRoomHandler().getRoom("downunder"));
+            }
+        }
         event.getNewRoom().draw();
-        ConsoleInfo.setConsoleData("Location: " + event.getNewRoom().getShortDescription());
     }
 
     @Override

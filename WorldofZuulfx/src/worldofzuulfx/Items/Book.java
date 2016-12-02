@@ -17,7 +17,7 @@ public class Book extends Item {
     public void use(Player player) {
         //TODO Use book
        
-        if (player.getNearNPC() == null) {
+        if (player.getNearNPC() != null) {
             // Deliver the item to NPC.  
             player.deliverItem(player.getNearNPC(), this);
         }
