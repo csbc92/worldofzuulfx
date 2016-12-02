@@ -59,7 +59,7 @@ public class RoomFactory {
                     break;
                 }
                 case "clock": {
-                    item = ItemFactory.makeClock(600);
+                    item = ItemFactory.makeClock(30);
                     break;
                 }
                 case "note": {

@@ -132,6 +132,10 @@ public class Game implements NavigateListener, ItemPickupListener {
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                         player.setNearNPC(npc);
+                        
+                        if (npc instanceof PartyGuy) {
+                            player.getInventory().addItem(((PartyGuy) npc).giveItem());
+                        }
                     }
                     return;
                 }
