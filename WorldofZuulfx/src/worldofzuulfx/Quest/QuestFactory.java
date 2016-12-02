@@ -36,7 +36,7 @@ public class QuestFactory {
      * @return Returns the Quest.
      */
     public Quest roomQuest(String questID, String roomID, String questDescription, Reward reward) {
-        // Create the quest without any reward.
+        // Create the quest
         Quest roomQuest = new Quest(questID, questDescription, reward, QuestType.STATIC);
 
         roomQuest.setRequirement(() -> {
@@ -64,7 +64,7 @@ public class QuestFactory {
      * @return Returns the Quest.
      */
     public Quest pickupItemQuest(String questID, String itemID, String questDescription, Reward reward) {
-        // Create the quest without any reward.
+        // Create the quest
         Quest pickupQuest = new Quest(questID, questDescription, reward, QuestType.DYNAMIC);
 
         pickupQuest.setRequirement(() -> {
@@ -91,7 +91,7 @@ public class QuestFactory {
      * @return Returns the Quest.
      */
     public Quest deliveryQuest(String questID, String itemID, NPC npc, String questDescription, Reward reward) {
-        
+        // Create the quest
         Quest deliverQuest = new Quest(questID, questDescription, reward, QuestType.STATIC);
         
         deliverQuest.setRequirement(() -> {

@@ -66,5 +66,4 @@ public class PartyGuy extends NPC {
         }
         return null;
     }
-
 }
