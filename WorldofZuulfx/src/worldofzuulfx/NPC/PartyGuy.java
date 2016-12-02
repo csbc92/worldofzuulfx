@@ -51,7 +51,7 @@ public class PartyGuy extends NPC{
     /**
      * Spawns the Partyguy randomly in a room which is not locked.
      * @param rooms
-     * @param q 
+     * @param q
      */
     public void randomSpawn(ArrayList<Room> rooms, HashMap<String, Quest> q){
         int p;
