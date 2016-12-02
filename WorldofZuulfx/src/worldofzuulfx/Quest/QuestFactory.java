@@ -35,13 +35,13 @@ public class QuestFactory {
      * @return Returns the Quest.
      */
     public Quest roomQuest(String roomID, String questDescription, Reward reward) {
-        // Create the quest without any reward.
+        // Create the quest
         Quest roomQuest = new Quest(questDescription, reward, QuestType.STATIC);
 
         roomQuest.setRequirement(() -> {
             String currentRoomID = player.getCurrentRoom().getID();
             
-            // Test if the player is in the examn-room.
+            // Test if the player is in the specified room
             if (currentRoomID.equalsIgnoreCase(roomID)) {
                 return true;
             } else {
@@ -63,7 +63,7 @@ public class QuestFactory {
      * @return Returns the Quest.
      */
     public Quest pickupItemQuest(String ID, String questDescription, Reward reward) {
-        // Create the quest without any reward.
+        // Create the quest
         Quest pickupQuest = new Quest(questDescription, reward, QuestType.DYNAMIC);
 
         pickupQuest.setRequirement(() -> {
@@ -91,6 +91,7 @@ public class QuestFactory {
      */
     public Quest deliveryQuest(String ID, NPC npc, String questDescription, Reward reward) {
         
+        // Create the Quest
         Quest deliverQuest = new Quest(questDescription, reward, QuestType.STATIC);
         
         deliverQuest.setRequirement(() -> {
