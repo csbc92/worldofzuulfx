@@ -155,7 +155,7 @@ public abstract class SpriteBase {
 
     public void move(double x, double y) {
 
-        if (!canMove) {
+        if (!getCanMove()) {
             return;
         }
         // Important to add 1 pixel. Without it the player can not collides with other objects.
@@ -273,13 +273,6 @@ public abstract class SpriteBase {
     }
 
     /**
-     * Set flag that the sprite can't move anymore.
-     */
-    public void stopMovement() {
-        this.canMove = false;
-    }
-
-    /**
      * @return the imageView
      */
     public ImageView getImageView() {
@@ -387,6 +380,20 @@ public abstract class SpriteBase {
      */
     public void setNextTelePosY(double nextTelePosY) {
         this.nextTelePosY = nextTelePosY;
+    }
+
+    /**
+     * @return the canMove
+     */
+    public boolean getCanMove() {
+        return canMove;
+    }
+
+    /**
+     * @param canMove the canMove to set
+     */
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 
 }

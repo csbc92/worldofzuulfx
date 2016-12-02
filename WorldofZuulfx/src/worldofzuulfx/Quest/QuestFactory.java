@@ -1,6 +1,7 @@
 package worldofzuulfx.Quest;
 
-import worldofzuulfx.Inventory;
+import worldofzuulfx.Inventory.Inventory;
+import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
@@ -34,14 +35,14 @@ public class QuestFactory {
      * @param reward The reward of the quest.
      * @return Returns the Quest.
      */
-    public Quest roomQuest(String roomID, String questDescription, Reward reward) {
+    public Quest roomQuest(String questID, String roomID, String questDescription, Reward reward) {
         // Create the quest
-        Quest roomQuest = new Quest(questDescription, reward, QuestType.STATIC);
+        Quest roomQuest = new Quest(questID, questDescription, reward, QuestType.STATIC);
 
         roomQuest.setRequirement(() -> {
             String currentRoomID = player.getCurrentRoom().getID();
             
-            // Test if the player is in the specified room
+            // Test if the player is in the examn-room.
             if (currentRoomID.equalsIgnoreCase(roomID)) {
                 return true;
             } else {
@@ -62,14 +63,14 @@ public class QuestFactory {
      * @param reward The reward of the quest.
      * @return Returns the Quest.
      */
-    public Quest pickupItemQuest(String ID, String questDescription, Reward reward) {
+    public Quest pickupItemQuest(String questID, String itemID, String questDescription, Reward reward) {
         // Create the quest
-        Quest pickupQuest = new Quest(questDescription, reward, QuestType.DYNAMIC);
+        Quest pickupQuest = new Quest(questID, questDescription, reward, QuestType.DYNAMIC);
 
         pickupQuest.setRequirement(() -> {
-            Inventory inventory = player.getInventory();
+            PlayerInventory inventory = player.getInventory();
             
-            if (inventory.contains(ID)) {
+            if (inventory.contains(itemID)) {
                 return true;
             } else {
                 return false;
@@ -89,17 +90,16 @@ public class QuestFactory {
      * @param reward The reward of the quest.
      * @return Returns the Quest.
      */
-    public Quest deliveryQuest(String ID, NPC npc, String questDescription, Reward reward) {
-        
-        // Create the Quest
-        Quest deliverQuest = new Quest(questDescription, reward, QuestType.STATIC);
+    public Quest deliveryQuest(String questID, String itemID, NPC npc, String questDescription, Reward reward) {
+        // Create the quest
+        Quest deliverQuest = new Quest(questID, questDescription, reward, QuestType.STATIC);
         
         deliverQuest.setRequirement(() -> {
             // Check if NPC has the required item in inventory.
             NPC n = npc;
             Inventory inventory = n.getInventory();
             
-            if (inventory.contains(ID)) {
+            if (inventory.contains(itemID)) {
                 return true;
             } else {
                 return false;

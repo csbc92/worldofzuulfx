@@ -69,15 +69,11 @@ public class Util {
     /**
      * @return the prop
      */
-    public static Properties getPropFile() {
-        
-        
-        
-        
+    public static Properties getPropFile() {        
         return prop;
     }
     
-    public static int [][] to2d (String source, String outerdelim, String innerdelim) {
+    public static int [][] strTo2d (String source, String outerdelim, String innerdelim) {
 
     int [][] result = new int [source.trim().replaceAll ( "[^" + outerdelim + "]", "").length () + 1][]; 
     int count = 0;

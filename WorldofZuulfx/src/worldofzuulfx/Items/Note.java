@@ -26,6 +26,7 @@ public class Note extends Item {
 
     @Override
     public void use(Player player) {
+        //TODO use Notes
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

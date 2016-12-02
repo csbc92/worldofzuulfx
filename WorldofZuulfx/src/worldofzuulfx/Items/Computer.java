@@ -24,9 +24,10 @@ public class Computer extends Item {
     public void use(Player player) {
         //TODO Computer
        
-        if (player.getNearNPC() == null) {
+        if (player.getNearNPC() != null) {
             // Deliver the item to NPC.  
-            player.deliverItem(player.getNearNPC(), this);
+            //TODO skal man kunne aflevere til NPC
+          //  player.deliverItem(player.getNearNPC(), this);
         }
     }
 }

@@ -17,7 +17,8 @@ public final class ConsoleInfo {
     private static StringProperty conInfo = new SimpleStringProperty();
 
     private static StringProperty itemInfo = new SimpleStringProperty();
-    // methods that set/format logData based on changes from your UI
+
+    private static StringProperty questInfo = new SimpleStringProperty();
 
     // provide public access to the property
     public static StringProperty consoleProperty() {
@@ -25,7 +26,8 @@ public final class ConsoleInfo {
     }
 
     public static void setConsoleData(String data) {
-        conInfo.set(conInfo.get() + data + "\n");
+        conInfo.set(data);
+//        conInfo.set(conInfo.get() + data + "\n");
     }
 
     public static String getConsoleData() {
@@ -42,6 +44,18 @@ public final class ConsoleInfo {
 
     public static String getItemData() {
         return itemInfo.get();
+    }
+
+    public static StringProperty questProperty() {
+        return questInfo;
+    }
+
+    public static String getQuestData() {
+        return questInfo.get();
+    }
+
+    public static void setQuestData(String data) {
+        questInfo.set(data);
     }
 
     public static void clearData() {
