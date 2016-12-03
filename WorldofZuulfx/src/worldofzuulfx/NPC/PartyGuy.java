@@ -5,8 +5,10 @@ import worldofzuulfx.Room;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.image.Image;
-import sun.audio.AudioPlayer;
 import worldofzuulfx.Game;
+import worldofzuulfx.Inventory.Inventory;
+import worldofzuulfx.Items.Item;
+import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Quest.Quest;
 
 /**
@@ -17,9 +19,11 @@ public class PartyGuy extends NPC {
 
     int[] partyRNG = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     private int random;
+    private Inventory inventory;
 
     public PartyGuy(String ID, String name, Image img) {
         super(ID, name, img);
+        inventory = new Inventory(10000, 1);
     }
 
     /**
@@ -28,7 +32,7 @@ public class PartyGuy extends NPC {
     public void partyTime(Player player, Room room) {
         if (this.getCurrentRoom() == player.getCurrentRoom() && !room.getID().equals("downunder")) {
             player.setCanMove(false);
-            player.navigateTo(room);        
+            player.navigateTo(room);
         }
         this.getCurrentRoom().removePerson(this);
         this.navigateTo(room);
@@ -38,9 +42,10 @@ public class PartyGuy extends NPC {
      * adds partyguy to a random room
      */
     public void spawn(ArrayList<Room> rooms) {
-        
+
         setRandom((int) (Math.random() * rooms.size()));
         this.navigateTo(rooms.get(getRandom()));
+        inventory.addItem(ItemFactory.makeClock(30));
 
     }
 
@@ -51,6 +56,7 @@ public class PartyGuy extends NPC {
     public int getRandom() {
         return random;
     }
+<<<<<<< HEAD
     /**
      * Spawns the Partyguy randomly in a room which is not locked.
      * @param rooms
@@ -64,6 +70,16 @@ public class PartyGuy extends NPC {
                 setRandom((int)(Math.random()*rooms.size()));
                 this.navigateTo(rooms.get(getRandom()));
             }
+=======
+
+    public Item giveItem() {
+        Item item;
+        if (inventory.getSize() != 0) {
+            item = inventory.getItem(0);
+            inventory.removeItem(item);
+            return item;
+>>>>>>> ddab23b19eb384d75903bb5bcbc43ed5f449f059
         }
+        return null;
     }
 }

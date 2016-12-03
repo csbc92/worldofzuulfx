@@ -34,7 +34,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private Bar hp;
     private boolean drunk;
     private PlayerInventory inventory;
-    // TODO skal dette flyttes ind i QuestInventory, så alt er samlet et sted?
+
     private Quest activeQuest;
     private HashMap<String, Quest> inactiveQuests;
     private Room currentRoom;
