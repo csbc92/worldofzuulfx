@@ -51,7 +51,6 @@ public class PartyGuy extends NPC {
     public int getRandom() {
         return random;
     }
-<<<<<<< HEAD
     /**
      * Spawns the Partyguy randomly in a room which is not locked.
      * @param rooms
@@ -67,7 +66,4 @@ public class PartyGuy extends NPC {
             }
         }
     }
-=======
-
->>>>>>> 19de660aa733e0e6001fddfaf5d2d6effedf14bb
 }
