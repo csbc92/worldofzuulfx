@@ -56,6 +56,21 @@ public class PartyGuy extends NPC {
     public int getRandom() {
         return random;
     }
+<<<<<<< HEAD
+    /**
+     * Spawns the Partyguy randomly in a room which is not locked.
+     * @param rooms
+     * @param q
+     */
+    public void randomSpawn(ArrayList<Room> rooms, HashMap<String, Quest> q){
+        int p;
+        p = (int)(Math.random()*12);
+        if(p==2){
+            if(q.get("goToBookStoreQ").isCompleted()){
+                setRandom((int)(Math.random()*rooms.size()));
+                this.navigateTo(rooms.get(getRandom()));
+            }
+=======
 
     public Item giveItem() {
         Item item;
@@ -63,6 +78,7 @@ public class PartyGuy extends NPC {
             item = inventory.getItem(0);
             inventory.removeItem(item);
             return item;
+>>>>>>> ddab23b19eb384d75903bb5bcbc43ed5f449f059
         }
         return null;
     }
