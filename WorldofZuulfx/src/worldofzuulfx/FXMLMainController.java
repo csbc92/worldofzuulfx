@@ -21,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -46,10 +48,6 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private TextArea taConsol;
     private Game game;
-    @FXML
-    private AnchorPane apConsole;
-    @FXML
-    private GridPane gpMain;
     @FXML
     private Button butNewGame;
     @FXML
@@ -79,6 +77,15 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Timer gameTimer;
     @FXML
     private Label lQuest;
+    @FXML
+    private TabPane tabControl;
+    @FXML
+    private Tab tabGame;
+    @FXML
+    private Tab tabNewGame;
+    private AnchorPane pmain;
+    @FXML
+    private AnchorPane pMain;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,11 +94,10 @@ public class FXMLMainController implements Initializable, BarValueListener {
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
 
-//        gpMain.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
-        pMenu.setVisible(true);
-        pInfo.setVisible(false);
+
+        tabControl.getSelectionModel().select(tabNewGame);
 
     }
 
@@ -150,20 +156,21 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private void onClickNewGame(ActionEvent event) {
 
-        pMenu.setVisible(false);
         pBackground.setVisible(true);
         pObjects.setVisible(true);
         pSprites.setVisible(true);
         pInfo.setVisible(true);
-
+        tabControl.getSelectionModel().select(tabGame);
+        pMain.requestFocus(); // Important that pMain request the focus otherwise the eventhandler will not work.
+        
         Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
         addInputControls(pBackground.getScene());
         game = new Game(layers); //En instans af spillet oprettes.
-
+        
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
         progEnergy.setProgress(1);
-        
+
         // Create a timer which keeps decreasing the timeleft
         gameTimer = new Timer();
         gameTimer.scheduleAtFixedRate(new TimerTask() {
