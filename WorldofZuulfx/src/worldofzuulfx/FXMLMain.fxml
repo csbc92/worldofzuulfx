@@ -10,11 +10,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pMain" prefHeight="666.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
+<AnchorPane fx:id="pMain" prefHeight="680.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
    <children>
-      <TabPane fx:id="tabControl" layoutX="14.0" layoutY="14.0" prefHeight="628.0" prefWidth="694.0" stylesheets="@../resources/tabControl.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabControl" layoutX="14.0" layoutY="14.0" onMouseClicked="#onTabClick" prefHeight="628.0" prefWidth="694.0" stylesheets="@../resources/tabControl.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab fx:id="tabGame" closable="false" text="Untitled Tab 1">
+          <Tab fx:id="tabGame" closable="false" text="Game">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                      <children>
@@ -25,10 +25,10 @@
                               <Pane fx:id="pSprites" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
                               <Pane fx:id="pInventory" layoutX="72.0" layoutY="402.0" prefHeight="47.0" prefWidth="367.0" />
                               <Text fx:id="tItemInfo" fill="WHITE" layoutX="85.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
-                              <Pane fx:id="pInfo" layoutX="464.0" layoutY="-9.0" prefHeight="469.0" prefWidth="234.0">
+                              <Pane fx:id="pInfo" layoutX="464.0" prefHeight="460.0" prefWidth="234.0">
                                  <children>
-                                    <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="111.0" prefWidth="200.0" progress="1.0" />
-                                    <Text fill="WHITE" layoutX="17.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
+                                    <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="135.0" prefWidth="200.0" progress="1.0" />
+                                    <Text fill="WHITE" layoutX="17.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
@@ -44,6 +44,16 @@
                                        </font>
                                     </Text>
                                     <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="197.0" prefHeight="206.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
+                                    <Text fill="WHITE" layoutX="18.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="tHealth" fill="WHITE" layoutX="78.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </Pane>
                               <TextArea fx:id="taConsol" disable="true" editable="false" focusTraversable="false" layoutX="19.0" layoutY="482.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" wrapText="true">
@@ -51,13 +61,20 @@
                                     <Font size="10.0" />
                                  </font>
                               </TextArea>
+                              <Pane fx:id="pRPS" layoutX="18.0" layoutY="622.0" prefHeight="44.0" prefWidth="658.0">
+                                 <children>
+                                    <Button fx:id="butRock" layoutX="32.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Rock" />
+                                    <Button fx:id="butPaper" layoutX="238.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Paper" />
+                                    <Button fx:id="butScissor" layoutX="444.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Scissor" />
+                                 </children>
+                              </Pane>
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tabNewGame" closable="false" text="Untitled Tab 2">
+          <Tab fx:id="tabNewGame" closable="false" text="newGame">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                      <children>
@@ -76,6 +93,11 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="exam">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

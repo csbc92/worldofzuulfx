@@ -47,7 +47,6 @@ public class Exam {
      */
     public void play() {
         // TODO Exam
-        ConsoleInfo.clearData();
         ConsoleInfo.setConsoleData("Welcome to your exam");
         ConsoleInfo.setConsoleData("");
         for (Question question : questionList) {
