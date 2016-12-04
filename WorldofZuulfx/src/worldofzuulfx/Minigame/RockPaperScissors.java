@@ -37,8 +37,6 @@ public class RockPaperScissors {
                 break;
             case 1:
                 ConsoleInfo.setConsoleData("You won because " + playerMove + " defeats " + computerMove);
-                // TODO Skal tilføjes til Player's inventory
-                //i.addItem(ItemFactory.makeBeer());
                 break;
             case -1:
                 ConsoleInfo.setConsoleData("You lost: " + computerMove + " defeats " + playerMove);

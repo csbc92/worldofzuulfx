@@ -20,7 +20,9 @@ public final class ConsoleInfo {
 
     private static StringProperty questInfo = new SimpleStringProperty();
     
-    private static StringProperty RPSInfo = new SimpleStringProperty();
+    private static StringProperty rpsInfo = new SimpleStringProperty();
+    
+    private static StringProperty ectsInfo = new SimpleStringProperty();
 
     // provide public access to the property
     public static StringProperty consoleProperty() {
@@ -60,15 +62,27 @@ public final class ConsoleInfo {
         questInfo.set(data);
     }
     
-    public static StringProperty RPSProperty() {
-        return RPSInfo;
+    public static StringProperty rpsProperty() {
+        return rpsInfo;
     }
 
     public static String getRPSData() {
-        return RPSInfo.get();
+        return rpsInfo.get();
     }
 
     public static void setRPSData(String data) {
-        RPSInfo.set(data);
+        rpsInfo.set(data);
+    }
+    
+    public static StringProperty ectsProperty() {
+        return ectsInfo;
+    }
+
+    public static String getECTSData() {
+        return ectsInfo.get();
+    }
+
+    public static void setECTSData(String data) {
+        ectsInfo.set(data);
     }
 }

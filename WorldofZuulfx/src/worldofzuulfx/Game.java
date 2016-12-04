@@ -24,6 +24,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Player player;
     private ECTSHandler ectsHandler;
     private RoomHandler roomHandler;
+    private RoomFactory roomFactory;
     private QuestInventory questInventory;
     private RockPaperScissors RPS;
 
@@ -31,13 +32,15 @@ public class Game implements NavigateListener, ItemPickupListener {
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
-    public Game(Layers layers) {
+    public Game(Layers layers, int gameLevel) {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
-
+        
+       
         roomHandler = new RoomHandler();
-        roomHandler.setRooms(RoomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
+         roomFactory = new RoomFactory(gameLevel);
+        roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
 
         questInventory = new QuestInventory();
 
@@ -85,6 +88,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     public void checkCollisions() {
+        Tile nextTile;
         Room currentRoom = this.player.getCurrentRoom();
 
         // Check tile collision
@@ -96,7 +100,8 @@ public class Game implements NavigateListener, ItemPickupListener {
                     if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
 
                         // The Player needs to moved with the offset 1.
-                        player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
+                        nextTile = tile.getNextRoom().getTileMap().getTile(tile.getNextPos());
+                        player.move(nextTile.getX() + 1, nextTile.getY() + 1);
                     }
                     
                     // Reset the nextPos since a collision was detected
@@ -162,9 +167,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     private void initPartyGuy() {
-        // TODO: Change image on partyguy
         partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(123).getImageView().getImage());
-//        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
     }
 
     /**
@@ -323,6 +326,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private void initECTSHandler() {
         Room examRoom = getRoomHandler().getRoom("exam");
         this.ectsHandler = new ECTSHandler(player, examRoom);
+        player.getECTSBar().setValue(0);
     }
 
     /**
