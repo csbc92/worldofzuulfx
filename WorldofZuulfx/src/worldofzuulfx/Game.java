@@ -32,14 +32,14 @@ public class Game implements NavigateListener, ItemPickupListener {
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
-    public Game(Layers layers) {
+    public Game(Layers layers, int gameLevel) {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
         
        
         roomHandler = new RoomHandler();
-         roomFactory = new RoomFactory();
+         roomFactory = new RoomFactory(gameLevel);
         roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
 
         questInventory = new QuestInventory();

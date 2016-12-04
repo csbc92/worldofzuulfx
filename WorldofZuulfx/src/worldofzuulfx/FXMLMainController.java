@@ -21,9 +21,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -101,6 +103,20 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Button butScissor;
     @FXML
     private Text tECTS;
+    @FXML
+    private Button butHighscore;
+    @FXML
+    private Tab tabExam;
+    @FXML
+    private Tab tabHighscore;
+    @FXML
+    private Button butBack;
+    @FXML
+    private RadioButton rbNormal;
+    @FXML
+    private ToggleGroup tgGameLevel;
+    @FXML
+    private RadioButton rbAbnormal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,6 +124,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
         highscores = new Highscores(5);
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
+        
+        rbNormal.setUserData(0);
+        rbAbnormal.setUserData(1);
 
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
@@ -219,6 +238,8 @@ public class FXMLMainController implements Initializable, BarValueListener {
     }
 
     private void initializeGame() {
+        int gameLevel;
+        // Sets the correct panes visible.
         pBackground.setVisible(true);
         pObjects.setVisible(true);
         pSprites.setVisible(true);
@@ -228,8 +249,11 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
         Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
         addInputControls(pBackground.getScene());
-
-        game = new Game(layers); //En instans af spillet oprettes.
+        
+        // GameLevel chooses which game to be loaded - Normal or Hogwarts mode.
+        gameLevel = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
+                
+        game = new Game(layers,gameLevel ); //En instans af spillet oprettes.
 
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
@@ -247,5 +271,15 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private void onTabClick(MouseEvent event) {
         pMain.requestFocus();
+    }
+
+    @FXML
+    private void onbutHighscoreClick(ActionEvent event) {
+        tabControl.getSelectionModel().select(tabHighscore);
+    }
+
+    @FXML
+    private void onbutBackClick(ActionEvent event) {
+        tabControl.getSelectionModel().select(tabNewGame);
     }
 }

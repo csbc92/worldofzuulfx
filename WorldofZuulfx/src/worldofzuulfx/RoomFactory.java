@@ -20,10 +20,10 @@ import worldofzuulfx.tiles.Tile;
  */
 public class RoomFactory {
     
-    private RoomHandler roomHandler;
+    int gameLevel;
     
-    public RoomFactory() {
-        
+    public RoomFactory(int gameLevel) {
+        this.gameLevel = gameLevel;
     }
     
     public Room loadRoom(String roomID, Pane backgroundLayer, Pane objectLayer, HashMap<Integer, Tile> tiles) {
@@ -40,7 +40,21 @@ public class RoomFactory {
 
         // Creates a new properties file and loads a given file.
         Util.newPropFile();
-        Util.loadFile("rooms.data");
+        
+        switch (gameLevel) {
+            case 0: {
+                Util.loadFile("rooms.data");
+                break;
+            }
+            case 1: {
+                Util.loadFile("rooms.data");
+                break;
+            }
+            default: {
+                Util.loadFile("rooms.data");
+                break;
+            }
+        }
         
         description = Util.getProp(roomID + ".description");
         tileLayout = Util.strTo2d(Util.getProp(roomID), "\r", ", ");
@@ -145,7 +159,22 @@ public class RoomFactory {
         Room nextRoom = null;
         
         Util.newPropFile();
-        Util.loadFile("exits.data");
+        
+        switch (gameLevel) {
+            case 0: {
+                Util.loadFile("exits.data");
+                break;
+            }
+            case 1: {
+                Util.loadFile("exits.data");
+                break;
+            }
+            default: {
+                Util.loadFile("exits.data");
+                break;
+            }
+        }
+        
         for (Room room : list) {
             numExits = Integer.parseInt(Util.getProp(room.getID() + ".numExits"));
             for (int i = 0; i < numExits; i++) {

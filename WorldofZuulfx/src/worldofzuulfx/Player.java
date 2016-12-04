@@ -589,7 +589,7 @@ public class Player extends SpriteBase implements BarValueListener {
                 System.out.println(getHp().getValue());
             } else {
                 // TODO sæt finish flag
-                Main.getGame().setFinished();
+   //             Main.getGame().setFinished();
             }
         }
     }
