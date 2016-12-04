@@ -33,6 +33,7 @@ public abstract class SpriteBase {
     private boolean canTeleport = false;
 
     private Room nextRoom;
+    private String nextPos;
     private double nextPosX;
     private double nextPosY;
     
@@ -312,10 +313,10 @@ public abstract class SpriteBase {
         this.canTeleport = canTeleport;
     }
 
-    public void setTeleport(Room room, double x, double y) {
+    public void setTeleport(Room room, String nextPos) {
         nextRoom = room;
-        nextTelePosX = x;
-        nextTelePosY = y;
+        this.nextPos = nextPos;
+
         canTeleport = true;
     }
 
@@ -354,34 +355,7 @@ public abstract class SpriteBase {
         return nextPosX;
     }
 
-    /**
-     * @return the nextTelePosX
-     */
-    public double getNextTelePosX() {
-        return nextTelePosX;
-    }
-
-    /**
-     * @param nextTelePosX the nextTelePosX to set
-     */
-    public void setNextTelePosX(double nextTelePosX) {
-        this.nextTelePosX = nextTelePosX;
-    }
-
-    /**
-     * @return the nextTelePosY
-     */
-    public double getNextTelePosY() {
-        return nextTelePosY;
-    }
-
-    /**
-     * @param nextTelePosY the nextTelePosY to set
-     */
-    public void setNextTelePosY(double nextTelePosY) {
-        this.nextTelePosY = nextTelePosY;
-    }
-
+  
     /**
      * @return the canMove
      */
@@ -396,4 +370,10 @@ public abstract class SpriteBase {
         this.canMove = canMove;
     }
 
+    /**
+     * @return the nextPos
+     */
+    public String getNextPos() {
+        return nextPos;
+    }    
 }

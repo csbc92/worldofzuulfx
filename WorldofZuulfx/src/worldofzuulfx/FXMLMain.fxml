@@ -27,8 +27,8 @@
                               <Text fx:id="tItemInfo" fill="WHITE" layoutX="85.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
                               <Pane fx:id="pInfo" layoutX="464.0" prefHeight="460.0" prefWidth="234.0">
                                  <children>
-                                    <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="135.0" prefWidth="200.0" progress="1.0" />
-                                    <Text fill="WHITE" layoutX="17.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
+                                    <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="155.0" prefWidth="200.0" progress="1.0" />
+                                    <Text fill="WHITE" layoutX="17.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
@@ -38,18 +38,28 @@
                                           <Font size="34.0" />
                                        </font>
                                     </Text>
-                                    <Text fill="WHITE" layoutX="17.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
+                                    <Text fill="WHITE" layoutX="17.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
                                     </Text>
-                                    <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="197.0" prefHeight="206.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
-                                    <Text fill="WHITE" layoutX="18.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health:">
+                                    <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="217.0" prefHeight="206.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
+                                    <Text fill="WHITE" layoutX="18.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health:">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="tHealth" fill="WHITE" layoutX="78.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                    <Text fx:id="tHealth" fill="WHITE" layoutX="78.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="tECTS" fill="WHITE" layoutX="78.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fill="WHITE" layoutX="18.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ECTS:">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>

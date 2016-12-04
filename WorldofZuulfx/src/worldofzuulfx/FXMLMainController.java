@@ -47,7 +47,7 @@ import worldofzuulfx.Minigame.RockPaperScissorsMoves;
  * @author JV
  */
 public class FXMLMainController implements Initializable, BarValueListener {
-    
+
     @FXML
     private TextArea taConsol;
     private Game game;
@@ -67,7 +67,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Text tItemInfo;
     @FXML
     private ListView<Score> lvHighscore;
-    
+
     private Highscores highscores;
     private int interval;
     @FXML
@@ -99,51 +99,53 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Button butPaper;
     @FXML
     private Button butScissor;
-    
+    @FXML
+    private Text tECTS;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeConsole();
         highscores = new Highscores(5);
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
-        
+
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
         pRPS.setVisible(false);
         tabControl.getSelectionModel().select(tabNewGame);
-        
+
     }
-    
+
     private void addInputControls(Scene scene) {
 
         // keyboard handler: key pressed
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (!game.isFinished()) {
-                
+
                 if (key.getCode() == KeyCode.RIGHT) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
-                    
+
                 }
                 if (key.getCode() == KeyCode.LEFT) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
-                    
+
                 }
                 if (key.getCode() == KeyCode.UP) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
-                    
+
                 }
                 if (key.getCode() == KeyCode.DOWN) {
                     game.getPlayer().setNearNPC(null);
                     game.getPlayer().setDroppedItem(false);
                     game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
                 }
-                
+
                 if (key.getCode() == KeyCode.A) {
                     game.getPlayer().getInventory().nextItem();
                     game.getPlayer().getInventory().draw(false);
@@ -152,7 +154,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
                     game.getPlayer().getInventory().previousItem();
                     game.getPlayer().getInventory().draw(false);
                 }
-                
+
                 if (key.getCode() == KeyCode.D) {
                     game.getPlayer().drop(game.getPlayer().getInventory().getSelectedItem());
                 }
@@ -160,9 +162,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
                     game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
                 }
                 if (game.getRPS() != null) {
-                    
-                    if (key.getCode() == KeyCode.R) {  
-                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.ROCK);  
+
+                    if (key.getCode() == KeyCode.R) {
+                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.ROCK);
                     }
                     if (key.getCode() == KeyCode.P) {
                         game.getRPS().setPlayerMove(RockPaperScissorsMoves.PAPER);
@@ -174,27 +176,11 @@ public class FXMLMainController implements Initializable, BarValueListener {
             }
         });
     }
-    
+
     @FXML
     private void onClickNewGame(ActionEvent event) {
-        
-        pBackground.setVisible(true);
-        pObjects.setVisible(true);
-        pSprites.setVisible(true);
-        pInfo.setVisible(true);
-        tabControl.getSelectionModel().select(tabGame);
-        pMain.requestFocus(); // Important that pMain request the focus otherwise the eventhandler will not work.
-        
-        Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
-        addInputControls(pBackground.getScene());
-        game = new Game(layers); //En instans af spillet oprettes.
 
-        // Listen for when the players energy changes.
-        game.getPlayer().getEnergyBar().addBarValueListener(this);
-        initializeRPS();
-        progEnergy.setProgress(1);
-        
-        tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+        initializeGame();
 
         // Create a timer which keeps decreasing the timeleft
         gameTimer = new Timer();
@@ -218,9 +204,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
                 gameTimer.cancel();
             }
         });
-        
+
     }
-    
+
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
         taConsol.textProperty().addListener(new ChangeListener<Object>() {
@@ -231,21 +217,35 @@ public class FXMLMainController implements Initializable, BarValueListener {
             }
         });
     }
-    
-    private void initializeRPS() {
-        butRock.setUserData("ROCK");
-        butPaper.setUserData("PAPER");
-        butScissor.setUserData("SCISSOR");
+
+    private void initializeGame() {
+        pBackground.setVisible(true);
+        pObjects.setVisible(true);
+        pSprites.setVisible(true);
+        pInfo.setVisible(true);
+        tabControl.getSelectionModel().select(tabGame);
+        pMain.requestFocus(); // Important that pMain request the focus otherwise the eventhandler will not work.
+
+        Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
+        addInputControls(pBackground.getScene());
+
+        game = new Game(layers); //En instans af spillet oprettes.
+
+        // Listen for when the players energy changes.
+        game.getPlayer().getEnergyBar().addBarValueListener(this);
+        progEnergy.setProgress(1);
+        tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+        tECTS.textProperty().bind(ConsoleInfo.ectsProperty());
     }
-    
+
     @Override
     public void barValueChanged(Bar bar) {
         progEnergy.setProgress((double) bar.getValue() / 100);
         tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
     }
-    
+
     @FXML
     private void onTabClick(MouseEvent event) {
-        pMain.requestFocus();        
+        pMain.requestFocus();
     }
 }

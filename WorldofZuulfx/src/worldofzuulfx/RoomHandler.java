@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class RoomHandler {
     private ArrayList<Room> rooms;
+    
     public RoomHandler() {
         
     }

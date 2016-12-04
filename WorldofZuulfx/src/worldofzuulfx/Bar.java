@@ -27,7 +27,6 @@ public class Bar {
 
     public void setValue(int value) {
         this.currentValue = value;
-
         notifyBarValueChanged();
     }
 

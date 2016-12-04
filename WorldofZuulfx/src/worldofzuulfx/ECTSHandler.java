@@ -24,7 +24,8 @@ public class ECTSHandler implements BarValueListener {
     }
     
     @Override
-    public void barValueChanged(Bar bar) {
+    public void barValueChanged(Bar bar) {  
+        ConsoleInfo.setECTSData(String.valueOf(bar.getValue()));
         // Open the exam room if the player has enough ECTS-points
         if (bar.getValue() >= 30) {
             examRoom.setLocked(false);
