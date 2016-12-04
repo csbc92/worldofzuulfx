@@ -2,28 +2,33 @@ package worldofzuulfx.Minigame;
 
 import java.util.Random;
 import worldofzuulfx.ConsoleInfo;
-import worldofzuulfx.Game;
-import worldofzuulfx.Inventory.PlayerInventory;
-import worldofzuulfx.Items.Drink;
-import worldofzuulfx.Items.ItemFactory;
-import worldofzuulfx.Layers;
 
 public class RockPaperScissors {
-    
+
     private RockPaperScissorsMoves computerMove;
     private RockPaperScissorsMoves playerMove;
     private int moveComparison;
+    
+    public RockPaperScissors() {
+        computerMove = null;
+        playerMove = null;
+    }
 
     /**
      * The play starts the game of Rock, Paper, Scissors. If player wins get
      * beer. Player lose decrement energy.
      */
     public void play() {
-        RockPaperScissorsMoves playerMove = getPlayerMove();
-        RockPaperScissorsMoves computerMove = computerMove();
 
-        ConsoleInfo.setConsoleData("You chose " + playerMove);
-        ConsoleInfo.setConsoleData("The computer chose " + computerMove);
+        ConsoleInfo.setConsoleData("Rock (R), Paper (P) or Scissors (S)");
+        while (playerMove == null) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
+        computerMove = computerMove();
 
         moveComparison = playerMove.compareMove(computerMove);
         switch (moveComparison) {
@@ -40,34 +45,6 @@ public class RockPaperScissors {
                 break;
 
         }
-    }
-
-    /**
-     * Takes the input from the user and makes it upper case, then checks if it
-     * is a legit input. If the input it legit it will iterate through until the
-     * right move is found
-     *
-     * @return the player's move
-     */
-    public RockPaperScissorsMoves getPlayerMove() {
-        ConsoleInfo.setConsoleData("Rock, Paper or Scissors");
-        
-        //TODO RPS
-        String playerInput = "Get input";
-
-        // Checks if the input is legit
-        if (playerInput.equals("ROCK") || playerInput.equals("SCISSORS") || playerInput.equals("PAPER")) {
-
-            switch (playerInput) {
-                case "ROCK":
-                    return RockPaperScissorsMoves.ROCK;
-                case "SCISSORS":
-                    return RockPaperScissorsMoves.SCISSORS;
-                case "PAPER":
-                    return RockPaperScissorsMoves.PAPER;
-            }
-        }
-        return getPlayerMove();
     }
 
     /**
@@ -88,5 +65,14 @@ public class RockPaperScissors {
      */
     public int getMoveComparison() {
         return moveComparison;
+    }
+
+    /**
+     * @param playerMove the playerMove to set
+     */
+    public void setPlayerMove(RockPaperScissorsMoves playerMove) {
+
+        this.playerMove = playerMove;
+
     }
 }

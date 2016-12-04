@@ -7,6 +7,7 @@ package worldofzuulfx;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,10 +27,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        Pane root = fxmlLoader.load(getClass().getResource("FXMLMain.fxml"));
+        Parent root = fxmlLoader.load(getClass().getResource("FXMLMain.fxml"));
         scene = new Scene(root);
-
-        //       initiate();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

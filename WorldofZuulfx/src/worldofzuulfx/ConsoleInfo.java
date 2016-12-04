@@ -19,6 +19,8 @@ public final class ConsoleInfo {
     private static StringProperty itemInfo = new SimpleStringProperty();
 
     private static StringProperty questInfo = new SimpleStringProperty();
+    
+    private static StringProperty RPSInfo = new SimpleStringProperty();
 
     // provide public access to the property
     public static StringProperty consoleProperty() {
@@ -57,9 +59,16 @@ public final class ConsoleInfo {
     public static void setQuestData(String data) {
         questInfo.set(data);
     }
-
-    public static void clearData() {
-        // info.set("");
+    
+    public static StringProperty RPSProperty() {
+        return RPSInfo;
     }
 
+    public static String getRPSData() {
+        return RPSInfo.get();
+    }
+
+    public static void setRPSData(String data) {
+        RPSInfo.set(data);
+    }
 }

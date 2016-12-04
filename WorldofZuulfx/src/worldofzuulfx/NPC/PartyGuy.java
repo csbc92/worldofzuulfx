@@ -56,13 +56,14 @@ public class PartyGuy extends NPC {
     public int getRandom() {
         return random;
     }
-
+    
     public Item giveItem() {
         Item item;
         if (inventory.getSize() > 0) {
             item = inventory.getItem(0);
             inventory.removeItem(item);
             return item;
+
         }
         return null;
     }

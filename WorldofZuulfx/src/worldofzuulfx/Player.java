@@ -581,12 +581,12 @@ public class Player extends SpriteBase implements BarValueListener {
             //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
             //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
-            if (hp.getValue() > 0) {
+            if (getHp().getValue() > 0) {
                 bar.setValue(bar.getMax());
-                hp.setValue(hp.getValue() - 1);
+                getHp().setValue(getHp().getValue() - 1);
                 setAlcoCounter(0);
                 setDrunk();
-                System.out.println(hp.getValue());
+                System.out.println(getHp().getValue());
             } else {
                 // TODO sæt finish flag
                 Main.getGame().setFinished();
@@ -644,5 +644,12 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public HashMap<String, Quest> getInactiveQuests() {
         return inactiveQuests;
+    }
+
+    /**
+     * @return the hp
+     */
+    public Bar getHp() {
+        return hp;
     }
 }

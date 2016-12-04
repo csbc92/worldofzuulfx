@@ -2,7 +2,10 @@ package worldofzuulfx;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import worldofzuulfx.Events.*;
 import worldofzuulfx.Interfaces.*;
@@ -18,11 +21,11 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     private boolean finished;
     private PartyGuy partyguy;
-    private ArrayList<String> RPSCommands;
     private Player player;
     private ECTSHandler ectsHandler;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
+    private RockPaperScissors RPS;
 
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
@@ -136,9 +139,14 @@ public class Game implements NavigateListener, ItemPickupListener {
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                         player.setNearNPC(npc);
-                        
+
                         if (npc instanceof PartyGuy) {
-                            player.getInventory().addItem(((PartyGuy) npc).giveItem());
+                            if (player.getCurrentRoom() == getRoomHandler().getRoom("downunder")) {
+                                challenge();
+                            } else {
+                                player.getInventory().addItem(((PartyGuy) npc).giveItem());
+                            }
+
                         }
                     }
                     return;
@@ -204,33 +212,37 @@ public class Game implements NavigateListener, ItemPickupListener {
      * @param command
      */
     private void challenge() {
-        String txt;
-        RockPaperScissors rpsMiniGame = new RockPaperScissors();
+        Thread rpsThread;
+        new Thread() {
 
-        if (getPlayer().getCurrentRoom() == getRoomHandler().getRoom("Fredagsbar")) {
-            txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
-                    + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
-                    + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+            // runnable for that thread
+            public void run() {
 
-            ConsoleInfo.setConsoleData(txt);
+                RPS = new RockPaperScissors();
+                String txt;
 
-//            if (!command.hasSecondWord()) {
-            ConsoleInfo.setConsoleData("Use one of the following commands:");
-            ConsoleInfo.setConsoleData(">");
-            rpsMiniGame.play();
-            if (rpsMiniGame.getMoveComparison() == 1) {
-                getPlayer().pickupItem(ItemFactory.makeBeer());
+                txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
+                        + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
+                        + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+                // .play() waits for user-input.
+                RPS.play();
+                
+                Platform.runLater(new Runnable() {
+
+                    public void run() {
+                        if (RPS.getMoveComparison() == 1) {
+                            getPlayer().getInventory().addItem(ItemFactory.makeBeer());
+                        }
+                        if (RPS.getMoveComparison() == -1) {
+                            getPlayer().increaseEnergy(-30);
+                        }
+                    }
+
+                });
             }
-            if (rpsMiniGame.getMoveComparison() == -1) {
-                getPlayer().increaseEnergy(-5);
-            }
-            return;
-//            }
+        }.start();
 
-        }
-        if (getPlayer().getCurrentRoom() != getRoomHandler().getRoom("Fredagsbar")) {
-            ConsoleInfo.setConsoleData("There is a time and place for everything, and now is not time for a challenge.");
-        }
+        return;
     }
 
     public void showInfo() {
@@ -268,7 +280,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         Quest quest = player.getInactiveQuests().get("goToCampusQ");
 
         if (quest != null && quest.isCompleted()) {
-            
+
             if (!player.getCurrentRoom().getID().equals("downunder")) {
                 partyguy.move(256, 256);
                 partyguy.spawn(getRoomHandler().getRooms(false));
@@ -307,9 +319,16 @@ public class Game implements NavigateListener, ItemPickupListener {
     public boolean isFinished() {
         return finished;
     }
-
+    
     private void initECTSHandler() {
         Room examRoom = getRoomHandler().getRoom("exam");
         this.ectsHandler = new ECTSHandler(player, examRoom);
+    }
+
+    /**
+     * @return the RPS
+     */
+    public RockPaperScissors getRPS() {
+        return RPS;
     }
 }
