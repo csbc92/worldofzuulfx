@@ -7,6 +7,7 @@ package worldofzuulfx.Items;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
 import worldofzuulfx.Player;
 
@@ -26,7 +27,11 @@ public class Note extends Item {
 
     @Override
     public void use(Player player) {
-        //TODO use Notes
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if (player.getCurrentRoom().getID().equals("exam")) {
+            //TODO player cheated during exam
+        } else {
+            ConsoleInfo.setConsoleData(content);
+        }
     }
 }

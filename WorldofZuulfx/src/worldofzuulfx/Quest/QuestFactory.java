@@ -28,8 +28,8 @@ public class QuestFactory {
 
     /**
      * Creates a new quest that is completed when the player IS in a certain
-     * room. Once the player has been into this room, the quest is forever completed,
-     * even when the player exits the room.
+     * room. Once the player has been into this room, the quest's requirement
+     * is set to true, even when the player has left the room.
      * @param roomID The ID of the room the player has to be in.
      * @param questDescription The description of the quest, e.g. Go to room xyz.
      * @param reward The reward of the quest.
@@ -55,14 +55,15 @@ public class QuestFactory {
     }
     
     /**
-     * Creates a new quest that is completed when the player carries a certain
-     * Item in the player's inventory. This quest is dynamic, meaning the completed
-     * status will change behavior depending on if the player is carrying the Item or not.
-     * @param item The type of Item the player has to carry.
-     * @param questDescription The description of the quest, e.g. Pick up a Coffee.
-     * @param reward The reward of the quest.
-     * @return Returns the Quest.
-     */
+    * Creates a new quest that is completed when the player carries a certain
+    * Item in the player's inventory. This quest is dynamic, meaning the requirement
+    * status will change behavior depending on if the player is carrying the Item or not.
+    * @param questID The id of the quest that will be created.
+    * @param itemID The id of the Item the player has to carry.
+    * @param questDescription The description of the quest, e.g. Pick up a Coffee.
+    * @param reward The reward of the quest.
+    * @return Returns the Quest.
+    */
     public Quest pickupItemQuest(String questID, String itemID, String questDescription, Reward reward) {
         // Create the quest
         Quest pickupQuest = new Quest(questID, questDescription, reward, QuestType.DYNAMIC);

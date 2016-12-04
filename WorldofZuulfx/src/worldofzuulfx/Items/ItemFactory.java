@@ -45,9 +45,9 @@ public class ItemFactory {
         return new Book(description, description, 5);
     }
 
-    public static Note makeNote(String content) {
+    public static Note makeNote(String noteID, String description, String content) {
 
-        return new Note("book", "Book", 5, content);
+        return new Note(description, noteID, 5, content);
     }
     
     public static Clock makeClock(int time) {

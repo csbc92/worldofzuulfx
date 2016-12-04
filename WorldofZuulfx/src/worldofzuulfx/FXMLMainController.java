@@ -21,11 +21,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -38,6 +41,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import worldofzuulfx.Highscores.Score;
+import worldofzuulfx.Minigame.RockPaperScissors;
+import worldofzuulfx.Minigame.RockPaperScissorsMoves;
 
 /**
  *
@@ -86,6 +91,32 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private AnchorPane pmain;
     @FXML
     private AnchorPane pMain;
+    @FXML
+    private Text tHealth;
+    @FXML
+    private Pane pRPS;
+    @FXML
+    private Button butRock;
+    @FXML
+    private Button butPaper;
+    @FXML
+    private Button butScissor;
+    @FXML
+    private Text tECTS;
+    @FXML
+    private Button butHighscore;
+    @FXML
+    private Tab tabExam;
+    @FXML
+    private Tab tabHighscore;
+    @FXML
+    private Button butBack;
+    @FXML
+    private RadioButton rbNormal;
+    @FXML
+    private ToggleGroup tgGameLevel;
+    @FXML
+    private RadioButton rbAbnormal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -93,10 +124,13 @@ public class FXMLMainController implements Initializable, BarValueListener {
         highscores = new Highscores(5);
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
+        
+        rbNormal.setUserData(0);
+        rbAbnormal.setUserData(1);
 
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
-
+        pRPS.setVisible(false);
         tabControl.getSelectionModel().select(tabNewGame);
 
     }
@@ -142,34 +176,30 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
                 if (key.getCode() == KeyCode.D) {
                     game.getPlayer().drop(game.getPlayer().getInventory().getSelectedItem());
-
                 }
                 if (key.getCode() == KeyCode.U) {
                     game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
+                }
+                if (game.getRPS() != null) {
 
+                    if (key.getCode() == KeyCode.R) {
+                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.ROCK);
+                    }
+                    if (key.getCode() == KeyCode.P) {
+                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.PAPER);
+                    }
+                    if (key.getCode() == KeyCode.S) {
+                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.SCISSORS);
+                    }
                 }
             }
-
         });
     }
 
     @FXML
     private void onClickNewGame(ActionEvent event) {
 
-        pBackground.setVisible(true);
-        pObjects.setVisible(true);
-        pSprites.setVisible(true);
-        pInfo.setVisible(true);
-        tabControl.getSelectionModel().select(tabGame);
-        pMain.requestFocus(); // Important that pMain request the focus otherwise the eventhandler will not work.
-        
-        Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
-        addInputControls(pBackground.getScene());
-        game = new Game(layers); //En instans af spillet oprettes.
-        
-        // Listen for when the players energy changes.
-        game.getPlayer().getEnergyBar().addBarValueListener(this);
-        progEnergy.setProgress(1);
+        initializeGame();
 
         // Create a timer which keeps decreasing the timeleft
         gameTimer = new Timer();
@@ -185,6 +215,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
                 tfTimeLeft.setText(value + " sec");
             }
         }, 1000, 1000);
+
         // Creates a listener which listens for onClose event.
         stage = (Stage) pInfo.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -197,7 +228,6 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-
         taConsol.textProperty().addListener(new ChangeListener<Object>() {
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
@@ -207,8 +237,49 @@ public class FXMLMainController implements Initializable, BarValueListener {
         });
     }
 
+    private void initializeGame() {
+        int gameLevel;
+        // Sets the correct panes visible.
+        pBackground.setVisible(true);
+        pObjects.setVisible(true);
+        pSprites.setVisible(true);
+        pInfo.setVisible(true);
+        tabControl.getSelectionModel().select(tabGame);
+        pMain.requestFocus(); // Important that pMain request the focus otherwise the eventhandler will not work.
+
+        Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
+        addInputControls(pBackground.getScene());
+        
+        // GameLevel chooses which game to be loaded - Normal or Hogwarts mode.
+        gameLevel = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
+                
+        game = new Game(layers,gameLevel ); //En instans af spillet oprettes.
+
+        // Listen for when the players energy changes.
+        game.getPlayer().getEnergyBar().addBarValueListener(this);
+        progEnergy.setProgress(1);
+        tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+        tECTS.textProperty().bind(ConsoleInfo.ectsProperty());
+    }
+
     @Override
     public void barValueChanged(Bar bar) {
         progEnergy.setProgress((double) bar.getValue() / 100);
+        tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+    }
+
+    @FXML
+    private void onTabClick(MouseEvent event) {
+        pMain.requestFocus();
+    }
+
+    @FXML
+    private void onbutHighscoreClick(ActionEvent event) {
+        tabControl.getSelectionModel().select(tabHighscore);
+    }
+
+    @FXML
+    private void onbutBackClick(ActionEvent event) {
+        tabControl.getSelectionModel().select(tabNewGame);
     }
 }

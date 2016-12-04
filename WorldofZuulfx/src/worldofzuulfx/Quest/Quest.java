@@ -111,11 +111,11 @@ public class Quest {
      * Complete the quest and get the Reward for the quest.
      *
      * @return Returns the Reward for the quest.
-     * @throws QuestNotCompletedException Throws a QuestNotCompletedException if
+     * @throws QuestRequirementException Throws a QuestNotCompletedException if
      * the quest has not set its status to Completed. You cannot get a reward
      * for a quest that is not completed.
      */
-    public Reward complete() throws QuestNotCompletedException {
+    public Reward complete() throws QuestRequirementException {
 
         switch (this.questType) {
 
@@ -124,7 +124,7 @@ public class Quest {
                     this.isCompleted = true;
                     return this.reward;
                 } else {
-                    throw new QuestNotCompletedException("Quest is not completed.");
+                    throw new QuestRequirementException("The quest's requirement is not complied.");
                 }
 
             case STATIC:
@@ -132,7 +132,7 @@ public class Quest {
                     this.isCompleted = true;
                     return this.reward;
                 } else {
-                    throw new QuestNotCompletedException("The quest is not completed.");
+                    throw new QuestRequirementException("The quest's requirement is not complied.");
                 }
 
             default:

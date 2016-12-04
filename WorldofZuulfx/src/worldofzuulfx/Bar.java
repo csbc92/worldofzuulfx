@@ -27,7 +27,6 @@ public class Bar {
 
     public void setValue(int value) {
         this.currentValue = value;
-
         notifyBarValueChanged();
     }
 
@@ -38,17 +37,15 @@ public class Bar {
      * @param energyAmount
      */
     public void increaseEnergy(int amount) {
-        if (amount > 0) {
-            int currentVal = getValue();
-            int newVal = currentVal + amount;
+        int currentVal = getValue();
+        int newVal = currentVal + amount;
 
-            // Set the energy to max if the new value would otherwise
-            // be higher than what the Bar allows.
-            if (newVal > this.getMax()) {
-                this.setValue(this.getMax());
-            } else {
-                this.setValue(newVal);
-            }
+        // Set the energy to max if the new value would otherwise
+        // be higher than what the Bar allows.
+        if (newVal > this.getMax()) {
+            this.setValue(this.getMax());
+        } else {
+            this.setValue(newVal);
         }
     }
 

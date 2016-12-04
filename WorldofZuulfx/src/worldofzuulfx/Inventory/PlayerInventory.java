@@ -87,7 +87,11 @@ public class PlayerInventory extends Inventory {
                 txt.append("Use the computer");
             }
             if (i instanceof Book) {
-                txt.append("Use the book");
+                if (player.getNearNPC() != null) {
+                    txt.append("Give the " + i.getDescription() + " to " + player.getNearNPC().getName());
+                } else {
+                    txt.append("Use the " + i.getDescription());
+                }
             }
             if (i instanceof Clock) {
                 txt.append("Use the clock");

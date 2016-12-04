@@ -51,7 +51,6 @@ public class Drink extends Item {
         } else {
             // Deliver the item to NPC.  
             player.deliverItem(player.getNearNPC(), this);
-
         }
     }
 }

@@ -2,7 +2,10 @@ package worldofzuulfx;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import worldofzuulfx.Events.*;
 import worldofzuulfx.Interfaces.*;
@@ -18,26 +21,31 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     private boolean finished;
     private PartyGuy partyguy;
-    private ArrayList<String> RPSCommands;
     private Player player;
+    private ECTSHandler ectsHandler;
     private RoomHandler roomHandler;
+    private RoomFactory roomFactory;
     private QuestInventory questInventory;
+    private RockPaperScissors RPS;
 
     private AnimationTimer timer;
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
-    public Game(Layers layers) {
+    public Game(Layers layers, int gameLevel) {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
-
+        
+       
         roomHandler = new RoomHandler();
-        roomHandler.setRooms(RoomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
+         roomFactory = new RoomFactory(gameLevel);
+        roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
 
         questInventory = new QuestInventory();
 
         initPlayer();
+        initECTSHandler();
 
         initNPCs();
         initPartyGuy();
@@ -80,6 +88,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     public void checkCollisions() {
+        Tile nextTile;
         Room currentRoom = this.player.getCurrentRoom();
 
         // Check tile collision
@@ -87,14 +96,15 @@ public class Game implements NavigateListener, ItemPickupListener {
 
             if (tile.getCanCollide()) {
                 if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    // Reset the nextPos since a collision was detected
-
+                    
                     if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
 
                         // The Player needs to moved with the offset 1.
-                        player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
+                        nextTile = tile.getNextRoom().getTileMap().getTile(tile.getNextPos());
+                        player.move(nextTile.getX() + 1, nextTile.getY() + 1);
                     }
-
+                    
+                    // Reset the nextPos since a collision was detected
                     player.setNextPosX(player.getX());
                     player.setNextPosY(player.getY());
                     return;
@@ -106,13 +116,14 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    ;
-                    // Reset the nextPos since a collision was detected
+                    
                     if (item.canTeleport()) {
                         player.navigateTo(item.getNextRoom());
                     } else {
                         // Pick up the item
                         player.pickupItem(item);
+                        
+                        // Reset the nextPos since a collision was detected
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                     }
@@ -125,16 +136,22 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (NPC npc : currentRoom.getNPCList()) {
             if (npc.getCanCollide()) {
                 if (npc.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    // Reset the nextPos since a collision was detected
+                    
                     if (npc.canTeleport()) {
                         player.navigateTo(npc.getNextRoom());
                     } else {
+                        // Reset the nextPos since a collision was detected
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                         player.setNearNPC(npc);
-                        
+
                         if (npc instanceof PartyGuy) {
-                            player.getInventory().addItem(((PartyGuy) npc).giveItem());
+                            if (player.getCurrentRoom() == getRoomHandler().getRoom("downunder")) {
+                                challenge();
+                            } else {
+                                player.getInventory().addItem(((PartyGuy) npc).giveItem());
+                            }
+
                         }
                     }
                     return;
@@ -150,9 +167,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     private void initPartyGuy() {
-        // TODO: Change image on partyguy
         partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(123).getImageView().getImage());
-//        partyguy.spawn(getRoomHandler().getRooms(false), questInventory.getAllGameQuests());
     }
 
     /**
@@ -200,33 +215,37 @@ public class Game implements NavigateListener, ItemPickupListener {
      * @param command
      */
     private void challenge() {
-        String txt;
-        RockPaperScissors rpsMiniGame = new RockPaperScissors();
+        Thread rpsThread;
+        new Thread() {
 
-        if (getPlayer().getCurrentRoom() == getRoomHandler().getRoom("Fredagsbar")) {
-            txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
-                    + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
-                    + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+            // runnable for that thread
+            public void run() {
 
-            ConsoleInfo.setConsoleData(txt);
+                RPS = new RockPaperScissors();
+                String txt;
 
-//            if (!command.hasSecondWord()) {
-            ConsoleInfo.setConsoleData("Use one of the following commands:");
-            ConsoleInfo.setConsoleData(">");
-            rpsMiniGame.play();
-            if (rpsMiniGame.getMoveComparison() == 1) {
-                getPlayer().pickupItem(ItemFactory.makeBeer());
+                txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
+                        + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
+                        + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+                // .play() waits for user-input.
+                RPS.play();
+                
+                Platform.runLater(new Runnable() {
+
+                    public void run() {
+                        if (RPS.getMoveComparison() == 1) {
+                            getPlayer().getInventory().addItem(ItemFactory.makeBeer());
+                        }
+                        if (RPS.getMoveComparison() == -1) {
+                            getPlayer().increaseEnergy(-30);
+                        }
+                    }
+
+                });
             }
-            if (rpsMiniGame.getMoveComparison() == -1) {
-                getPlayer().increaseEnergy(-5);
-            }
-            return;
-//            }
+        }.start();
 
-        }
-        if (getPlayer().getCurrentRoom() != getRoomHandler().getRoom("Fredagsbar")) {
-            ConsoleInfo.setConsoleData("There is a time and place for everything, and now is not time for a challenge.");
-        }
+        return;
     }
 
     public void showInfo() {
@@ -264,7 +283,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         Quest quest = player.getInactiveQuests().get("goToCampusQ");
 
         if (quest != null && quest.isCompleted()) {
-            
+
             if (!player.getCurrentRoom().getID().equals("downunder")) {
                 partyguy.move(256, 256);
                 partyguy.spawn(getRoomHandler().getRooms(false));
@@ -302,5 +321,18 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     public boolean isFinished() {
         return finished;
+    }
+    
+    private void initECTSHandler() {
+        Room examRoom = getRoomHandler().getRoom("exam");
+        this.ectsHandler = new ECTSHandler(player, examRoom);
+        player.getECTSBar().setValue(0);
+    }
+
+    /**
+     * @return the RPS
+     */
+    public RockPaperScissors getRPS() {
+        return RPS;
     }
 }

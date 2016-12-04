@@ -10,11 +10,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pMain" prefHeight="666.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
+<AnchorPane fx:id="pMain" prefHeight="680.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
    <children>
-      <TabPane fx:id="tabControl" layoutX="14.0" layoutY="14.0" prefHeight="628.0" prefWidth="694.0" stylesheets="@../resources/tabControl.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabControl" focusTraversable="false" layoutX="14.0" layoutY="14.0" onMouseClicked="#onTabClick" prefHeight="628.0" prefWidth="694.0" stylesheets="@../resources/tabControl.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab fx:id="tabGame" closable="false" text="Untitled Tab 1">
+          <Tab fx:id="tabGame" closable="false" text="Game">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                      <children>
@@ -25,10 +25,10 @@
                               <Pane fx:id="pSprites" layoutX="64.0" prefHeight="400.0" prefWidth="400.0" />
                               <Pane fx:id="pInventory" layoutX="72.0" layoutY="402.0" prefHeight="47.0" prefWidth="367.0" />
                               <Text fx:id="tItemInfo" fill="WHITE" layoutX="85.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dette er en test" wrappingWidth="342.13671875" />
-                              <Pane fx:id="pInfo" layoutX="464.0" layoutY="-9.0" prefHeight="469.0" prefWidth="234.0">
+                              <Pane fx:id="pInfo" layoutX="464.0" prefHeight="460.0" prefWidth="234.0">
                                  <children>
-                                    <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="111.0" prefWidth="200.0" progress="1.0" />
-                                    <Text fill="WHITE" layoutX="17.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
+                                    <ProgressBar fx:id="progEnergy" layoutX="17.0" layoutY="155.0" prefWidth="200.0" progress="1.0" />
+                                    <Text fill="WHITE" layoutX="17.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energy">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
@@ -38,44 +38,103 @@
                                           <Font size="34.0" />
                                        </font>
                                     </Text>
-                                    <Text fill="WHITE" layoutX="17.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
+                                    <Text fill="WHITE" layoutX="17.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
                                     </Text>
-                                    <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="197.0" prefHeight="206.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
+                                    <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="217.0" prefHeight="206.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
+                                    <Text fill="WHITE" layoutX="18.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="tHealth" fill="WHITE" layoutX="78.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="tECTS" fill="WHITE" layoutX="78.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fill="WHITE" layoutX="18.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ECTS:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </Pane>
-                              <TextArea fx:id="taConsol" disable="true" editable="false" focusTraversable="false" layoutX="19.0" layoutY="482.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" wrapText="true">
+                              <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="19.0" layoutY="482.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" wrapText="true">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </TextArea>
+                              <Pane fx:id="pRPS" layoutX="18.0" layoutY="622.0" prefHeight="44.0" prefWidth="658.0">
+                                 <children>
+                                    <Button fx:id="butRock" layoutX="32.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Rock" />
+                                    <Button fx:id="butPaper" layoutX="238.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Paper" />
+                                    <Button fx:id="butScissor" layoutX="444.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Scissor" />
+                                 </children>
+                              </Pane>
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tabNewGame" closable="false" text="Untitled Tab 2">
+          <Tab fx:id="tabNewGame" closable="false" text="newGame">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                      <children>
                         <Pane fx:id="pMenu" prefHeight="599.0" prefWidth="694.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="butNewGame" layoutX="263.0" layoutY="353.0" mnemonicParsing="false" onAction="#onClickNewGame" prefHeight="47.0" prefWidth="156.0" text="New Game" />
-                              <ListView fx:id="lvHighscore" layoutX="241.0" layoutY="118.0" prefHeight="200.0" prefWidth="200.0" />
-                              <Text fill="WHITE" layoutX="220.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HIGHSCORES">
+                              <Button fx:id="butNewGame" layoutX="263.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickNewGame" prefHeight="47.0" prefWidth="156.0" text="New Game" />
+                              <Button fx:id="butHighscore" layoutX="263.0" layoutY="500.0" mnemonicParsing="false" onAction="#onbutHighscoreClick" prefHeight="47.0" prefWidth="156.0" text="Highscore" />
+                              <RadioButton fx:id="rbNormal" layoutX="176.0" layoutY="229.0" mnemonicParsing="false" selected="true" text="Normal" textFill="WHITE">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tgGameLevel" />
+                                 </toggleGroup>
                                  <font>
-                                    <Font size="43.0" />
+                                    <Font size="18.0" />
                                  </font>
-                              </Text>
+                              </RadioButton>
+                              <RadioButton fx:id="rbAbnormal" layoutX="419.0" layoutY="229.0" mnemonicParsing="false" text="Abnormal" textFill="WHITE" toggleGroup="$tgGameLevel">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </RadioButton>
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab fx:id="tabExam" text="exam">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab fx:id="tabHighscore" text="Highscore">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="673.0" prefWidth="694.0" style="-fx-background-color: #333333;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ListView fx:id="lvHighscore" layoutX="247.0" layoutY="157.0" prefHeight="200.0" prefWidth="200.0" />
+                              <Text fill="WHITE" layoutX="220.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HIGHSCORES">
+                                 <font>
+                                    <Font size="43.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="butBack" layoutX="247.0" layoutY="422.0" mnemonicParsing="false" onAction="#onbutBackClick" prefHeight="47.0" prefWidth="201.0" text="Return" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
