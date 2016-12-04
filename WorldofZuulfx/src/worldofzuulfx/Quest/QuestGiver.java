@@ -15,14 +15,14 @@ public class QuestGiver implements NavigateListener {
 
     @Override
     public void navigated(NavigateEvent navEvent) {
-        Room room = navEvent.getNewRoom();
-        if (room.getID().equals("U170")){
-            Quest quest = Main.getGame().getQuestInventory().getAllGameQuests().get("U170Lecture");
-            }
-        if (room.getID().equals("U180")){
-            Quest quest = Main.getGame().getQuestInventory().getAllGameQuests().get("U180Lecture");
-            
-            
-        }
+//        Room room = navEvent.getNewRoom();
+//        if (room.getID().equals("U170")){
+//            Quest quest = Main.getGame().getQuestInventory().getAllGameQuests().get("U170Lecture");
+//            }
+//        if (room.getID().equals("U180")){
+//            Quest quest = Main.getGame().getQuestInventory().getAllGameQuests().get("U180Lecture");
+//            
+//            
+//        }
     }
 }

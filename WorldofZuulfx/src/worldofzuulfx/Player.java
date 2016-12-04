@@ -581,7 +581,7 @@ public class Player extends SpriteBase implements BarValueListener {
             //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
             //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
-            if (getHp().getValue() > 0) {
+            if (getHp().getValue() > 1) {
                 bar.setValue(bar.getMax());
                 getHp().setValue(getHp().getValue() - 1);
                 setAlcoCounter(0);
@@ -589,7 +589,6 @@ public class Player extends SpriteBase implements BarValueListener {
                 System.out.println(getHp().getValue());
             } else {
                 // TODO sæt finish flag
-                Main.getGame().setFinished();
             }
         }
     }
