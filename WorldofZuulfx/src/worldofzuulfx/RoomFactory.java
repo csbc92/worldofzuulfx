@@ -63,7 +63,7 @@ public class RoomFactory {
                     break;
                 }
                 case "note": {
-                    item = ItemFactory.makeNote("");
+                    item = ItemFactory.makeNote("", "", "");
                     break;
                 }
                 case "coffee": {

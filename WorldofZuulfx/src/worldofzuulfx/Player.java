@@ -81,6 +81,13 @@ public class Player extends SpriteBase implements BarValueListener {
     public int getECTS() {
         return ects.getValue();
     }
+    
+    /**
+     * @return Returns the Player's ECTS-bar
+     */
+    public Bar getECTSBar() {
+        return this.ects;
+    }
 
     public int getEnergy() {
         return energy.getValue();
@@ -119,13 +126,21 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public boolean setActiveQuest(Quest quest, boolean overrideOldQuest) {
 
+        if (quest == null) {
+            ConsoleInfo.setQuestData("No active quest");
+        }
+        
         if (overrideOldQuest) {
             this.activeQuest = quest;
-            ConsoleInfo.setQuestData(quest.getDescription());
+            if (quest != null) {
+                ConsoleInfo.setQuestData(quest.getDescription());
+            }
             return true;
         } else if (this.activeQuest == null) {
             this.activeQuest = quest;
-            ConsoleInfo.setQuestData(quest.getDescription());
+            if (quest != null) {
+                ConsoleInfo.setQuestData(quest.getDescription());
+            }
             return true;
         }
 
@@ -135,7 +150,7 @@ public class Player extends SpriteBase implements BarValueListener {
     public void untrackQuest(Quest q) {
         if (activeQuest != null) {
             getInactiveQuests().put(q.getId(), q);
-            activeQuest = null;
+            setActiveQuest(null, true);
         }
     }
 

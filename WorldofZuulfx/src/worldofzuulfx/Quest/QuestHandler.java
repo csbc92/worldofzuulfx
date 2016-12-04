@@ -21,6 +21,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
     
     public QuestHandler(Player p) {
         this.player = p;
+        // Subscribe for events throwed by the player.
         this.player.addNavigateListener(this);
         this.player.addItemPickupListener(this);
         this.player.addItemDeliveredListener(this);
@@ -50,9 +51,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
     private void completeQuest() {
         
         Quest activeQuest = this.player.getActiveQuest();
-        
-        
-        
+
         if (activeQuest != null ) {
 
             if (activeQuest.checkRequirement()) {
@@ -73,8 +72,9 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
                         this.player.setActiveQuest(activeQuest.getChainQuest(), true);
                     }
 
-                } catch (QuestNotCompletedException ex) {
-                    //TODO: handle the exception
+                } catch (QuestRequirementException ex) {
+                    ConsoleInfo.setConsoleData("The requirement to complete the quest has not been met. " 
+                                                + "Quest: " + activeQuest.getDescription());
                 }
             }            
         }

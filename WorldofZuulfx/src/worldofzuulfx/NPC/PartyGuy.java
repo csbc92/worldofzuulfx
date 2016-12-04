@@ -59,7 +59,7 @@ public class PartyGuy extends NPC {
 
     public Item giveItem() {
         Item item;
-        if (inventory.getSize() != 0) {
+        if (inventory.getSize() > 0) {
             item = inventory.getItem(0);
             inventory.removeItem(item);
             return item;

@@ -20,6 +20,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private PartyGuy partyguy;
     private ArrayList<String> RPSCommands;
     private Player player;
+    private ECTSHandler ectsHandler;
     private RoomHandler roomHandler;
     private QuestInventory questInventory;
 
@@ -38,6 +39,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         questInventory = new QuestInventory();
 
         initPlayer();
+        initECTSHandler();
 
         initNPCs();
         initPartyGuy();
@@ -87,14 +89,14 @@ public class Game implements NavigateListener, ItemPickupListener {
 
             if (tile.getCanCollide()) {
                 if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    // Reset the nextPos since a collision was detected
-
+                    
                     if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
 
                         // The Player needs to moved with the offset 1.
                         player.move(tile.getNextTelePosX() + 1, tile.getNextTelePosY() + 1);
                     }
-
+                    
+                    // Reset the nextPos since a collision was detected
                     player.setNextPosX(player.getX());
                     player.setNextPosY(player.getY());
                     return;
@@ -106,13 +108,14 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    ;
-                    // Reset the nextPos since a collision was detected
+                    
                     if (item.canTeleport()) {
                         player.navigateTo(item.getNextRoom());
                     } else {
                         // Pick up the item
                         player.pickupItem(item);
+                        
+                        // Reset the nextPos since a collision was detected
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                     }
@@ -125,10 +128,11 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (NPC npc : currentRoom.getNPCList()) {
             if (npc.getCanCollide()) {
                 if (npc.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    // Reset the nextPos since a collision was detected
+                    
                     if (npc.canTeleport()) {
                         player.navigateTo(npc.getNextRoom());
                     } else {
+                        // Reset the nextPos since a collision was detected
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
                         player.setNearNPC(npc);
@@ -302,5 +306,10 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     public boolean isFinished() {
         return finished;
+    }
+
+    private void initECTSHandler() {
+        Room examRoom = getRoomHandler().getRoom("exam");
+        this.ectsHandler = new ECTSHandler(player, examRoom);
     }
 }

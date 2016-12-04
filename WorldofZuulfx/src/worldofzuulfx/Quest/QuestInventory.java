@@ -7,6 +7,7 @@ package worldofzuulfx.Quest;
 
 import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
+import worldofzuulfx.Items.Book;
 import worldofzuulfx.Items.Item;
 
 import worldofzuulfx.Items.ItemFactory;
@@ -114,6 +115,7 @@ public class QuestInventory {
         });
 
         Quest leaveU163Q = qFactory.roomQuest("leaveU163Q", "Knoldene", "Leave U163", null);
+
         leaveU163Q.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
                     + "\n\"The OOP lesson has not finished yet. To attend to the course, you need your OOP book. "
@@ -122,7 +124,7 @@ public class QuestInventory {
                     + "Remember that you can use the map if you’re lost.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
             
-            Item oopBook = ItemFactory.makeBook("OOP-book");
+            Book oopBook = ItemFactory.makeBook("OOP-book");
             oopBook.setX(128);
             oopBook.setY(128);
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(oopBook);
@@ -137,6 +139,12 @@ public class QuestInventory {
                     + "e.g. ‘take oopbook’ in the console.";
             ConsoleInfo.setConsoleData(postCompleteMessage);            
         });
+        
+        Quest pickupOOPBookQ = qFactory.pickupItemQuest("pickupOOPBookQ", "OOP-book", "Pick up the OOP-book", null);
+        goToBookStoreQ.setPostAction(() -> {
+            String postCompleteMessage = "Return to U163 and participate in the OOP lecture.";
+            ConsoleInfo.setConsoleData(postCompleteMessage);            
+        });
 
         Quest returnToU163 = qFactory.roomQuest("returnToU163", "U163", "Return to U163", null);
         returnToU163.setPostAction(() -> {
@@ -147,8 +155,9 @@ public class QuestInventory {
             
         });
         
-        Note oopNote = ItemFactory.makeNote("OOP Lecture notes."
-                + "\nInt are whole numbers, such as 1, 2 and 3."
+        NPC daniel = roomHandler.getRoom("U163").getNPC("Daniel");
+        Note oopNote = ItemFactory.makeNote("oop-notes", "OOP Lecture notes.",
+                  "\nInt are whole numbers, such as 1, 2 and 3."
                 + "\nDouble which support dicimals such as 1,2 or 3,4"
                 + "\nBoolean can only be \'true\' or \'false\'"
                 + "\nString is use for text based information."
@@ -165,12 +174,11 @@ public class QuestInventory {
                 + "\n     Name = name;"
                 + "\n     det IsItHealthy = vaccine"
                 + "\n}");
-                
-        Quest oopLecture = qFactory.roomQuest("oopLecture", "U163", "Participate in OOP lecture", new Reward(oopNote, 10));
+        Quest oopLecture = qFactory.deliveryQuest("oopLecture", "OOP-book", daniel, "Participate in OOP lecture by giving Daniel the OOP-book", new Reward(null, 10));
         oopLecture.setPostAction(() -> {
-            String postCompleteMessage = "You have now completed the OOPLecture"
+            String postCompleteMessage = "You have now completed the OOP lecture"
                     + "\nLook in your inventory for your notes";
-            
+            player.getInventory().addItem(oopNote);
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
        
@@ -202,7 +210,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
-        Note iseNote = ItemFactory.makeNote("The Waterfall model, a model with different phases where you follow a specific pattern, "
+        Note iseNote = ItemFactory.makeNote("ise-notes", "ISE Lecture notes", "The Waterfall model, a model with different phases where you follow a specific pattern, "
                 + "where each phase must be executed before moving on to the next"
                 + "\nSpiral model, a model that can be considered a linear model but it isn’t, "
                 + "you are going through all the phases repeated in a spiral motion, until you have the finished project"
@@ -245,7 +253,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
-        Note cosNote = ItemFactory.makeNote("Everyhing you do is 1's and 0's, also known as Binary."
+        Note cosNote = ItemFactory.makeNote("cos-notes", "COS Lecture notes", "Everyhing you do is 1's and 0's, also known as Binary."
                 + "\nA sequence of four 1's or 0's is also known as a bite - for example \'1101\'"
                 + "\nA byte is a sequence of two bites, so a sequence of 8 binary numbers like \'11011011\'"
                 + "you can also add or subtract in binary - for example:"
@@ -286,7 +294,8 @@ public class QuestInventory {
         coffeeQ.setChainQuest(deliverCoffeeQ);
         deliverCoffeeQ.setChainQuest(leaveU163Q);
         leaveU163Q.setChainQuest(goToBookStoreQ);
-        goToBookStoreQ.setChainQuest(returnToU163);
+        goToBookStoreQ.setChainQuest(pickupOOPBookQ);
+        pickupOOPBookQ.setChainQuest(returnToU163);
         returnToU163.setChainQuest(oopLecture);
 
         // Chain the rest of the quests together in the game
