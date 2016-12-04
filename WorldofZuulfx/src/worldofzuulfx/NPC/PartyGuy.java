@@ -70,7 +70,6 @@ public class PartyGuy extends NPC {
                 setRandom((int)(Math.random()*rooms.size()));
                 this.navigateTo(rooms.get(getRandom()));
             }
-=======
 
     public Item giveItem() {
         Item item;
@@ -78,7 +77,6 @@ public class PartyGuy extends NPC {
             item = inventory.getItem(0);
             inventory.removeItem(item);
             return item;
->>>>>>> ddab23b19eb384d75903bb5bcbc43ed5f449f059
         }
         return null;
     }
