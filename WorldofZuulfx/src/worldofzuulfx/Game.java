@@ -20,6 +20,7 @@ import worldofzuulfx.tiles.*;
 public class Game implements NavigateListener, ItemPickupListener {
 
     private boolean finished;
+    private int timeLeft;
     private PartyGuy partyguy;
     private Player player;
     private ECTSHandler ectsHandler;
@@ -36,20 +37,13 @@ public class Game implements NavigateListener, ItemPickupListener {
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
-        
-       
-        roomHandler = new RoomHandler();
-        roomFactory = new RoomFactory(gameLevel);
-        roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
 
-        questInventory = new QuestInventory();
-
+        initRooms(gameLevel);
         initPlayer();
         initECTSHandler();
-
         initNPCs();
         initPartyGuy();
-        questInventory.initQuests(roomHandler, player);
+        initQuest();
 
         gameLoop();
 
@@ -96,15 +90,15 @@ public class Game implements NavigateListener, ItemPickupListener {
 
             if (tile.getCanCollide()) {
                 if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    
+
                     if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
 
                         // The Player needs to moved with the offset 1.
                         nextTile = tile.getNextRoom().getTileMap().getTile(tile.getNextPos());
                         player.move(nextTile.getX() + 1, nextTile.getY() + 1);
-                       
+
                     }
-                    
+
                     // Reset the nextPos since a collision was detected
                     player.setNextPosX(player.getX());
                     player.setNextPosY(player.getY());
@@ -117,13 +111,13 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (Item item : currentRoom.getRoomInventory().getItemList()) {
             if (item.getCanCollide()) {
                 if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    
+
                     if (item.canTeleport()) {
                         player.navigateTo(item.getNextRoom());
                     } else {
                         // Pick up the item
                         player.pickupItem(item);
-                        
+
                         // Reset the nextPos since a collision was detected
                         player.setNextPosX(player.getX());
                         player.setNextPosY(player.getY());
@@ -137,7 +131,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (NPC npc : currentRoom.getNPCList()) {
             if (npc.getCanCollide()) {
                 if (npc.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-                    
+
                     if (npc.canTeleport()) {
                         player.navigateTo(npc.getNextRoom());
                     } else {
@@ -167,6 +161,11 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     }
 
+    private void initQuest() {
+        questInventory = new QuestInventory();
+        questInventory.initQuests(roomHandler, player);
+    }
+
     private void initPartyGuy() {
         partyguy = new PartyGuy("PartyGuy", "Party Guy", Game.tiles.get(123).getImageView().getImage());
     }
@@ -187,6 +186,12 @@ public class Game implements NavigateListener, ItemPickupListener {
         return list;
     }
 
+    public void initRooms(int gameLevel) {
+        roomHandler = new RoomHandler();
+        roomFactory = new RoomFactory(gameLevel);
+        roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
+    }
+
     public void initPlayer() {
         player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
@@ -203,11 +208,10 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     private void printWelcome() {
-        // Velkomst
         String welcome = "Welcome " + getPlayer().getName() + ", to the World of Zuul!"
-                + "\n World of Zuul is a new, incredibly boring adventure game.";
+                + "\nWorld of Zuul is a new, incredibly boring adventure game. \n"
+                + getPlayer().getCurrentRoom().getLongDescription();
         ConsoleInfo.setConsoleData(welcome);
-        showInfo();
     }
 
     /**
@@ -217,8 +221,8 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     private void challenge() {
         Thread rpsThread;
-        new Thread() {
-
+        player.setCanMove(false);
+        rpsThread = new Thread() {
             // runnable for that thread
             public void run() {
 
@@ -230,7 +234,7 @@ public class Game implements NavigateListener, ItemPickupListener {
                         + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
                 // .play() waits for user-input.
                 RPS.play();
-                
+                // TODO KILL Thread
                 Platform.runLater(new Runnable() {
 
                     public void run() {
@@ -240,18 +244,14 @@ public class Game implements NavigateListener, ItemPickupListener {
                         if (RPS.getMoveComparison() == -1) {
                             getPlayer().increaseEnergy(-30);
                         }
+                        player.setCanMove(true);
+
                     }
 
                 });
             }
-        }.start();
-
-        return;
-    }
-
-    public void showInfo() {
-        // TODO skal muligvis slettes
-        ConsoleInfo.setConsoleData(getPlayer().getCurrentRoom().getLongDescription());
+        };
+        rpsThread.start();
     }
 
     /**
@@ -278,19 +278,19 @@ public class Game implements NavigateListener, ItemPickupListener {
         daniel.move(256, 64);
         u163.addNPC(daniel);
         u163.addNPC(anders);
-        
+
         // U170 NPCS
         Room u170 = getRoomHandler().getRoom("U170");
         NPC lone = new NPC("Lone", "Lone", Game.tiles.get(121).getImageView().getImage());
         lone.move(96, 64);
         u170.addNPC(lone);
-        
+
         // U180 NPCS
         Room u180 = getRoomHandler().getRoom("U180");
         NPC erik = new NPC("Erik", "Erik", Game.tiles.get(122).getImageView().getImage());
         erik.move(128, 64);
         u180.addNPC(erik);
-        
+
     }
 
     @Override
@@ -337,7 +337,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     public boolean isFinished() {
         return finished;
     }
-    
+
     private void initECTSHandler() {
         Room examRoom = getRoomHandler().getRoom("exam");
         this.ectsHandler = new ECTSHandler(player, examRoom);

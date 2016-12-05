@@ -13,10 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import worldofzuulfx.Room;
 
-/**
- *
- * @author JV
- */
 public abstract class SpriteBase {
 
     private Image image;
@@ -169,8 +165,7 @@ public abstract class SpriteBase {
         double x = getBounds().getX();
         double y = getBounds().getY();
 
-        getBounds().relocate(x, y);
-        getImageView().relocate(getBounds().getX(), getBounds().getY());
+        getImageView().relocate(x, y);
 
     }
 

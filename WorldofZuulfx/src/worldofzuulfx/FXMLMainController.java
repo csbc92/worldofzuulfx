@@ -42,7 +42,6 @@ import worldofzuulfx.Highscores.Score;
 import worldofzuulfx.Minigame.RockPaperScissorsMoves;
 import worldofzuulfx.Exam.ExamCallback;
 
-
 public class FXMLMainController implements Initializable, BarValueListener, ExamCallback {
 
     private Stage stage;
@@ -104,15 +103,14 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private Text tfTimeLeft;
     @FXML
     private Text tRoom;
+    @FXML
+    private Tab tabEndGame;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeConsole();
         initializeExamTab();
-
-        highscores = new Highscores(5);
-        highscores.loadHighscores();
-        lvHighscore.itemsProperty().set(highscores.getHighscoreList());
+        initialzeHighscore();
 
         rbNormal.setUserData(0);
         rbAbnormal.setUserData(1);
@@ -220,6 +218,8 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
                     if (value == 1 || game.isFinished()) {
                         gameTimer.cancel();
                         game.setFinished();
+                        tabControl.getSelectionModel().select(tabEndGame);
+
                     }
                     game.getPlayer().setTimeLeft(--value);
                     tfTimeLeft.setText(value + " sec");
@@ -234,18 +234,16 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
                 }
             });
         }
-
     }
 
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-        taConsol.textProperty().addListener(new ChangeListener<Object>() {
-            @Override
-            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-                //TODO: Scroll to the bottom
-                taConsol.positionCaret(Integer.MAX_VALUE);
-            }
-        });
+    }
+
+    private void initialzeHighscore() {
+        highscores = new Highscores(5);
+        highscores.loadHighscores();
+        lvHighscore.itemsProperty().set(highscores.getHighscoreList());
     }
 
     private void initializeGame() {
@@ -278,6 +276,9 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     public void barValueChanged(Bar bar) {
         progEnergy.setProgress((double) bar.getValue() / 100);
         tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+        if (bar.getValue() < 1) {
+            game.setFinished();
+        }
     }
 
     @FXML
