@@ -114,8 +114,11 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
+        /*
+        * OOP QUESTS
+        */
+        
         Quest leaveU163Q = qFactory.roomQuest("leaveU163Q", "Knoldene", "Leave U163", null);
-
         leaveU163Q.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
                     + "\n\"The OOP lesson has not finished yet. To attend to the course, you need your OOP book. "
@@ -124,7 +127,7 @@ public class QuestInventory {
                     + "Remember that you can use the map if you’re lost.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
             
-            Book oopBook = ItemFactory.makeBook("OOP-book");
+            Book oopBook = ItemFactory.makeBook("OOP-book", Book.BookColor.RED);
             oopBook.setX(128);
             oopBook.setY(128);
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(oopBook);
@@ -141,7 +144,7 @@ public class QuestInventory {
         });
         
         Quest pickupOOPBookQ = qFactory.pickupItemQuest("pickupOOPBookQ", "OOP-book", "Pick up the OOP-book", null);
-        goToBookStoreQ.setPostAction(() -> {
+        pickupOOPBookQ.setPostAction(() -> {
             String postCompleteMessage = "Return to U163 and participate in the OOP lecture.";
             ConsoleInfo.setConsoleData(postCompleteMessage);            
         });
@@ -182,24 +185,37 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
        
-        Quest u170Lecture = qFactory.roomQuest("u170Lecture", "U170", "Participate in lecture", null);
-        u170Lecture.setPostAction(() -> {
+        /*
+        * ISE QUESTS
+        */
+        
+        Quest goToU170 = qFactory.roomQuest("u170Lecture", "U170", "Go to U170", null);
+        goToU170.setPostAction(() -> {
             String postCompleteMessage = "Lone:"
                     + "\n\"Welcome to the ISE-lecture."
                     + "\nBefore we can start the lecture you need your ISE Book."
                     + "\nGet your book in the Bookstore.";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
-
-            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook("ISE-Book"));
+            
+            Book iseBook = ItemFactory.makeBook("ISE-Book", Book.BookColor.ORANGE);
+            iseBook.setX(128);
+            iseBook.setY(128);
+            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(iseBook);
         });
-
+        
         Quest bookstoreIse = qFactory.roomQuest("bookstoreIse", "Bookstore", "Go to Bookstore", null);
         bookstoreIse.setPostAction(() -> {
             String postCompleteMessage = "Bookstore"
                     + "\nSearch for the ISE-Book";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+        
+        Quest pickupISEBookQ = qFactory.pickupItemQuest("pickupISEBookQ", "ISE-Book", "Pick up the ISE-book", null);
+        pickupISEBookQ.setPostAction(() -> {
+            String postCompleteMessage = "Return to U170 and participate in the ISE lecture.";
+            ConsoleInfo.setConsoleData(postCompleteMessage);            
         });
 
         Quest returnToU170 = qFactory.roomQuest("returnToU170", "U170", "Return to U170", null);
@@ -210,6 +226,7 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
+        NPC lone = roomHandler.getRoom("U170").getNPC("Lone");
         Note iseNote = ItemFactory.makeNote("ise-notes", "ISE Lecture notes", "The Waterfall model, a model with different phases where you follow a specific pattern, "
                 + "where each phase must be executed before moving on to the next"
                 + "\nSpiral model, a model that can be considered a linear model but it isn’t, "
@@ -219,40 +236,59 @@ public class QuestInventory {
                 + "\n1: Listen to the requirement the customer asks for, it is important."
                 + "\n2: Give the customer advices, is there something you can add or is the idea already created."
                 + "\n3: Go thought the steps of each model");
-        Quest iseLecture = qFactory.roomQuest("iseLecture", "U170", "Participate in ISE lecture", new Reward(iseNote, 10));
+        Quest iseLecture = qFactory.deliveryQuest("iseLecture", "ISE-Book", lone, "Participate in ISE lecture by giving Lone the ISE-book", new Reward(null, 10));
         iseLecture.setPostAction(() -> {
-            String postCompleteMessage = "";
+            String postCompleteMessage = "You have now completed the ISE lecture"
+                    + "\nLook in your inventory for your notes";
+            player.getInventory().addItem(iseNote);
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
-        Quest u180Lecture = qFactory.roomQuest("u180Lecture", "U180", "Participate in lecture", null);
-        u180Lecture.setPostAction(() -> {
+        
+        /*
+        * COS QUESTS
+        */
+        
+        Quest goToU180 = qFactory.roomQuest("u180Lecture", "U180", "Go to U180", null);
+        goToU180.setPostAction(() -> {
             String postCompleteMessage = "Erik:"
                     + "\n\"Welcome to the COS-lecture."
-                    + "\nBefore we can start the lecture you need your BOS Book."
+                    + "\nBefore we can start the lecture you need your COS Book."
                     + "\nGet your book in the Bookstore.";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
-            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(ItemFactory.makeBook("COS-Book"));
+            Book cosBook = ItemFactory.makeBook("COS-Book", Book.BookColor.GREEN);
+            cosBook.setX(128);
+            cosBook.setY(128);
+            roomHandler.getRoom("Bookstore").getRoomInventory().addItem(cosBook);
         });
 
         Quest bookstoreCos = qFactory.roomQuest("bookstoreCos", "Bookstore", "Go to Bookstore", null);
         bookstoreCos.setPostAction(() -> {
-            String postCompleteMessage = "Search for the COS Book";
-
-            ConsoleInfo.setConsoleData(postCompleteMessage);
-        });
-
-        Quest returnToU180 = qFactory.roomQuest("returnToU180", "u180", "Return to U180", null);
-        returnToU180.setPostAction(() -> {
-            String postCompleteMessage = "Erik:"
-                    + "\n\"Great! You've collected the book."
-                    + "\nThe lecture can now begin\"";
+            String postCompleteMessage = "Bookstore"
+                    + "\nSearch for the COS-Book";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
+        Quest pickupCOSBookQ = qFactory.pickupItemQuest("pickupCOSBookQ", "COS-Book", "Pick up the COS-book", null);
+        pickupCOSBookQ.setPostAction(() -> {
+            String postCompleteMessage = "Return to U180 and participate in the COS lecture.";
+            ConsoleInfo.setConsoleData(postCompleteMessage);            
+        });
+
+        Quest returnToU180 = qFactory.roomQuest("returnToU170", "U180", "Return to U180", null);
+        returnToU180.setPostAction(() -> {
+            String postCompleteMessage = "Erik:"
+                    + "\n\"Great! You've collected the book."
+                    + "\nThe lecture can now begin\"";
+            ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+        
+        
+        
+        NPC erik = roomHandler.getRoom("U180").getNPC("Erik");
         Note cosNote = ItemFactory.makeNote("cos-notes", "COS Lecture notes", "Everyhing you do is 1's and 0's, also known as Binary."
                 + "\nA sequence of four 1's or 0's is also known as a bite - for example \'1101\'"
                 + "\nA byte is a sequence of two bites, so a sequence of 8 binary numbers like \'11011011\'"
@@ -273,11 +309,11 @@ public class QuestInventory {
                 + "\n156C: load register 5 iwth the bit pattern found in the memory cell at address 6C."
                 + "\nOr"
                 + "\n40A4 where we move the bit pattern found in register A and copy it to register 4)");
-        
-        Quest cosLecture = qFactory.roomQuest("cosLecture", "u180", "Participate in COS lecture", new Reward(cosNote, 10));
+        Quest cosLecture = qFactory.deliveryQuest("cosLecture", "COS-book", erik, "Participate in the COS lecture by giving Erik the COS-book", new Reward(null, 10));
         cosLecture.setPostAction(() -> {
-            String postCompleteMessage = "";
-            
+            String postCompleteMessage = "You have now completed the COS lecture"
+                    + "\nLook in your inventory for your notes";
+            player.getInventory().addItem(cosNote);
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
@@ -293,18 +329,25 @@ public class QuestInventory {
         goToCanteenQ.setChainQuest(coffeeQ);
         coffeeQ.setChainQuest(deliverCoffeeQ);
         deliverCoffeeQ.setChainQuest(leaveU163Q);
+        
+        // Chain OOP
         leaveU163Q.setChainQuest(goToBookStoreQ);
         goToBookStoreQ.setChainQuest(pickupOOPBookQ);
         pickupOOPBookQ.setChainQuest(returnToU163);
         returnToU163.setChainQuest(oopLecture);
+        oopLecture.setChainQuest(goToU170);
 
-        // Chain the rest of the quests together in the game
-        u170Lecture.setChainQuest(bookstoreIse);
-        bookstoreIse.setChainQuest(returnToU170);
+        // Chain ISE
+        goToU170.setChainQuest(bookstoreIse);
+        bookstoreIse.setChainQuest(pickupISEBookQ);
+        pickupISEBookQ.setChainQuest(returnToU170);
         returnToU170.setChainQuest(iseLecture);
-
-        u180Lecture.setChainQuest(bookstoreCos);
-        bookstoreCos.setChainQuest(returnToU180);
+        iseLecture.setChainQuest(goToU180);
+        
+        // Chain COS
+        goToU180.setChainQuest(bookstoreCos);
+        bookstoreCos.setChainQuest(pickupCOSBookQ);
+        pickupCOSBookQ.setChainQuest(returnToU180);
         returnToU180.setChainQuest(cosLecture);
 
         // Save a reference to the rest of the quests
@@ -316,12 +359,18 @@ public class QuestInventory {
         this.allGameQuests.put("deliverCoffeeQ", deliverCoffeeQ);
         this.allGameQuests.put("leaveU163Q", leaveU163Q);
         this.allGameQuests.put("goToBookStoreQ", goToBookStoreQ);
+        this.allGameQuests.put("pickupOOPBookQ", pickupOOPBookQ);
         this.allGameQuests.put("returnToU163", returnToU163);
-        this.allGameQuests.put("u170Lecuture", u170Lecture);
+        this.allGameQuests.put("oopLecture", oopLecture);
+        this.allGameQuests.put("u170Lecuture", goToU170);
         this.allGameQuests.put("bookstoreIse", bookstoreIse);
+        this.allGameQuests.put("pickupISEBook", pickupISEBookQ);
         this.allGameQuests.put("returnToU170", returnToU170);
-        this.allGameQuests.put("u180Lecture", u180Lecture);
+        this.allGameQuests.put("iseLecture", iseLecture);
+        this.allGameQuests.put("u180Lecture", goToU180);
         this.allGameQuests.put("bookstoreCos", bookstoreCos);
+        this.allGameQuests.put("pickupCOSBookQ", pickupCOSBookQ);
         this.allGameQuests.put("returnToU180", returnToU180);
+        this.allGameQuests.put("cosLecture", cosLecture);
     }
 }

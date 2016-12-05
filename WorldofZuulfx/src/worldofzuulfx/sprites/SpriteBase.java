@@ -13,10 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import worldofzuulfx.Room;
 
-/**
- *
- * @author JV
- */
 public abstract class SpriteBase {
 
     private Image image;
@@ -169,8 +165,7 @@ public abstract class SpriteBase {
         double x = getBounds().getX();
         double y = getBounds().getY();
 
-        getBounds().relocate(x, y);
-        getImageView().relocate(getBounds().getX(), getBounds().getY());
+        getImageView().relocate(x, y);
 
     }
 
@@ -376,4 +371,19 @@ public abstract class SpriteBase {
     public String getNextPos() {
         return nextPos;
     }    
+
+    /**
+     * @return the image
+     */
+    public Image getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(Image image) {
+        this.image = image;
+        this.imageView.setImage(image);
+    }
 }

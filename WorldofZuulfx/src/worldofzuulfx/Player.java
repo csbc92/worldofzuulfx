@@ -54,19 +54,18 @@ public class Player extends SpriteBase implements BarValueListener {
     public Player(String name, Pane layer, Image image, double posX, double posY) {
         super(layer, image, posX, posY);
         this.name = name;
-        ects = new Bar(0, 10);
-        energy = new Bar(0, 100);
-        energy.addBarValueListener(this);
-        hp = new Bar(0, 3);
+
         drunk = false;
         inventory = new PlayerInventory(5000, 6);
         inventory.setPlayer(this);
+        initializeBars();
+        initializeListeners();
 
-        ects.setValue(0);
-        energy.setValue(100);
-        hp.setValue(3);
-        timeLeft = (60 * 10);
+        droppedItem = false;
 
+    }
+
+    private void initializeListeners() {
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
@@ -74,14 +73,24 @@ public class Player extends SpriteBase implements BarValueListener {
         inactiveQuests = new HashMap<>();
         itemDropListeners = new ArrayList<>();
         itemReceivedListener = new ArrayList<>();
-        droppedItem = false;
+    }
 
+    private void initializeBars() {
+        ects = new Bar(0, 10);
+        energy = new Bar(0, 100);
+        energy.addBarValueListener(this);
+        hp = new Bar(0, 3);
+
+        ects.setValue(0);
+        energy.setValue(100);
+        hp.setValue(3);
+        timeLeft = (5 * 60);
     }
 
     public int getECTS() {
         return ects.getValue();
     }
-    
+
     /**
      * @return Returns the Player's ECTS-bar
      */
@@ -129,7 +138,7 @@ public class Player extends SpriteBase implements BarValueListener {
         if (quest == null) {
             ConsoleInfo.setQuestData("No active quest");
         }
-        
+
         if (overrideOldQuest) {
             this.activeQuest = quest;
             if (quest != null) {
@@ -199,8 +208,10 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param item
      */
     public void pickupItem(Item item) {
+        // Checks if Player just dropped an item.
         if (!droppedItem) {
             Inventory roomInventory = this.getCurrentRoom().getRoomInventory();
+            // Checks if the Item is located inside the room. If false - Player can't pickup the item.
             if (roomInventory.contains(item.getID())) {
                 if (this.inventory.addItem(item)) {
                     roomInventory.removeItem(item);
@@ -239,6 +250,7 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public boolean navigateTo(Room room) {
         if (!room.isLocked()) {
+            // TODO slet Drunk til 
             Random r = new Random();
             Room oldRoom = null;
             oldRoom = currentRoom;
@@ -248,7 +260,8 @@ public class Player extends SpriteBase implements BarValueListener {
             setAlcoTolerance(r.nextInt(5 - 2) + 2);
 
             // Decrease the players energy each time he navigates between rooms.
-            energy.setValue(energy.getValue() - 2);
+            energy.increaseEnergy(-5);
+
             notifyChangeRoomListeners(oldRoom, currentRoom);
             return true;
         }
