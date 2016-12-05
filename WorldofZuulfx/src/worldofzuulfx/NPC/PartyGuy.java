@@ -57,6 +57,7 @@ public class PartyGuy extends NPC {
         return random;
     }
     
+<<<<<<< HEAD
     /**
      * Spawns the Partyguy randomly in a room which is not locked.
      * @param rooms
@@ -71,6 +72,8 @@ public class PartyGuy extends NPC {
                 this.navigateTo(rooms.get(getRandom()));
             }
             
+=======
+>>>>>>> 626e6839bb49d80c62873e4cc0746f817a4a54bd
     public Item giveItem() {
         Item item;
         if (inventory.getSize() > 0) {

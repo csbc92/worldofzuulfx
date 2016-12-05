@@ -19,19 +19,21 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Scene scene;
-    private static Game game;
-    private Pane background;
-    private Pane sprites;
-    private FXMLMainController controller;
+    private static FXMLMainController controller;
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        Parent root = fxmlLoader.load(getClass().getResource("FXMLMain.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLMain.fxml"));
+        Parent root = fxmlLoader.load();
+        Main.controller = fxmlLoader.getController();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+    
+    public static FXMLMainController getController() {
+        return Main.controller;
     }
 
     /**
@@ -40,17 +42,6 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         launch(args);
-    }
-
-    public static Game getGame() {
-        return game;
-    }
-
-    /**
-     * @return the controller
-     */
-    public FXMLMainController getController() {
-        return controller;
     }
 
 }

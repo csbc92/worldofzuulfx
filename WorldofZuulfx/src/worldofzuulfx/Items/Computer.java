@@ -5,10 +5,11 @@
  */
 package worldofzuulfx.Items;
 
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
+import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
+import worldofzuulfx.Main;
 import worldofzuulfx.Player;
+import worldofzuulfx.Room;
 
 /**
  *
@@ -22,12 +23,17 @@ public class Computer extends Item {
 
     @Override
     public void use(Player player) {
-        //TODO Computer
-       
-        if (player.getNearNPC() != null) {
-            // Deliver the item to NPC.  
-            //TODO skal man kunne aflevere til NPC
-          //  player.deliverItem(player.getNearNPC(), this);
+        
+        Room currentRoom = player.getCurrentRoom();
+        
+        if (currentRoom.getID().equals("exam")) {
+            // execute exam in the main controller
+            Main.getController().executeExam();
+            
+        } else {
+            ConsoleInfo.setConsoleData("You don't have time to browse Facebook at this time.\n" +
+                                       "The computer is only for use in the exam room.");
         }
+        
     }
 }

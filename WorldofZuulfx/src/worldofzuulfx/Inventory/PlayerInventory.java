@@ -14,6 +14,7 @@ import worldofzuulfx.Items.Clock;
 import worldofzuulfx.Items.CoffeeVoucher;
 import worldofzuulfx.Items.Computer;
 import worldofzuulfx.Items.Drink;
+import worldofzuulfx.Items.Globus;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.Note;
 import worldofzuulfx.Player;
@@ -80,6 +81,11 @@ public class PlayerInventory extends Inventory {
                     txt.append("The voucher can only be used in the canteen");
                 }
             }
+
+            if (i instanceof Globus) {
+                txt.append("Use the globus " + "(" + ((Globus) i).getSpinAmount() + ")");
+            }
+
             if (i instanceof Note) {
                 txt.append("Look through your notes");
             }
@@ -138,6 +144,7 @@ public class PlayerInventory extends Inventory {
     public void setLayer(Pane layer) {
         this.layer = layer;
     }
+
     /**
      * @return the selectedItem
      */

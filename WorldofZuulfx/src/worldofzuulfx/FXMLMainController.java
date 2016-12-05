@@ -5,6 +5,7 @@
  */
 package worldofzuulfx;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -14,8 +15,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,26 +32,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Interfaces.BarValueListener;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import worldofzuulfx.Exam.ExamInterface;
+import worldofzuulfx.Exam.FXMLExamController;
 import worldofzuulfx.Highscores.Score;
-import worldofzuulfx.Minigame.RockPaperScissors;
 import worldofzuulfx.Minigame.RockPaperScissorsMoves;
 
-/**
- *
- * @author JV
- */
-public class FXMLMainController implements Initializable, BarValueListener {
 
+public class FXMLMainController implements Initializable, BarValueListener, ExamInterface {
+    
     @FXML
     private TextArea taConsol;
     private Game game;
@@ -121,6 +116,8 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeConsole();
+        initializeExamTab();
+        
         highscores = new Highscores(5);
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
@@ -133,6 +130,27 @@ public class FXMLMainController implements Initializable, BarValueListener {
         pRPS.setVisible(false);
         tabControl.getSelectionModel().select(tabNewGame);
 
+    }
+    
+    private void initializeExamTab() {
+        try {
+            // Load the FXML document and Controller from another file
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("worldofzuulfx/Exam/FXMLExam.fxml"));
+            Pane content = fxmlLoader.load();
+            FXMLExamController controller = fxmlLoader.getController();
+            controller.setExamInterface(this);
+            
+            // Set the tab's content
+            tabExam.setContent(content);
+            
+        } catch (IOException ex) {
+            System.out.println(ex.getStackTrace());
+            System.exit(0);
+        }
+    }
+    
+    public void executeExam() {
+        tabControl.getSelectionModel().select(tabExam);
     }
 
     private void addInputControls(Scene scene) {
@@ -281,5 +299,23 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private void onbutBackClick(ActionEvent event) {
         tabControl.getSelectionModel().select(tabNewGame);
+    }
+
+    @Override
+    public void examSubmitted(int grade) {
+        // Calculate highscore
+        Player player = game.getPlayer();
+        int score = (player.getTimeLeft() + player.getEnergy()) * player.getHp().getValue() * grade;
+        
+        // The score cannot be negative
+        if (score < 0) {
+            score = 0;
+        }
+        
+        highscores.add(player.getName(), score);
+        highscores.saveHighscores();
+        
+        // Select highscore tab
+        tabControl.getSelectionModel().select(tabHighscore);
     }
 }

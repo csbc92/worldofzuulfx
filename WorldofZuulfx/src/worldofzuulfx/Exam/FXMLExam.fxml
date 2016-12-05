@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPane" prefHeight="599.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.Exam.FXMLExamController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="348.90736389160156" minWidth="10.0" prefWidth="400.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="416.9384765625" minWidth="10.0" prefWidth="295.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Button fx:id="btnNotes" mnemonicParsing="false" text="Notes" GridPane.rowIndex="4" />
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+         <children>
+            <Label text="Question 1:  Which datatype would you use for a city name?  " />
+            <RadioButton fx:id="q1Answer" mnemonicParsing="false" text="String?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question1" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Int?" toggleGroup="$question1" />
+            <RadioButton mnemonicParsing="false" text="Boolean?" toggleGroup="$question1" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
+         <children>
+            <Label text="Question 3: Which statement is true?" />
+            <RadioButton mnemonicParsing="false" text="A double can only store two possible values?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question3" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="A Construtor requires a return type?" toggleGroup="$question3" />
+            <RadioButton fx:id="q3Answer" mnemonicParsing="false" text="A Boolean expression is the same as true/false question?" toggleGroup="$question3" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="2">
+         <children>
+            <Label text="Question 5: Starting a new project, what you be your first task?" />
+            <RadioButton mnemonicParsing="false" text="Find out what model to use?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question5" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="q5Answer" mnemonicParsing="false" text="To find out the requirements and needs?" toggleGroup="$question5" />
+            <RadioButton mnemonicParsing="false" text="To make Coffee and watch the lates episode of friends?" toggleGroup="$question5" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="3">
+         <children>
+            <Label text="Question 7: Subtract tow bits, 1001 from 1111, the answer is?" />
+            <RadioButton mnemonicParsing="false" text="011000?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question7" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="1100?" toggleGroup="$question7" />
+            <RadioButton fx:id="q7Answer" mnemonicParsing="false" text="0110?" toggleGroup="$question7" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
+         <children>
+            <Label text="Question 2: An objects condition is defined by?" />
+            <RadioButton mnemonicParsing="false" text="The object's most important variable values?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question2" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="The object's location in the memory?" toggleGroup="$question2" />
+            <RadioButton fx:id="q2Answer" mnemonicParsing="false" text="The object's attributes values?" toggleGroup="$question2" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label text="Question 4: What does a software engineer &quot;build&quot;?" />
+            <RadioButton mnemonicParsing="false" text="Giant buildings for houseing purposes?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question4" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="q4Answer" mnemonicParsing="false" text="Applications, computer systems and programs?" toggleGroup="$question4" />
+            <RadioButton mnemonicParsing="false" text="Computers, high-tech cars and planes?" toggleGroup="$question4" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <Label text="Question 6: Add two bits, 0111 and 1000, the answer is?" />
+            <RadioButton mnemonicParsing="false" text="10011101?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question6" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="q6Answer" mnemonicParsing="false" text="1111?" toggleGroup="$question6" />
+            <RadioButton mnemonicParsing="false" text="1100?" toggleGroup="$question6" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <Label text="Question 8: What does CPU mean?" />
+            <RadioButton mnemonicParsing="false" text="Computer Programming Userinterface?">
+               <toggleGroup>
+                  <ToggleGroup fx:id="question8" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Computer program for Users?" toggleGroup="$question8" />
+            <RadioButton fx:id="q8Answer" mnemonicParsing="false" text="Central Processing Unit?" toggleGroup="$question8" />
+         </children>
+      </VBox>
+      <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="70.0" />
+   </padding>
+</GridPane>
