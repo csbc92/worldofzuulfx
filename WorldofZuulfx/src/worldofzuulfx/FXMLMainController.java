@@ -37,17 +37,19 @@ import worldofzuulfx.Interfaces.BarValueListener;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import worldofzuulfx.Exam.ExamInterface;
 import worldofzuulfx.Exam.FXMLExamController;
 import worldofzuulfx.Highscores.Score;
 import worldofzuulfx.Minigame.RockPaperScissorsMoves;
+import worldofzuulfx.Exam.ExamCallback;
 
-public class FXMLMainController implements Initializable, BarValueListener, ExamInterface {
+
+public class FXMLMainController implements Initializable, BarValueListener, ExamCallback {
 
     private Stage stage;
     private Timer gameTimer;
     private Highscores highscores;
     private Game game;
+
     @FXML
     private TextArea taConsol;
     @FXML
@@ -127,7 +129,8 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("worldofzuulfx/Exam/FXMLExam.fxml"));
             Pane content = fxmlLoader.load();
             FXMLExamController controller = fxmlLoader.getController();
-            controller.setExamInterface(this);
+
+            controller.setExamSubmittedCallback(this);
 
             // Set the tab's content
             tabExam.setContent(content);
@@ -293,7 +296,7 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     }
 
     @Override
-    public void examSubmitted(int grade) {
+    public void examSubmittedCallback(int grade) {
         // Calculate highscore
         Player player = game.getPlayer();
         int score = (player.getTimeLeft() + player.getEnergy()) * player.getHp().getValue() * grade;

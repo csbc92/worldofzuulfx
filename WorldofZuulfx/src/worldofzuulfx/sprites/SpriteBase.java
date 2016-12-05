@@ -376,4 +376,19 @@ public abstract class SpriteBase {
     public String getNextPos() {
         return nextPos;
     }    
+
+    /**
+     * @return the image
+     */
+    public Image getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(Image image) {
+        this.image = image;
+        this.imageView.setImage(image);
+    }
 }

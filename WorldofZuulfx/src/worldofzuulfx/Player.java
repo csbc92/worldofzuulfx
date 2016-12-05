@@ -250,8 +250,8 @@ public class Player extends SpriteBase implements BarValueListener {
             setAlcoTolerance(r.nextInt(5 - 2) + 2);
 
             // Decrease the players energy each time he navigates between rooms.
-            energy.setValue(energy.getValue() - 2);
-            ConsoleInfo.setRoomData(room.getShortDescription());
+            energy.increaseEnergy(-5);
+
             notifyChangeRoomListeners(oldRoom, currentRoom);
             return true;
         }

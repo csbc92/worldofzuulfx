@@ -39,7 +39,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         
        
         roomHandler = new RoomHandler();
-         roomFactory = new RoomFactory(gameLevel);
+        roomFactory = new RoomFactory(gameLevel);
         roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
 
         questInventory = new QuestInventory();
@@ -270,6 +270,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     private void initNPCs() {
+        // U163 NPCS
         Room u163 = getRoomHandler().getRoom("U163");
         NPC anders = new NPC("Anders", "Anders", Game.tiles.get(124).getImageView().getImage());
         anders.move(96, 64);
@@ -277,6 +278,19 @@ public class Game implements NavigateListener, ItemPickupListener {
         daniel.move(256, 64);
         u163.addNPC(daniel);
         u163.addNPC(anders);
+        
+        // U170 NPCS
+        Room u170 = getRoomHandler().getRoom("U170");
+        NPC lone = new NPC("Lone", "Lone", Game.tiles.get(121).getImageView().getImage());
+        lone.move(96, 64);
+        u170.addNPC(lone);
+        
+        // U180 NPCS
+        Room u180 = getRoomHandler().getRoom("U180");
+        NPC erik = new NPC("Erik", "Erik", Game.tiles.get(122).getImageView().getImage());
+        erik.move(128, 64);
+        u180.addNPC(erik);
+        
     }
 
     @Override
