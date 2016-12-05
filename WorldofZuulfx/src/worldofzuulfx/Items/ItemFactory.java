@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package worldofzuulfx.Items;
+
 import worldofzuulfx.Game;
+import worldofzuulfx.Room;
 import worldofzuulfx.tiles.Tile;
 
 /**
@@ -49,10 +51,15 @@ public class ItemFactory {
 
         return new Note(description, noteID, 5, content);
     }
-    
+
     public static Clock makeClock(int time) {
 
         return new Clock("clock", "Clock", 300, time);
+    }
+
+    public static Globus makeGlobus(int spins, Room toRoom, String nextPos) {
+
+        return new Globus("globus", spins, toRoom, nextPos);
     }
 
 }

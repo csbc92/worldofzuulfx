@@ -102,6 +102,7 @@ public class Game implements NavigateListener, ItemPickupListener {
                         // The Player needs to moved with the offset 1.
                         nextTile = tile.getNextRoom().getTileMap().getTile(tile.getNextPos());
                         player.move(nextTile.getX() + 1, nextTile.getY() + 1);
+                       
                     }
                     
                     // Reset the nextPos since a collision was detected
