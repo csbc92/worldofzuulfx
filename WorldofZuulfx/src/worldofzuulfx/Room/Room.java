@@ -1,4 +1,4 @@
-package worldofzuulfx;
+package worldofzuulfx.Room;
 
 /**
  * This class holds informations about a Room that was issued along the creation

@@ -1,5 +1,6 @@
 package worldofzuulfx;
 
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Quest.Quest;
 import java.util.ArrayList;
@@ -261,7 +262,7 @@ public class Player extends SpriteBase implements BarValueListener {
 
             // Decrease the players energy each time he navigates between rooms.
             energy.increaseEnergy(-5);
-
+            ConsoleInfo.setRoomData(room.getShortDescription());
             notifyChangeRoomListeners(oldRoom, currentRoom);
             return true;
         }

@@ -1,5 +1,8 @@
 package worldofzuulfx;
 
+import worldofzuulfx.Room.RoomFactory;
+import worldofzuulfx.Room.Room;
+import worldofzuulfx.Room.RoomHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;

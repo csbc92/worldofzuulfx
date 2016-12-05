@@ -1,7 +1,7 @@
 package worldofzuulfx.NPC;
 
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.image.Image;

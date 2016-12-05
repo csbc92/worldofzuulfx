@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 
 public abstract class SpriteBase {
 
@@ -32,10 +32,9 @@ public abstract class SpriteBase {
     private String nextPos;
     private double nextPosX;
     private double nextPosY;
-    
+
     private double nextTelePosX;
     private double nextTelePosY;
-    
 
     private double w;
     private double h;
@@ -184,6 +183,7 @@ public abstract class SpriteBase {
     public double getCenterY() {
         return getBounds().getY() + getBounds().getHeight() / 2;
     }
+
     // TODO Slet CollidesWith
     public boolean collidesWith(SpriteBase otherSprite) {
         boolean collides = false;
@@ -350,7 +350,6 @@ public abstract class SpriteBase {
         return nextPosX;
     }
 
-  
     /**
      * @return the canMove
      */
@@ -370,7 +369,7 @@ public abstract class SpriteBase {
      */
     public String getNextPos() {
         return nextPos;
-    }    
+    }
 
     /**
      * @return the image

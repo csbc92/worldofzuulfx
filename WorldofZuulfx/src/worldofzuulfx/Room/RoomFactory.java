@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package worldofzuulfx;
+package worldofzuulfx.Room;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import worldofzuulfx.Items.Book;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Util;
 import worldofzuulfx.tiles.Tile;
 
 /**

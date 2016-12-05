@@ -8,7 +8,7 @@ import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Layers;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.sprites.SpriteBase;
 
 /**
