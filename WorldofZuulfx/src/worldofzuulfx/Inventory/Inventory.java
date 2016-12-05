@@ -106,7 +106,7 @@ public class Inventory {
 
     public boolean contains(String ID) {
         for (Item item : itemList) {
-            if (item.getID().equals(ID)) {
+            if (item.getID().equalsIgnoreCase(ID)) {
                 return true;
             }
         }

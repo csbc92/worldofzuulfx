@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import javafx.scene.layout.Pane;
+import worldofzuulfx.Items.Book;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.tiles.Tile;
@@ -91,7 +92,7 @@ public class RoomFactory {
                     break;
                 }
                 case "book": {
-                    item = ItemFactory.makeBook("");
+                    item = ItemFactory.makeBook("", Book.BookColor.RED);
                     break;
                 }
                 default: {

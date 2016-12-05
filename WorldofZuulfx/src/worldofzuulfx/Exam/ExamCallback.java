@@ -9,6 +9,6 @@ package worldofzuulfx.Exam;
  *
  * @author cclausen
  */
-public interface ExamInterface {
-    public void examSubmitted(int grade);
+public interface ExamCallback {
+    public void examSubmittedCallback(int grade);
 }

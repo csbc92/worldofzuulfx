@@ -32,7 +32,7 @@ public class FXMLExamController implements Initializable {
     private HashSet<ToggleGroup> toggleGroups;
     private int grade;
     
-    private ExamInterface examInterface;
+    private ExamCallback examInterface;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -40,7 +40,7 @@ public class FXMLExamController implements Initializable {
         initializeToggleGroups();
     }
     
-    public void setExamInterface(ExamInterface examInterface) {
+    public void setExamSubmittedCallback(ExamCallback examInterface) {
         this.examInterface = examInterface;
     }
 
@@ -63,7 +63,7 @@ public class FXMLExamController implements Initializable {
         }
         evaluate(rightAnswerCounter);
         
-        this.examInterface.examSubmitted(grade);
+        this.examInterface.examSubmittedCallback(grade);
         
     }
     
