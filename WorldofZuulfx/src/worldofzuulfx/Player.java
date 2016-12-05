@@ -600,7 +600,6 @@ public class Player extends SpriteBase implements BarValueListener {
                 getHp().setValue(getHp().getValue() - 1);
                 setAlcoCounter(0);
                 setDrunk();
-                System.out.println(getHp().getValue());
             } else {
                 // TODO sæt finish flag
             }

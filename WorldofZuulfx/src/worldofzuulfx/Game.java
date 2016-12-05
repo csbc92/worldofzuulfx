@@ -65,8 +65,6 @@ public class Game implements NavigateListener, ItemPickupListener {
 
                 checkCollisions();
 
-                cleanupSprites();
-
                 if (isFinished()) {
                     timer.stop();
                 }
@@ -158,10 +156,6 @@ public class Game implements NavigateListener, ItemPickupListener {
         }
 
         player.move(player.getNextPosX(), player.getNextPosY());
-    }
-
-    public void cleanupSprites() {
-
     }
 
     private void initQuest() {
