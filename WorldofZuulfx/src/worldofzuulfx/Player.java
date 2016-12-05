@@ -199,8 +199,10 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param item
      */
     public void pickupItem(Item item) {
+        // Checks if Player just dropped an item.
         if (!droppedItem) {
             Inventory roomInventory = this.getCurrentRoom().getRoomInventory();
+            // Checks if the Item is located inside the room. If false - Player can't pickup the item.
             if (roomInventory.contains(item.getID())) {
                 if (this.inventory.addItem(item)) {
                     roomInventory.removeItem(item);
@@ -249,6 +251,7 @@ public class Player extends SpriteBase implements BarValueListener {
 
             // Decrease the players energy each time he navigates between rooms.
             energy.setValue(energy.getValue() - 2);
+            ConsoleInfo.setRoomData(room.getShortDescription());
             notifyChangeRoomListeners(oldRoom, currentRoom);
             return true;
         }

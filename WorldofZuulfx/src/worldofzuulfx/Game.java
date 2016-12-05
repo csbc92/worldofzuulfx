@@ -168,7 +168,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     private void initPartyGuy() {
-        partyguy = new PartyGuy("PartyGuy", "Den festlige ven", Game.tiles.get(123).getImageView().getImage());
+        partyguy = new PartyGuy("PartyGuy", "Party Guy", Game.tiles.get(123).getImageView().getImage());
     }
 
     /**

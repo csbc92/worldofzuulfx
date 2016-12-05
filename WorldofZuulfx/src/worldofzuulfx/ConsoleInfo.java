@@ -23,6 +23,8 @@ public final class ConsoleInfo {
     private static StringProperty rpsInfo = new SimpleStringProperty();
     
     private static StringProperty ectsInfo = new SimpleStringProperty();
+    
+    private static StringProperty roomInfo = new SimpleStringProperty();
 
     // provide public access to the property
     public static StringProperty consoleProperty() {
@@ -84,5 +86,17 @@ public final class ConsoleInfo {
 
     public static void setECTSData(String data) {
         ectsInfo.set(data);
+    }
+    
+    public static StringProperty roomProperty() {
+        return roomInfo;
+    }
+
+    public static String getRoomData() {
+        return roomInfo.get();
+    }
+
+    public static void setRoomData(String data) {
+        roomInfo.set(data);
     }
 }
