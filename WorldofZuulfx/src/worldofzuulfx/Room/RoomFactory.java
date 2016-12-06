@@ -219,6 +219,9 @@ public class RoomFactory {
         u180 = loadRoom("u180", backgroundLayer, objectLayer, tiles);
         downunder = loadRoom("downunder", backgroundLayer, objectLayer, tiles);
 
+//    //12x12
+//    outside = new Room("outside", "Oustide", backgroundLayer, objectLayer, tiles, tileLayout);
+
 //        outside.setExit("0600", campus, "0610");
 //        campus.setExit("0612", outside, "0601");
 //        campus.setExit("0006", exam, "0906");

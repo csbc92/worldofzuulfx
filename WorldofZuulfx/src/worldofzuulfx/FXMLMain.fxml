@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pMain" prefHeight="680.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
+<AnchorPane fx:id="pMain" prefHeight="642.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
    <children>
       <TabPane fx:id="tabControl" focusTraversable="false" layoutX="14.0" layoutY="14.0" onMouseClicked="#onTabClick" prefHeight="628.0" prefWidth="694.0" stylesheets="@../resources/tabControl.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -93,6 +94,11 @@
                      <children>
                         <Pane fx:id="pMenu" prefHeight="599.0" prefWidth="694.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
+                              <ImageView fitHeight="184.0" fitWidth="581.0" layoutX="57.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/woz-logo.png" />
+                                 </image>
+                              </ImageView>
                               <Button fx:id="butNewGame" layoutX="263.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickNewGame" prefHeight="47.0" prefWidth="156.0" text="New Game" />
                               <Button fx:id="butHighscore" layoutX="263.0" layoutY="500.0" mnemonicParsing="false" onAction="#onbutHighscoreClick" prefHeight="47.0" prefWidth="156.0" text="Highscore" />
                               <RadioButton fx:id="rbNormal" layoutX="176.0" layoutY="229.0" mnemonicParsing="false" selected="true" text="Normal" textFill="WHITE">
