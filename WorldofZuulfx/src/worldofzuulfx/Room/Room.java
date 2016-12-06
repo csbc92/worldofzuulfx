@@ -1,4 +1,4 @@
-package worldofzuulfx;
+package worldofzuulfx.Room;
 
 /**
  * This class holds informations about a Room that was issued along the creation
@@ -43,8 +43,6 @@ public class Room {
     }
 
     public void setExit(String pos, Room room, String nextPos) {
-        // Insert key and value into HashMap.
-        //      exits.put(pos, event);
         groundTiles.getTile(pos).setTeleport(room, nextPos);
     }
 

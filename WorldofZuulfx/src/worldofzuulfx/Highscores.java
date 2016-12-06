@@ -85,12 +85,6 @@ public class Highscores {
 
     }
 
-    public void printAll() {
-        for (Score score : getHighscoreList()) {
-            System.out.println(score.getName() + " " + score.getHighscore());
-        }
-    }
-
     public void saveHighscores() {
         Util.newPropFile();
         for (Score score : getHighscoreList()) {

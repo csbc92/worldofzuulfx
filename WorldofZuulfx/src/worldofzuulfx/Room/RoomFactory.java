@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package worldofzuulfx;
+package worldofzuulfx.Room;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import worldofzuulfx.Items.Book;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Util;
 import worldofzuulfx.tiles.Tile;
 
 /**
@@ -217,6 +218,9 @@ public class RoomFactory {
         u170 = loadRoom("u170", backgroundLayer, objectLayer, tiles);
         u180 = loadRoom("u180", backgroundLayer, objectLayer, tiles);
         downunder = loadRoom("downunder", backgroundLayer, objectLayer, tiles);
+
+//    //12x12
+//    outside = new Room("outside", "Oustide", backgroundLayer, objectLayer, tiles, tileLayout);
 
 //        outside.setExit("0600", campus, "0610");
 //        campus.setExit("0612", outside, "0601");

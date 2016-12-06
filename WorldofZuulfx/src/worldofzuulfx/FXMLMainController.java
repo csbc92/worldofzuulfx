@@ -42,12 +42,15 @@ import worldofzuulfx.Highscores.Score;
 import worldofzuulfx.Minigame.RockPaperScissorsMoves;
 import worldofzuulfx.Exam.ExamCallback;
 
-
 public class FXMLMainController implements Initializable, BarValueListener, ExamCallback {
-    
+
+    private Stage stage;
+    private Timer gameTimer;
+    private Highscores highscores;
+    private Game game;
+
     @FXML
     private TextArea taConsol;
-    private Game game;
     @FXML
     private Button butNewGame;
     @FXML
@@ -64,17 +67,10 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private Text tItemInfo;
     @FXML
     private ListView<Score> lvHighscore;
-
-    private Highscores highscores;
-    private int interval;
     @FXML
     private Pane pInfo;
     @FXML
     private ProgressBar progEnergy;
-    @FXML
-    private Text tfTimeLeft;
-    private Stage stage;
-    private Timer gameTimer;
     @FXML
     private Label lQuest;
     @FXML
@@ -83,19 +79,10 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private Tab tabGame;
     @FXML
     private Tab tabNewGame;
-    private AnchorPane pmain;
     @FXML
     private AnchorPane pMain;
     @FXML
     private Text tHealth;
-    @FXML
-    private Pane pRPS;
-    @FXML
-    private Button butRock;
-    @FXML
-    private Button butPaper;
-    @FXML
-    private Button butScissor;
     @FXML
     private Text tECTS;
     @FXML
@@ -112,43 +99,46 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private ToggleGroup tgGameLevel;
     @FXML
     private RadioButton rbAbnormal;
+    @FXML
+    private Text tfTimeLeft;
+    @FXML
+    private Text tRoom;
+    @FXML
+    private Tab tabEndGame;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeConsole();
         initializeExamTab();
-        
-        highscores = new Highscores(5);
-        highscores.loadHighscores();
-        lvHighscore.itemsProperty().set(highscores.getHighscoreList());
-        
+        initialzeHighscore();
+
         rbNormal.setUserData(0);
         rbAbnormal.setUserData(1);
 
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
-        pRPS.setVisible(false);
         tabControl.getSelectionModel().select(tabNewGame);
 
     }
-    
+
     private void initializeExamTab() {
         try {
             // Load the FXML document and Controller from another file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("worldofzuulfx/Exam/FXMLExam.fxml"));
             Pane content = fxmlLoader.load();
             FXMLExamController controller = fxmlLoader.getController();
+
             controller.setExamSubmittedCallback(this);
-            
+
             // Set the tab's content
             tabExam.setContent(content);
-            
+
         } catch (IOException ex) {
             System.out.println(ex.getStackTrace());
             System.exit(0);
         }
     }
-    
+
     public void executeExam() {
         tabControl.getSelectionModel().select(tabExam);
     }
@@ -216,43 +206,44 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
 
     @FXML
     private void onClickNewGame(ActionEvent event) {
+        if (game == null) {
+            initializeGame();
 
-        initializeGame();
+            // Create a timer which keeps decreasing the timeleft
+            gameTimer = new Timer();
+            gameTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    int value = game.getPlayer().getTimeLeft();
+                    if (value == 1 || game.isFinished()) {
+                        gameTimer.cancel();
+                        game.setFinished();
+                        tabControl.getSelectionModel().select(tabEndGame);
 
-        // Create a timer which keeps decreasing the timeleft
-        gameTimer = new Timer();
-        gameTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                int value = game.getPlayer().getTimeLeft();
-                if (value == 1 || game.isFinished()) {
-                    gameTimer.cancel();
-                    game.setFinished();
+                    }
+                    game.getPlayer().setTimeLeft(--value);
+                    tfTimeLeft.setText(value + " sec");
                 }
-                game.getPlayer().setTimeLeft(--value);
-                tfTimeLeft.setText(value + " sec");
-            }
-        }, 1000, 1000);
+            }, 1000, 1000);
 
-        // Creates a listener which listens for onClose event.
-        stage = (Stage) pInfo.getScene().getWindow();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                gameTimer.cancel();
-            }
-        });
-
+            // Creates a listener which listens for onClose event.
+            stage = (Stage) pInfo.getScene().getWindow();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    gameTimer.cancel();
+                }
+            });
+        }
     }
 
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
-        taConsol.textProperty().addListener(new ChangeListener<Object>() {
-            @Override
-            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-                //TODO: Scroll to the bottom
-                taConsol.positionCaret(Integer.MAX_VALUE);
-            }
-        });
+    }
+
+    private void initialzeHighscore() {
+        highscores = new Highscores(5);
+        highscores.loadHighscores();
+        lvHighscore.itemsProperty().set(highscores.getHighscoreList());
     }
 
     private void initializeGame() {
@@ -267,23 +258,27 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
 
         Layers layers = new Layers(pBackground, pObjects, pSprites, pInventory);
         addInputControls(pBackground.getScene());
-        
+
         // GameLevel chooses which game to be loaded - Normal or Hogwarts mode.
         gameLevel = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
-                
-        game = new Game(layers,gameLevel ); //En instans af spillet oprettes.
+
+        game = new Game(layers, gameLevel); //En instans af spillet oprettes.
 
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
         progEnergy.setProgress(1);
         tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
         tECTS.textProperty().bind(ConsoleInfo.ectsProperty());
+        tRoom.textProperty().bind(ConsoleInfo.roomProperty());
     }
 
     @Override
     public void barValueChanged(Bar bar) {
         progEnergy.setProgress((double) bar.getValue() / 100);
         tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+        if (bar.getValue() < 1) {
+            game.setFinished();
+        }
     }
 
     @FXML
@@ -306,15 +301,15 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
         // Calculate highscore
         Player player = game.getPlayer();
         int score = (player.getTimeLeft() + player.getEnergy()) * player.getHp().getValue() * grade;
-        
+
         // The score cannot be negative
         if (score < 0) {
             score = 0;
         }
-        
+
         highscores.add(player.getName(), score);
         highscores.saveHighscores();
-        
+
         // Select highscore tab
         tabControl.getSelectionModel().select(tabHighscore);
     }

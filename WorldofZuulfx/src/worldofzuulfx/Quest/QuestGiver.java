@@ -4,7 +4,7 @@ import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.Main;
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 
 public class QuestGiver implements NavigateListener {
     private Player player; 

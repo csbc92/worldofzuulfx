@@ -5,6 +5,7 @@
  */
 package worldofzuulfx;
 
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.Interfaces.BarValueListener;
 
 /**

@@ -16,8 +16,8 @@ import worldofzuulfx.Layers;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.NPC.PartyGuy;
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
-import worldofzuulfx.RoomHandler;
+import worldofzuulfx.Room.Room;
+import worldofzuulfx.Room.RoomHandler;
 
 /**
  *

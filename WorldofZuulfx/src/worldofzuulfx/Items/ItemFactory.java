@@ -6,7 +6,7 @@
 package worldofzuulfx.Items;
 
 import worldofzuulfx.Game;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.tiles.Tile;
 
 /**

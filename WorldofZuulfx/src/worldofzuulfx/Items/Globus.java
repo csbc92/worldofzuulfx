@@ -7,7 +7,7 @@ package worldofzuulfx.Items;
 
 import worldofzuulfx.Game;
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.tiles.Tile;
 
 /**
@@ -49,9 +49,8 @@ public class Globus extends Item {
         if (this.checkAmount()) {
             player.navigateTo(toRoom);
             nextTile = toRoom.getTileMap().getTile(nextPos);
-            // TODO Move player to rigth location
-//            player.move(nextTile.getX() + 1, nextTile.getY() + 1);
-//            player.updateUI();
+            player.setNextPosX(nextTile.getX() + 1);
+            player.setNextPosY(nextTile.getY() + 1);
             spinAmount--;
 
         } else {
