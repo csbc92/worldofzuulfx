@@ -15,7 +15,7 @@ import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.tiles.Tile;
-import worldofzuulfx.tiles.TileMap;
+import worldofzuulfx.tiles.TileTerrain;
 
 public class Room {
 
@@ -27,7 +27,7 @@ public class Room {
     private ArrayList<NPC> npcList;
     private Pane groundLayer;
     private Pane objectLayer;
-    private final TileMap groundTiles;
+    private final TileTerrain groundTiles;
 
     public Room(String ID, String description, Pane groundLayer, Pane objectLayer, HashMap<Integer, Tile> tiles, int[][] groundLayout) {
         // Constructor - defines the description of the room.
@@ -39,7 +39,7 @@ public class Room {
         this.groundLayer = groundLayer;
         this.objectLayer = objectLayer;
 
-        this.groundTiles = new TileMap(groundLayout, tiles);
+        this.groundTiles = new TileTerrain(groundLayout, tiles);
     }
 
     public void setExit(String pos, Room room, String nextPos) {
@@ -114,7 +114,7 @@ public class Room {
         return null;
     }
 
-    public TileMap getTileMap() {
+    public TileTerrain getTileMap() {
         return this.groundTiles;
     }
 
