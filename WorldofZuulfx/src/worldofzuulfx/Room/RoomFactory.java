@@ -16,10 +16,6 @@ import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Util;
 import worldofzuulfx.tiles.Tile;
 
-/**
- *
- * @author JV
- */
 public class RoomFactory {
     
     int gameLevel;

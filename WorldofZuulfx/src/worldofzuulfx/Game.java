@@ -2,7 +2,7 @@ package worldofzuulfx;
 
 import worldofzuulfx.Room.RoomFactory;
 import worldofzuulfx.Room.Room;
-import worldofzuulfx.Room.RoomHandler;
+import worldofzuulfx.Room.RoomsHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -27,7 +27,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private PartyGuy partyguy;
     private Player player;
     private ECTSHandler ectsHandler;
-    private RoomHandler roomHandler;
+    private RoomsHandler roomHandler;
     private RoomFactory roomFactory;
     private QuestInventory questInventory;
     private RockPaperScissors RPS;
@@ -37,6 +37,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private Layers layers;
 
     public Game(Layers layers, int gameLevel) {
+        // Loads a specific image containing all tiles to used throughout the game
         TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
@@ -49,14 +50,15 @@ public class Game implements NavigateListener, ItemPickupListener {
         initQuest();
 
         gameLoop();
-
+        // Navigae
         player.navigateTo(roomHandler.getRoom("outside"));
         printWelcome();
     }
 
     private void gameLoop() {
 
-        // game loop
+        // Creates a AnimationTimer which updates the players position
+        // and checks for collision between tiles, items and NPC's.
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -77,11 +79,20 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     }
 
+    /**
+     * Updates the players UI - i.e. the players position and the player's
+     * inventory (Which item to be selected).
+     *
+     */
     public void updateSprites() {
         player.updateUI();
         player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
+    /**
+     * Checks for collision between player and Tiles, Collision between player
+     * and Items, and collision between player and NPCs.
+     */
     public void checkCollisions() {
         Tile nextTile;
         Room currentRoom = this.player.getCurrentRoom();
@@ -97,7 +108,6 @@ public class Game implements NavigateListener, ItemPickupListener {
                         // The Player needs to moved with the offset 1.
                         nextTile = tile.getNextRoom().getTileMap().getTile(tile.getNextPos());
                         player.move(nextTile.getX() + 1, nextTile.getY() + 1);
-
                     }
 
                     // Reset the nextPos since a collision was detected
@@ -147,18 +157,18 @@ public class Game implements NavigateListener, ItemPickupListener {
                             } else {
                                 player.getInventory().addItem(((PartyGuy) npc).giveItem());
                             }
-
                         }
                     }
                     return;
                 }
             }
         }
-
+        // MOves the player if it did not collide with any objects - e.g. Items, tiles and NPCs.
         player.move(player.getNextPosX(), player.getNextPosY());
     }
-
+    
     private void initQuest() {
+        // Initiates every quests.
         questInventory = new QuestInventory();
         questInventory.initQuests(roomHandler, player);
     }
@@ -179,17 +189,24 @@ public class Game implements NavigateListener, ItemPickupListener {
         for (NPC person : room.getNPCList()) {
             list.add(person.getName());
         }
-
         return list;
     }
-
-    public void initRooms(int gameLevel) {
-        roomHandler = new RoomHandler();
+    /**
+     * Initiate all rooms based on a given GameLevel.
+     * 
+     * @param gameLevel 
+     */
+    private void initRooms(int gameLevel) {
+        roomHandler = new RoomsHandler();
         roomFactory = new RoomFactory(gameLevel);
         roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
     }
-
-    public void initPlayer() {
+    
+    /**
+     * Initiate Player - which involves Player name, layers, Player-image
+     * and the position of the player.
+     */
+    private void initPlayer() {
         player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
 
@@ -231,7 +248,7 @@ public class Game implements NavigateListener, ItemPickupListener {
                         + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
                 // .play() waits for user-input.
                 RPS.play();
-                // TODO KILL Thread
+
                 Platform.runLater(new Runnable() {
 
                     public void run() {
@@ -242,10 +259,10 @@ public class Game implements NavigateListener, ItemPickupListener {
                             getPlayer().increaseEnergy(-30);
                         }
                         player.setCanMove(true);
-
                     }
 
                 });
+                this.interrupt();
             }
         };
         rpsThread.start();
@@ -317,7 +334,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     /**
      * @return the roomHandler
      */
-    public RoomHandler getRoomHandler() {
+    public RoomsHandler getRoomHandler() {
         return roomHandler;
     }
 

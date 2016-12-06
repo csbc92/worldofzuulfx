@@ -112,7 +112,7 @@ public class Inventory {
         }
         return false;
     }
-
+    // TODO - skal denne slettes, da den ikke bliver anvendt
     public Item find(String itemString) {
         try {
             for (Item item : itemList) {

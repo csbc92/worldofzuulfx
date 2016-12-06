@@ -11,10 +11,10 @@ import java.util.ArrayList;
  *
  * @author JV
  */
-public class RoomHandler {
+public class RoomsHandler {
     private ArrayList<Room> rooms;
     
-    public RoomHandler() {
+    public RoomsHandler() {
         
     }
 

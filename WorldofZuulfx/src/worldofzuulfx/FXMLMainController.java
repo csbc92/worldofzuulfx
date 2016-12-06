@@ -111,10 +111,11 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
         initializeConsole();
         initializeExamTab();
         initialzeHighscore();
-
+        // Sets the userData for the two radiobutton. 
+        //The selected value is later used to choose which game mode to be played
         rbNormal.setUserData(0);
         rbAbnormal.setUserData(1);
-
+        // Binds properties to their respective textfield
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
         tabControl.getSelectionModel().select(tabNewGame);
@@ -139,6 +140,9 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
         }
     }
 
+    /**
+     * Shifts the current view to the exam view.
+     */
     public void executeExam() {
         tabControl.getSelectionModel().select(tabExam);
     }
@@ -209,12 +213,13 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
         if (game == null) {
             initializeGame();
 
-            // Create a timer which keeps decreasing the timeleft
+            // Create a timer which keeps decreasing the timeleft variable
             gameTimer = new Timer();
             gameTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     int value = game.getPlayer().getTimeLeft();
+                    // Checks if the time ran out or if the game was finished for som other reason
                     if (value == 1 || game.isFinished()) {
                         gameTimer.cancel();
                         game.setFinished();
@@ -241,6 +246,7 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     }
 
     private void initialzeHighscore() {
+        // Creates an instance of the Highscore-class and loads all saved highscores.
         highscores = new Highscores(5);
         highscores.loadHighscores();
         lvHighscore.itemsProperty().set(highscores.getHighscoreList());
@@ -272,27 +278,38 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
         tRoom.textProperty().bind(ConsoleInfo.roomProperty());
     }
 
+    /**
+     * Updates the UI - i.e. the energy-bar and the Health textfield
+     *
+     * @param bar
+     */
     @Override
     public void barValueChanged(Bar bar) {
+        // Divides the current value of the bar by 100.
+        // The progressbar only accepts value in the range 0..1
         progEnergy.setProgress((double) bar.getValue() / 100);
         tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
-        if (bar.getValue() < 1) {
+        // If the current value of the Energy-bar is below 1 then
+        if (bar.getValue() < 1 && game.getPlayer().getHp().getValue() == 1) {
             game.setFinished();
         }
     }
 
     @FXML
     private void onTabClick(MouseEvent event) {
+        // Makes sure that pMain (The game) has focus otherwise the keyboard inputs won't be captured
         pMain.requestFocus();
     }
 
     @FXML
     private void onbutHighscoreClick(ActionEvent event) {
+        // Changes the current view to Highscore view
         tabControl.getSelectionModel().select(tabHighscore);
     }
 
     @FXML
     private void onbutBackClick(ActionEvent event) {
+        // Changes Highscore view to Mainmenu
         tabControl.getSelectionModel().select(tabNewGame);
     }
 

@@ -17,7 +17,7 @@ import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.NPC.PartyGuy;
 import worldofzuulfx.Player;
 import worldofzuulfx.Room.Room;
-import worldofzuulfx.Room.RoomHandler;
+import worldofzuulfx.Room.RoomsHandler;
 
 /**
  *
@@ -36,7 +36,7 @@ public class QuestInventory {
         return allGameQuests;
     }
 
-    public void initQuests(RoomHandler roomHandler, Player player) {
+    public void initQuests(RoomsHandler roomHandler, Player player) {
         // Initialize Quests and Quest handling
         this.allGameQuests = new HashMap<>();
         QuestFactory qFactory = new QuestFactory(player);
