@@ -262,8 +262,9 @@ public class Player extends SpriteBase implements BarValueListener {
 
             // Decrease the players energy each time he navigates between rooms.
             energy.increaseEnergy(-5);
+
             ConsoleInfo.setRoomData(room.getShortDescription());
-            notifyChangeRoomListeners(oldRoom, currentRoom);
+            notifyNavigateListeners(oldRoom, currentRoom);
             return true;
         }
         return false;
@@ -442,7 +443,7 @@ public class Player extends SpriteBase implements BarValueListener {
      *
      * @param item
      */
-    private void notifyChangeRoomListeners(Room oldRoom, Room newRoom) {
+    private void notifyNavigateListeners(Room oldRoom, Room newRoom) {
         if (this.navigateListener != null) {
             for (NavigateListener listener : this.navigateListener) {
                 listener.navigated(new NavigateEvent(oldRoom, newRoom, this));
