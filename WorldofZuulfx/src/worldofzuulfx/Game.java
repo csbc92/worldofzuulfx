@@ -50,7 +50,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         initQuest();
 
         gameLoop();
-        // Navigae
+        // Navigates Player to Outside
         player.navigateTo(roomHandler.getRoom("outside"));
         printWelcome();
     }
@@ -275,10 +275,17 @@ public class Game implements NavigateListener, ItemPickupListener {
         return player;
     }
 
+    /**
+     *
+     * @return the PartyGuy
+     */
     public PartyGuy getPartyGuy() {
         return partyguy;
     }
 
+    /**
+     * Sets a flag which indicates game over
+     */
     public void setFinished() {
         finished = true;
     }
@@ -307,26 +314,41 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     }
 
+    /**
+     * When the Player navigates to a new room, this methods is executed.
+     * 
+     * @param event An event containing information about the Old Room and the New Room
+     */
     @Override
     public void navigated(NavigateEvent event) {
         Quest quest = player.getInactiveQuests().get("goToCampusQ");
-
+        // Checks if the Quest - "goToCampusQ" is completed.
         if (quest != null && quest.isCompleted()) {
-
+            // If true (statement above) - then checks if Player is not in the room "downunder".
             if (!player.getCurrentRoom().getID().equals("downunder")) {
+                // Spawns PartyGuy in a random location, and always places him in the corner of the room
                 partyguy.move(256, 256);
                 partyguy.spawn(getRoomHandler().getRooms(false));
             } else {
+                // Spawns PartyGuy in Downunder, if the player is in Downunder.
                 partyguy.navigateTo(getRoomHandler().getRoom("downunder"));
             }
         }
+        //The new room is drawn.
         event.getNewRoom().draw();
     }
 
+    /**
+     * When Player picks up an item, this method is executed.
+     * 
+     * @param event Contains information about the item and the player, who picked up the item.
+     */
     @Override
     public void itemPickedUp(ItemPickupEvent event) {
         Item item = event.getItem();
+        // Checks if the item is not null.
         if (item != null) {
+            // Removes the image from the layer.
             item.removeFromLayer();
         }
     }
@@ -346,12 +368,15 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     /**
-     * @return the finished
+     * @return the flag which indicates if the game is over.
      */
     public boolean isFinished() {
         return finished;
     }
 
+    /**
+     * Initiates the ECTSHandler and assigns Player and a given Room.
+     */
     private void initECTSHandler() {
         Room examRoom = getRoomHandler().getRoom("exam");
         this.ectsHandler = new ECTSHandler(player, examRoom);

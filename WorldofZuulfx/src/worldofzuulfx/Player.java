@@ -61,21 +61,26 @@ public class Player extends SpriteBase implements BarValueListener {
         inventory.setPlayer(this);
         initializeBars();
         initializeListeners();
-
+        inactiveQuests = new HashMap<>();
         droppedItem = false;
 
     }
 
+    /**
+     * Initiates all listeners e.g. navigateListener.
+     */
     private void initializeListeners() {
         navigateListener = new ArrayList<>();
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
         itemUseListeners = new ArrayList<>();
-        inactiveQuests = new HashMap<>();
         itemDropListeners = new ArrayList<>();
         itemReceivedListener = new ArrayList<>();
     }
 
+    /**
+     * Initiates all bars and sets an starting value.
+     */
     private void initializeBars() {
         ects = new Bar(0, 10);
         energy = new Bar(0, 100);
@@ -88,6 +93,10 @@ public class Player extends SpriteBase implements BarValueListener {
         timeLeft = (5 * 60);
     }
 
+    /**
+     *
+     * @return Current ECTS value
+     */
     public int getECTS() {
         return ects.getValue();
     }
@@ -99,10 +108,18 @@ public class Player extends SpriteBase implements BarValueListener {
         return this.ects;
     }
 
+    /**
+     *
+     * @return Current energy value
+     */
     public int getEnergy() {
         return energy.getValue();
     }
 
+    /**
+     *
+     * @return Energybar
+     */
     public Bar getEnergyBar() {
         return energy;
     }
@@ -118,10 +135,18 @@ public class Player extends SpriteBase implements BarValueListener {
 
     }
 
+    /**
+     *
+     * @return Player's inventory
+     */
     public PlayerInventory getInventory() {
         return inventory;
     }
 
+    /**
+     *
+     * @return Current active Quest
+     */
     public Quest getActiveQuest() {
         return this.activeQuest;
     }
@@ -157,6 +182,11 @@ public class Player extends SpriteBase implements BarValueListener {
         return false;
     }
 
+    /**
+     * Untracks the Quest q if the quest is not the active quest.
+     * The quest q is added to the inactive quest list.
+     * @param q
+     */
     public void untrackQuest(Quest q) {
         if (activeQuest != null) {
             getInactiveQuests().put(q.getId(), q);
@@ -164,6 +194,12 @@ public class Player extends SpriteBase implements BarValueListener {
         }
     }
 
+    /**
+     * The player uses an item if the player's inventory contains it.
+     * The item then calls it method use() which reqeuires a Player as argument.
+     * Then it notifies all ItemUse listeners.
+     * @param item
+     */
     public void useItem(Item item) {
         if (item != null) {
             if (this.inventory.contains(item.getClass())) {
@@ -224,8 +260,8 @@ public class Player extends SpriteBase implements BarValueListener {
 
     /**
      * Gives the player a Reward.
-     *
-     * @param reward
+     * 
+     * @param reward e.g. an item and ECTS-points
      */
     public void giveReward(Reward reward) {
         if (reward != null) {
@@ -580,9 +616,6 @@ public class Player extends SpriteBase implements BarValueListener {
         return this.drunk;
     }
 
-//     public SpriteBase getSprite() {
-//        return this.sprite;
-//    }
     /**
      * Checks if the player reached minimum energy after energy change, or if
      * player reached it's alcoTolerance.

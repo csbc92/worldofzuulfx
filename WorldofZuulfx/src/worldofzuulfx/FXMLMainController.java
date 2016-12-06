@@ -5,6 +5,7 @@
  */
 package worldofzuulfx;
 
+import worldofzuulfx.Highscore.Highscores;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,9 +39,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import worldofzuulfx.Exam.FXMLExamController;
-import worldofzuulfx.Highscores.Score;
 import worldofzuulfx.Minigame.RockPaperScissorsMoves;
 import worldofzuulfx.Exam.ExamCallback;
+import worldofzuulfx.Highscore.Score;
 
 public class FXMLMainController implements Initializable, BarValueListener, ExamCallback {
 
