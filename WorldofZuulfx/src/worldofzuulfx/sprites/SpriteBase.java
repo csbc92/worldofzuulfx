@@ -11,12 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 
-/**
- *
- * @author JV
- */
 public abstract class SpriteBase {
 
     private Image image;
@@ -36,10 +32,9 @@ public abstract class SpriteBase {
     private String nextPos;
     private double nextPosX;
     private double nextPosY;
-    
+
     private double nextTelePosX;
     private double nextTelePosY;
-    
 
     private double w;
     private double h;
@@ -169,8 +164,7 @@ public abstract class SpriteBase {
         double x = getBounds().getX();
         double y = getBounds().getY();
 
-        getBounds().relocate(x, y);
-        getImageView().relocate(getBounds().getX(), getBounds().getY());
+        getImageView().relocate(x, y);
 
     }
 
@@ -189,6 +183,7 @@ public abstract class SpriteBase {
     public double getCenterY() {
         return getBounds().getY() + getBounds().getHeight() / 2;
     }
+
     // TODO Slet CollidesWith
     public boolean collidesWith(SpriteBase otherSprite) {
         boolean collides = false;
@@ -355,7 +350,6 @@ public abstract class SpriteBase {
         return nextPosX;
     }
 
-  
     /**
      * @return the canMove
      */
@@ -375,5 +369,20 @@ public abstract class SpriteBase {
      */
     public String getNextPos() {
         return nextPos;
-    }    
+    }
+
+    /**
+     * @return the image
+     */
+    public Image getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(Image image) {
+        this.image = image;
+        this.imageView.setImage(image);
+    }
 }

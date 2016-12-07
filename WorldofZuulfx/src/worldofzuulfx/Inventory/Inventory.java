@@ -106,13 +106,13 @@ public class Inventory {
 
     public boolean contains(String ID) {
         for (Item item : itemList) {
-            if (item.getID().equals(ID)) {
+            if (item.getID().equalsIgnoreCase(ID)) {
                 return true;
             }
         }
         return false;
     }
-
+    // TODO - skal denne slettes, da den ikke bliver anvendt
     public Item find(String itemString) {
         try {
             for (Item item : itemList) {

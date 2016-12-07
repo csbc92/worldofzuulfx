@@ -5,12 +5,10 @@
  */
 package worldofzuulfx;
 
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.Interfaces.BarValueListener;
 
-/**
- *
- * @author cclausen
- */
+
 public class ECTSHandler implements BarValueListener {
 
     private final Room examRoom;
@@ -23,6 +21,10 @@ public class ECTSHandler implements BarValueListener {
         this.examRoom = examRoom;
     }
     
+    /**
+     * This method is executed when the ECTSBar's value has changed
+     * @param bar
+     */
     @Override
     public void barValueChanged(Bar bar) {  
         ConsoleInfo.setECTSData(String.valueOf(bar.getValue()));

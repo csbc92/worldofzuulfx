@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pMain" prefHeight="680.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
+<AnchorPane fx:id="pMain" prefHeight="642.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuulfx.FXMLMainController">
    <children>
       <TabPane fx:id="tabControl" focusTraversable="false" layoutX="14.0" layoutY="14.0" onMouseClicked="#onTabClick" prefHeight="628.0" prefWidth="694.0" stylesheets="@../resources/tabControl.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -38,12 +39,12 @@
                                           <Font size="34.0" />
                                        </font>
                                     </Text>
-                                    <Text fill="WHITE" layoutX="17.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
+                                    <Text fill="WHITE" layoutX="19.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active Quest:">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font>
                                     </Text>
-                                    <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="17.0" layoutY="217.0" prefHeight="206.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
+                                    <Label fx:id="lQuest" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="269.0" prefHeight="153.0" prefWidth="200.0" text="Quest info" textFill="WHITE" wrapText="true" />
                                     <Text fill="WHITE" layoutX="18.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health:">
                                        <font>
                                           <Font name="System Bold" size="15.0" />
@@ -64,6 +65,16 @@
                                           <Font name="System Bold" size="15.0" />
                                        </font>
                                     </Text>
+                                    <Text fill="WHITE" layoutX="17.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current room:">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="tRoom" fill="WHITE" layoutX="18.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OOP" wrappingWidth="200.0">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </Pane>
                               <TextArea fx:id="taConsol" editable="false" focusTraversable="false" layoutX="19.0" layoutY="482.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="656.0" stylesheets="@../resources/taConsole.css" wrapText="true">
@@ -71,13 +82,6 @@
                                     <Font size="10.0" />
                                  </font>
                               </TextArea>
-                              <Pane fx:id="pRPS" layoutX="18.0" layoutY="622.0" prefHeight="44.0" prefWidth="658.0">
-                                 <children>
-                                    <Button fx:id="butRock" layoutX="32.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Rock" />
-                                    <Button fx:id="butPaper" layoutX="238.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Paper" />
-                                    <Button fx:id="butScissor" layoutX="444.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" text="Scissor" />
-                                 </children>
-                              </Pane>
                            </children>
                         </Pane>
                      </children>
@@ -90,6 +94,11 @@
                      <children>
                         <Pane fx:id="pMenu" prefHeight="599.0" prefWidth="694.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
+                              <ImageView fitHeight="184.0" fitWidth="581.0" layoutX="57.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/woz-logo.png" />
+                                 </image>
+                              </ImageView>
                               <Button fx:id="butNewGame" layoutX="263.0" layoutY="411.0" mnemonicParsing="false" onAction="#onClickNewGame" prefHeight="47.0" prefWidth="156.0" text="New Game" />
                               <Button fx:id="butHighscore" layoutX="263.0" layoutY="500.0" mnemonicParsing="false" onAction="#onbutHighscoreClick" prefHeight="47.0" prefWidth="156.0" text="Highscore" />
                               <RadioButton fx:id="rbNormal" layoutX="176.0" layoutY="229.0" mnemonicParsing="false" selected="true" text="Normal" textFill="WHITE">
@@ -131,6 +140,37 @@
                               <Button fx:id="butBack" layoutX="247.0" layoutY="422.0" mnemonicParsing="false" onAction="#onbutBackClick" prefHeight="47.0" prefWidth="201.0" text="Return" />
                            </children>
                         </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="tabEndGame" text="The End">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
+                     <children>
+                        <Text fill="WHITE" layoutX="199.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost">
+                           <font>
+                              <Font size="83.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="tabCheat" text="Cheater">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
+                     <children>
+                        <Text fill="WHITE" layoutX="47.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You got caught cheating">
+                           <font>
+                              <Font size="55.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="199.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost">
+                           <font>
+                              <Font size="83.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
               </content>

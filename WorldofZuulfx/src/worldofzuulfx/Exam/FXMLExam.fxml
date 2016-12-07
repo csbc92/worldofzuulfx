@@ -60,7 +60,7 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="3">
          <children>
-            <Label text="Question 7: Subtract tow bits, 1001 from 1111, the answer is?" />
+            <Label text="Question 7: Subtract to bits, 1001 from 1111, the answer is?" />
             <RadioButton mnemonicParsing="false" text="011000?">
                <toggleGroup>
                   <ToggleGroup fx:id="question7" />

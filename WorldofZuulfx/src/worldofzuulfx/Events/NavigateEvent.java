@@ -1,7 +1,7 @@
 package worldofzuulfx.Events;
 
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 
 public class NavigateEvent {
     

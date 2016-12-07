@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package worldofzuulfx;
+package worldofzuulfx.Room;
 
 import java.util.ArrayList;
 
@@ -11,10 +11,10 @@ import java.util.ArrayList;
  *
  * @author JV
  */
-public class RoomHandler {
+public class RoomsHandler {
     private ArrayList<Room> rooms;
     
-    public RoomHandler() {
+    public RoomsHandler() {
         
     }
 

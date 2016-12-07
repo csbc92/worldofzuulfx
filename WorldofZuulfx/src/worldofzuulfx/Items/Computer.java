@@ -9,7 +9,7 @@ import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
 import worldofzuulfx.Main;
 import worldofzuulfx.Player;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 
 /**
  *

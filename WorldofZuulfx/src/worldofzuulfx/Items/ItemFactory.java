@@ -6,7 +6,7 @@
 package worldofzuulfx.Items;
 
 import worldofzuulfx.Game;
-import worldofzuulfx.Room;
+import worldofzuulfx.Room.Room;
 import worldofzuulfx.tiles.Tile;
 
 /**
@@ -42,9 +42,9 @@ public class ItemFactory {
         return new CoffeeVoucher("coffeeVoucher", "Coffee Voucher", 0, 10);
     }
 
-    public static Book makeBook(String description) {
+    public static Book makeBook(String description, Book.BookColor color) {
 
-        return new Book(description, description, 5);
+        return new Book(description, description, 5, color);
     }
 
     public static Note makeNote(String noteID, String description, String content) {
