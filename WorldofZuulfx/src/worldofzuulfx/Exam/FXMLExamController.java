@@ -44,6 +44,11 @@ public class FXMLExamController implements Initializable {
         this.examInterface = examInterface;
     }
 
+    /**
+     * Iterates through every toggle group 
+     * and checks if the correct radiobutton(Answer) has been choosen.
+     * @param event
+     */
     public void handleSubmit(ActionEvent event) {
         
         // Evaluate answers..
@@ -66,7 +71,11 @@ public class FXMLExamController implements Initializable {
         this.examInterface.examSubmittedCallback(grade);
         
     }
-    
+    /**
+     * Calculates a grade based on the correct answers
+     * @param correctAnswers 
+     * @return A grade
+     */
     private int evaluate(int correctAnswers) {
         
         if (correctAnswers == 8) {
@@ -88,6 +97,10 @@ public class FXMLExamController implements Initializable {
         return grade;
     }
     
+    /**
+     * Gets the grade which the player obtained
+     * @return
+     */
     public int getGrade() {
         return grade;
     }
@@ -113,7 +126,7 @@ public class FXMLExamController implements Initializable {
         }
     }
     
-    
+    //TODO kommentar
     // http://stackoverflow.com/questions/24986776/how-do-i-get-all-nodes-in-a-scene-in-javafx
     private static ArrayList<Node> getAllNodes(Parent root) {
         ArrayList<Node> nodes = new ArrayList<Node>();

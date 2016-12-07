@@ -6,17 +6,16 @@
 package worldofzuulfx.Events;
 
 import worldofzuulfx.Items.Item;
-import worldofzuulfx.NPC.NPC;
-import worldofzuulfx.Player;
 
-/**
- *
- * @author JV
- */
+
 public class ItemReceivedEvent {
 
     private final Item item;
 
+    /**
+     * An event containing information
+     * @param item
+     */
     public ItemReceivedEvent(Item item) {
 
         this.item = item;

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package worldofzuulfx.Inventory;
 
 import java.util.ArrayList;
@@ -15,6 +11,11 @@ public class Inventory {
     private int currentWeight;
     private ArrayList<Item> itemList;
 
+    /**
+     * Creates an inventory which contains items.
+     * @param maxWeight The maximum weight that the inventory can carry
+     * @param capacity The capacity that the inventory can carry.
+     */
     public Inventory(int maxWeight, int capacity) {
         this.maxWeight = maxWeight;
         this.capacity = capacity;
@@ -43,13 +44,16 @@ public class Inventory {
         return currentWeight;
     }
     
-       
+    /**
+     *
+     * @return The numbers of items inside the inventory
+     */
     public int getSize() {
         return itemList.size();
     }
 
     /**
-     * @return the itemList
+     * @return a copy of the itemList
      */
     public ArrayList<Item> getItemList() {
         // Makes a copy of the original ItemList.
@@ -58,12 +62,21 @@ public class Inventory {
 
     }
 
+    /**
+     * Adds an item to the inventory if the following are true:
+     * Item is not null.
+     * Item does not already exists.
+     * Inventory har space to an additional item.
+     * The current weight plus the weight of the item does not exceed max weight
+     * @param item
+     * @return
+     */
     public Boolean addItem(Item item) {
         // Cannot add an item that already exists
         if (item != null) {
             if (itemList.contains(item)) {
                 return false;
-            } //Check if inventory has space to a additional item and if the current weight exceeds maxWeight.
+            } //Check if inventory has space to an additional item and if the current weight exceeds maxWeight.
             else if (itemList.size() != capacity && (item.getWeight() + this.currentWeight) < maxWeight) {
                 itemList.add(item);
                 return true;
@@ -72,6 +85,12 @@ public class Inventory {
         return false;
     }
 
+    /**
+     * Removes an item from the inventory if item is not null and the item
+     * which is to be removed is not locked. 
+     * @param item The item to be removed
+     * @return True if the item was removed otherwise false
+     */
     public Boolean removeItem(Item item) {
         if (item != null && !item.getIsLocked()) {
             return itemList.remove(item);
@@ -79,6 +98,11 @@ public class Inventory {
         return false;
     }
 
+    /**
+     * Get an item based on the inventory index
+     * @param index
+     * @return The item based on the index
+     */
     public Item getItem(int index) {
         if (index > - 1) {
             return itemList.get(index);
@@ -86,6 +110,11 @@ public class Inventory {
         return null;
     }
 
+    /**
+     * Checks if the inventory contains a specific classe
+     * @param cls The class to be found
+     * @return True if the item class was found otherwise false
+     */
     public boolean contains(Class<?> cls) {
         if (amountOf(cls) > 0) {
             return true;
@@ -94,6 +123,11 @@ public class Inventory {
         }
     }
 
+    /**
+     * Gets the amount of a given item class in the inventory
+     * @param cls
+     * @return 
+     */
     public int amountOf(Class<?> cls) {
         int counter = 0;
         for (Item item : itemList) {
@@ -104,6 +138,11 @@ public class Inventory {
         return counter;
     }
 
+    /**
+     * Checks if the inventory contains a specific Item ID
+     * @param ID The ID of the item.
+     * @return True if the item ID was found otherwise false
+     */
     public boolean contains(String ID) {
         for (Item item : itemList) {
             if (item.getID().equalsIgnoreCase(ID)) {
@@ -111,18 +150,5 @@ public class Inventory {
             }
         }
         return false;
-    }
-    // TODO - skal denne slettes, da den ikke bliver anvendt
-    public Item find(String itemString) {
-        try {
-            for (Item item : itemList) {
-                if (item.getDescription().equalsIgnoreCase(itemString)) {
-                    return item;
-                }
-            }
-        } catch (NullPointerException e) {
-            //TODO: Handle nullpointer
-        }
-        return null;
     }
 }

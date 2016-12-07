@@ -20,25 +20,33 @@ import worldofzuulfx.Items.Note;
 import worldofzuulfx.Player;
 
 /**
- *
+ * This class extends Inventory
  *
  */
 public class PlayerInventory extends Inventory {
 
-//    private final int capacity;
-//    private final int maxWeight;
-//    private int currentWeight;
     private Pane layer;
     private Player player;
-
-//    private ArrayList<Item> itemList;
     private Item selectedItem;
     private Rectangle selectionRect;
 
+    /**
+     * Uses the constructor of the super-class
+     *
+     * @param maxWeight
+     * @param capacity
+     */
     public PlayerInventory(int maxWeight, int capacity) {
         super(maxWeight, capacity);
     }
 
+    /**
+     * Draws the PlayerInventory
+     *
+     * @param redraw If true the inventory is redrawn which means that all items
+     * are drawn again. Otherwise only the selection box is redrawn based on the
+     * selected item.
+     */
     public void draw(boolean redraw) {
         int i = 0;
         if (redraw) {
@@ -62,6 +70,13 @@ public class PlayerInventory extends Inventory {
         }
     }
 
+    /**
+     * Select an item in the inventory based on Item i. Based on the selected
+     * item, a given text is displayed. e.g. "Give the beer" and "Use the
+     * globus"
+     *
+     * @param i The Item to be selected
+     */
     public void selectItem(Item i) {
         selectedItem = i;
         StringBuilder txt = new StringBuilder("");
@@ -109,6 +124,10 @@ public class PlayerInventory extends Inventory {
 
     }
 
+    /**
+     * Selects the next item in the inventory. If the current selection is the
+     * last item nothing happens
+     */
     public void nextItem() {
         if (getSelectedItem() != null) {
             int i = getItemList().indexOf(getSelectedItem()) + 1;
@@ -120,6 +139,10 @@ public class PlayerInventory extends Inventory {
         }
     }
 
+    /**
+     * Selects the previous item in the inventory. If the current selection is
+     * the first item nothing happens
+     */
     public void previousItem() {
         if (getSelectedItem() != null) {
             int i = getItemList().indexOf(getSelectedItem()) - 1;
@@ -160,7 +183,7 @@ public class PlayerInventory extends Inventory {
     }
 
     /**
-     * @param player the player to set
+     * @param player The player who owens this inventory
      */
     public void setPlayer(Player player) {
         this.player = player;

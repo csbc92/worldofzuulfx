@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package worldofzuulfx;
 
 import java.io.FileInputStream;
@@ -13,19 +8,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author JV
- */
 public class Util {
 
     private static Properties prop;
     private static OutputStream output = null;
     private static InputStream input;
 
+    /**
+     * Used to store the prop-object as a file
+     *
+     * @param filename The name of the file.
+     */
     public static void storeFile(String filename) {
         try {
             if (getPropFile() != null) {
@@ -37,30 +31,49 @@ public class Util {
         }
     }
 
+    /**
+     * Used to load a given file based on the file name.
+     * If the prop-object is null a new prop-object will be instantiated
+     * @param filename
+     */
     public static void loadFile(String filename) {
         try {
             input = new FileInputStream(filename);
-
+            if (prop == null) {
+                newPropFile();
+            }
             // load a properties file
-            getPropFile().load(input);
+            getPropFile().load(input);     
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException io) {
+            io.printStackTrace();
         }
 
     }
 
+    /**
+     * Instantiate a new prop-object
+     */
     public static void newPropFile() {
         prop = new Properties();
 
     }
 
+    /**
+     * Sets a property with a given key and value
+     * @param name key
+     * @param data value
+     */
     public static void setProp(String name, String data) {
         getPropFile().setProperty(name, data);
-
     }
 
+    /**
+     * Get a property based on a given key
+     * @param name key
+     * @return A value based on the key. If the key is not found a String with "null" is returned.
+     */
     public static String getProp(String name) {
         return getPropFile().getProperty(name, "null");
 
@@ -69,23 +82,37 @@ public class Util {
     /**
      * @return the prop
      */
-    public static Properties getPropFile() {        
+    public static Properties getPropFile() {
         return prop;
     }
-    
-    public static int [][] strTo2d (String source, String outerdelim, String innerdelim) {
 
-    int [][] result = new int [source.trim().replaceAll ( "[^" + outerdelim + "]", "").length () + 1][]; 
-    int count = 0;
-    for (String line : source.split ("[" + outerdelim + "]"))
-    {   
-        String subString = line.replaceAll("\n", "").replaceAll("\\[", "").replaceAll("\\]", "").trim();
-        String [] subStringResult = subString.split(innerdelim);
-        int [] subIntResult = Arrays.stream(subStringResult).mapToInt(Integer::parseInt).toArray();
-        result [count++] = subIntResult;
+    /**
+     * Converts a String to a two-dimensional int array
+     * 
+     * @param source A given string to be converted
+     * @param outerdelim Outer demlimiter
+     * @param innerdelim Inner delimiter
+     * @return Two-dimensional int array
+     */
+    public static int[][] strTo2d(String source, String outerdelim, String innerdelim) {
+        // Replaces all characters except outerdelim with ""
+ 
+        String s = source.trim().replaceAll("[^" + outerdelim + "]", "");
+        // Counts all characters and creats an two-dimensional int array based on this number plus one.
+        int[][] result = new int[s.length() + 1][];
+        
+        int count = 0;
+        // Iterates through the lines which is created by splitting the String s.
+        for (String line : source.split("[" + outerdelim + "]")) {
+
+            String subString = line.replaceAll("\\[", "").replaceAll("\\]", "").trim();
+            
+            String[] subStringResult = subString.split(innerdelim);
+            //Converts a String Array to int using a stream array
+            int[] subIntResult = Arrays.stream(subStringResult).mapToInt(Integer::parseInt).toArray();
+            result[count++] = subIntResult;
+        }
+        return result;
     }
-    return result;
-}
-
 
 }

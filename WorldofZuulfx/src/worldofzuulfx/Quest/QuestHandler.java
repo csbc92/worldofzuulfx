@@ -1,17 +1,14 @@
 package worldofzuulfx.Quest;
 
-import java.util.ArrayList;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Events.ItemDeliveredEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
-import worldofzuulfx.Events.ItemReceivedEvent;
 import worldofzuulfx.Events.ItemUseEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.ItemPickupListener;
 import worldofzuulfx.Player;
 import worldofzuulfx.Interfaces.NavigateListener;
 import worldofzuulfx.Interfaces.ItemDeliveredListener;
-import worldofzuulfx.Interfaces.ItemReceivedListener;
 import worldofzuulfx.Interfaces.ItemUseListener;
 
 

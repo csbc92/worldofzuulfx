@@ -9,18 +9,14 @@ import java.util.Random;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Events.ItemDeliveredEvent;
-import worldofzuulfx.Events.ItemDropEvent;
 import worldofzuulfx.Events.ItemPickupEvent;
-import worldofzuulfx.Events.ItemReceivedEvent;
 import worldofzuulfx.Events.ItemUseEvent;
 import worldofzuulfx.Events.NavigateEvent;
 import worldofzuulfx.Interfaces.BarValueListener;
 import worldofzuulfx.Interfaces.ItemDeliveredListener;
-import worldofzuulfx.Interfaces.ItemDropListener;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Interfaces.ItemPickupListener;
-import worldofzuulfx.Interfaces.ItemReceivedListener;
 import worldofzuulfx.Interfaces.ItemUseListener;
 import worldofzuulfx.Quest.Reward;
 import worldofzuulfx.Interfaces.NavigateListener;
@@ -45,11 +41,9 @@ public class Player extends SpriteBase implements BarValueListener {
     private boolean droppedItem;
     private int timeLeft;
     private ArrayList<ItemPickupListener> itemPickupListeners;
-    private ArrayList<ItemDropListener> itemDropListeners;
     private ArrayList<ItemDeliveredListener> itemDeliveredListeners;
     private ArrayList<ItemUseListener> itemUseListeners;
     private ArrayList<NavigateListener> navigateListener;
-    private ArrayList<ItemReceivedListener> itemReceivedListener;
     private ArrayList<Room> roomRandom;
 
     public Player(String name, Pane layer, Image image, double posX, double posY) {
@@ -74,12 +68,10 @@ public class Player extends SpriteBase implements BarValueListener {
         itemPickupListeners = new ArrayList<>();
         itemDeliveredListeners = new ArrayList<>();
         itemUseListeners = new ArrayList<>();
-        itemDropListeners = new ArrayList<>();
-        itemReceivedListener = new ArrayList<>();
     }
 
     /**
-     * Initiates all bars and sets an starting value.
+     * Initiates all bars and sets starting values.
      */
     private void initializeBars() {
         ects = new Bar(0, 10);
@@ -234,7 +226,7 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void receiveItem(Item item) {
         if (this.inventory.addItem(item)) {
-            this.notifyItemReceivedListeners(item);
+
         }
     }
 
@@ -339,28 +331,6 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Subscribe to the event when a player drops an item.
-     *
-     * @param listener
-     */
-    public void addItemDropListener(ItemDropListener listener) {
-        if (!this.itemDropListeners.contains(listener)) {
-            this.itemDropListeners.add(listener);
-        }
-    }
-
-    /**
-     * Unsubscribe to the event when a player drops an item.
-     *
-     * @param listener
-     */
-    public void removeItemDropListener(ItemDropListener listener) {
-        if (this.itemDropListeners.contains(listener)) {
-            this.itemDropListeners.remove(listener);
-        }
-    }
-
-    /**
      * Subscribe to the event when a player picks up an Item.
      *
      * @param listener
@@ -427,28 +397,6 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Subscribe to the event when a player receives an item.
-     *
-     * @param listener
-     */
-    public void addItemReceiveListener(ItemReceivedListener listener) {
-        if (!this.itemReceivedListener.contains(listener)) {
-            this.itemReceivedListener.add(listener);
-        }
-    }
-
-    /**
-     * Unsubscribe to the event when a player reveives an item.
-     *
-     * @param listener
-     */
-    public void removeItemReceiveListener(ItemReceivedListener listener) {
-        if (this.itemReceivedListener.contains(listener)) {
-            this.itemReceivedListener.remove(listener);
-        }
-    }
-
-    /**
      * Method used to notify ItemPickupListeners
      *
      * @param item
@@ -457,19 +405,6 @@ public class Player extends SpriteBase implements BarValueListener {
         if (this.itemPickupListeners != null) {
             for (ItemPickupListener listener : this.itemPickupListeners) {
                 listener.itemPickedUp(new ItemPickupEvent(item, this));
-            }
-        }
-    }
-
-    /**
-     * Method used to notify ItemPickupListeners
-     *
-     * @param item
-     */
-    private void notifyItemDropListeners(Item item) {
-        if (this.itemDropListeners != null) {
-            for (ItemDropListener listener : this.itemDropListeners) {
-                listener.itemDropped(new ItemDropEvent(item, this));
             }
         }
     }
@@ -515,19 +450,6 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Method used to notify ItemReceivedListeners
-     *
-     * @param item
-     */
-    public void notifyItemReceivedListeners(Item item) {
-        if (this.itemReceivedListener != null) {
-            for (ItemReceivedListener listener : this.itemReceivedListener) {
-                listener.itemReceived(new ItemReceivedEvent(item));
-            }
-        }
-    }
-
-    /**
      * Drops the specified Item in the room where the player currently is. If
      * the item doesn't exist in the player's inventory - nothing is dropped in
      * the current room.
@@ -540,7 +462,6 @@ public class Player extends SpriteBase implements BarValueListener {
             this.currentRoom.getRoomInventory().addItem(i);
             this.currentRoom.draw();
             setDroppedItem(true);
-            notifyItemDropListeners(i);
         }
     }
 
@@ -640,9 +561,11 @@ public class Player extends SpriteBase implements BarValueListener {
         }
     }
 
+    /**
+     * Update the Player's Image position based on the Player's bounds.
+     */
     @Override
     public void updateUI() {
-        super.updateUI();
         getImageView().relocate(getBounds().getX(), getBounds().getY() - 16);
     }
 
