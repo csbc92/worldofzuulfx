@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="worldofzuulfx">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/WorldofZuulfx/dist/worldofzuulfx.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
