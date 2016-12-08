@@ -251,7 +251,7 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     }
 
     private void initializeGame() {
-        int gameLevel;
+        int gameMode;
         // Sets the correct panes visible.
         pBackground.setVisible(true);
         pObjects.setVisible(true);
@@ -264,9 +264,9 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
         addInputControls(pBackground.getScene());
 
         // GameLevel chooses which game to be loaded - Normal or Hogwarts mode.
-        gameLevel = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
+        gameMode = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
 
-        game = new Game(layers, gameLevel); //En instans af spillet oprettes.
+        game = new Game(layers, gameMode); //En instans af spillet oprettes.
 
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);

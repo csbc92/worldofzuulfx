@@ -118,14 +118,22 @@ public class FXMLExamController implements Initializable {
         }
     }
     
-    //TODO kommentar
+    /**
+     * 
+     * @param root the root to get the nodes from.
+     * @return A list containing all nodes from a given root.
+     */
     // http://stackoverflow.com/questions/24986776/how-do-i-get-all-nodes-in-a-scene-in-javafx
     private static ArrayList<Node> getAllNodes(Parent root) {
         ArrayList<Node> nodes = new ArrayList<Node>();
         addAllDescendents(root, nodes);
         return nodes;
     }
-
+    /**
+     * Fills a list with all nodes from a given parent.
+     * @param parent The parent to get the nodes from.
+     * @param nodes The list which the nodes are added to.
+     */
     // http://stackoverflow.com/questions/24986776/how-do-i-get-all-nodes-in-a-scene-in-javafx
     private static void addAllDescendents(Parent parent, ArrayList<Node> nodes) {
         for (Node node : parent.getChildrenUnmodifiable()) {

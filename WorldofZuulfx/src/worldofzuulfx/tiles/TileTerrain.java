@@ -20,7 +20,8 @@ public class TileTerrain {
         // Prepare a new terrain of tiles.
         this.terrain = new ArrayList<>();
         // This is the ID's of tiles that objects can collide with.
-        this.collideableTilesIDs = new int[]{0, 12, 13, 85, 99, 112, 126, 140, 141, 154, 155, 168, 169, 210, 214};
+        this.collideableTilesIDs = new int[]{0, 12, 13, 85, 99, 112, 126, 140, 141, 154, 155, 
+                                            168, 169, 202, 203, 204, 210, 214, 216, 217, 218};
         // Load the tile terrain.
         load();
     }
@@ -86,6 +87,11 @@ public class TileTerrain {
         }
     }
 
+    /**
+     * Get a specific tile based on specific tile position in the format "xxyy".
+     * @param pos
+     * @return A tile.
+     */
     public Tile getTile(String pos) {
         for (Tile tile : terrain) {
             if (tile.getPos().equals(pos)) {
