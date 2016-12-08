@@ -1,27 +1,24 @@
-/*
- * World of zuul, item class, 
- */
 package worldofzuulfx.Items;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import worldofzuulfx.Player;
 import worldofzuulfx.sprites.SpriteBase;
 
+public abstract class Item extends SpriteBase {
 
- 
-/**
- * @author march
- * @version (15/10/2016)
- */
-
-public abstract class Item extends SpriteBase{
-    private int weight; 
+    private int weight;
     protected String description;
     private Boolean isLocked;
     private String id;
 
-
+    //TODO
+    /**
+     *
+     * @param image The Image to be shown
+     * @param id The ID of the Item
+     * @param description The description of Item
+     * @param weight The weight of the Item
+     */
     public Item(Image image, String id, String description, int weight) {
         super(image);
         super.setCanCollide(true);
@@ -32,12 +29,16 @@ public abstract class Item extends SpriteBase{
 
     }
 
+    /**
+     *
+     * @return The description of the Item
+     */
     public String getDescription() {
-    	return description;
+        return description;
     }
 
     /**
-     * @return the isLocked
+     * @return True if the Item is locked otherwise false
      */
     public Boolean getIsLocked() {
         return isLocked;
@@ -51,20 +52,25 @@ public abstract class Item extends SpriteBase{
     }
 
     /**
-     * @return the weight
+     * @return The weight of the item
      */
     public int getWeight() {
         return weight;
     }
-    
+
+    /**
+     * This abstract method is implemented in all classe which extends this Item
+     * class. The method gives the functionality to use different items in
+     * different ways.
+     *
+     * @param player
+     */
     public abstract void use(Player player);
 
     /**
-     * @return the ID
+     * @return The ID of item
      */
     public String getID() {
         return id;
     }
 }
-
-

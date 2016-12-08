@@ -1,28 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package worldofzuulfx.Quest;
 
 import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Items.Book;
-import worldofzuulfx.Items.Item;
-
 import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Items.Note;
-import worldofzuulfx.Layers;
 import worldofzuulfx.NPC.NPC;
-import worldofzuulfx.NPC.PartyGuy;
 import worldofzuulfx.Player;
 import worldofzuulfx.Room.Room;
-import worldofzuulfx.Room.RoomsHandler;
+import worldofzuulfx.Room.RoomList;
 
-/**
- *
- * @author JV
- */
 public class QuestInventory {
 
     private HashMap<String, Quest> allGameQuests;
@@ -36,7 +24,7 @@ public class QuestInventory {
         return allGameQuests;
     }
 
-    public void initQuests(RoomsHandler roomHandler, Player player) {
+    public void initQuests(RoomList roomHandler, Player player) {
         // Initialize Quests and Quest handling
         this.allGameQuests = new HashMap<>();
         QuestFactory qFactory = new QuestFactory(player);

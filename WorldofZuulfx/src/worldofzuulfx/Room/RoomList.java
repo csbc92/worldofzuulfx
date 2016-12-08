@@ -7,15 +7,11 @@ package worldofzuulfx.Room;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author JV
- */
-public class RoomsHandler {
+public class RoomList {
     private ArrayList<Room> rooms;
     
-    public RoomsHandler() {
-        
+    public RoomList(ArrayList<Room> rooms) {
+        this.rooms = rooms;
     }
 
     public Room getRoom(String ID) {
@@ -44,14 +40,5 @@ public class RoomsHandler {
      */
     public ArrayList<Room> getRooms() {
         return rooms;
-    }
-
-    /**
-     * @param rooms the rooms to set
-     */
-    public void setRooms(ArrayList<Room> rooms) {
-        this.rooms = rooms;
-    }
-    
-    
+    }    
 }

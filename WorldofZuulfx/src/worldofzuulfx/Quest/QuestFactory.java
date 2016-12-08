@@ -2,7 +2,6 @@ package worldofzuulfx.Quest;
 
 import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Inventory.PlayerInventory;
-import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
 import worldofzuulfx.Quest.Quest.QuestType;

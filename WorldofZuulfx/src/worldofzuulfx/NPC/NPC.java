@@ -2,19 +2,14 @@
 package worldofzuulfx.NPC;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import worldofzuulfx.Game;
 import worldofzuulfx.Inventory.Inventory;
-import worldofzuulfx.Inventory.PlayerInventory;
 import worldofzuulfx.Items.Item;
-import worldofzuulfx.Layers;
 import worldofzuulfx.Room.Room;
 import worldofzuulfx.sprites.SpriteBase;
 
 /**
  * Class for Non Playable Characters like lectors and fellow students.
  * 
- * @author hjaltefromholtrindom
  */
 public class NPC extends SpriteBase {
     private final String ID;
@@ -22,7 +17,13 @@ public class NPC extends SpriteBase {
     private final Inventory inventory;
     private Room currentRoom;
     
-    public NPC(String ID, String name, Image img){ // Constructor for NPC class
+    /**
+     * Instantiates a NPC-object
+     * @param ID The ID of the NPC
+     * @param name The name of the NPC e.g. "Anders" and "Daniel"
+     * @param img The image which represent the charactor
+     */
+    public NPC(String ID, String name, Image img){ 
         super(img);
         this.ID = ID;
         this.name = name;
@@ -30,22 +31,42 @@ public class NPC extends SpriteBase {
         this.inventory = new Inventory(5000, 100);
     }
     
+    /**
+     *
+     * @return The ID of the NPC
+     */
     public String getID() {
         return this.ID;
     }
     
-    public String getName(){ // Get method for name of an NPC
+    /**
+     * @return  name of an NPC
+     */
+    public String getName(){ 
         return this.name;
     }
     
+    /**
+     * NPC receives an Item and adds the item to its inventory.
+     * @param item The Item to be added
+     * @return True if the Item was added otherwise false;
+     */
     public Boolean receiveItem(Item item) {
         return this.inventory.addItem(item);
     }
     
+    /**
+     * Get the NPC's inventory
+     * @return
+     */
     public Inventory getInventory() {
         return this.inventory;
     }
     
+    /**
+     * Used to navigate the NPC to a given room
+     * @param room The Room that the player will be navigated to.
+     */
     public void navigateTo(Room room) {
 
         Room oldRoom = currentRoom;
@@ -56,6 +77,10 @@ public class NPC extends SpriteBase {
         currentRoom.addNPC(this);
     }
     
+    /**
+     * 
+     * @return The room in which the NPC is located
+     */
     public Room getCurrentRoom(){
         return currentRoom;
     }

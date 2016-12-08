@@ -25,26 +25,47 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
         this.player.addItemUseListener(this);
     }
    
+    /**
+     * Checks if the Active Quest is completed when the player navigates
+     * @param navEvent
+     */
     @Override
     public void navigated(NavigateEvent navEvent) {
         this.completeQuest();
     }
 
+    /**
+     * Checks if the Active Quest is completed when the player picks up an item.
+     * @param pickupEvent
+     */
     @Override
     public void itemPickedUp(ItemPickupEvent pickupEvent) {
         this.completeQuest();
     }
     
+    /**
+     * Checks if the Active Quest is completed when the player deliveres an item.
+     * @param event
+     */
     @Override
     public void itemDelivered(ItemDeliveredEvent event) {
         this.completeQuest();
     }
     
+    /**
+     * Checks if the Active Quest is completed when the player uses an item
+     * @param event
+     */
     @Override
     public void itemUsed(ItemUseEvent event) {
         this.completeQuest();
     }
 
+    /**
+     * Checks if the Active Quest is completed.
+     * True: The Player is given a reward and a new Quest if there is any.
+     * False: The Player still needs to complete the Active Quest.
+     */
     private void completeQuest() {
         
         Quest activeQuest = this.player.getActiveQuest();

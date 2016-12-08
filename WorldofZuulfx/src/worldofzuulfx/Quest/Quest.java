@@ -140,6 +140,10 @@ public class Quest {
         }
     }
 
+    /**
+     *
+     * @return True if the Quest is completed otherwise false.
+     */
     public Boolean isCompleted() {
         return this.isCompleted;
     }
@@ -164,40 +168,29 @@ public class Quest {
         this.postAction = action;
     }
 
+    /**
+     * Executes the Post action
+     */
     public void executePostAction() {
         if (this.postAction != null) {
             this.postAction.execute();
         }
     }
 
+    /**
+     * Chain this Quest to another quest.
+     * @param quest The quest to be chained
+     */
     public void setChainQuest(Quest quest) {
         this.chainQuest = quest;
     }
 
+    /**
+     *
+     * @return The chained quest
+     */
     public Quest getChainQuest() {
         return this.chainQuest;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("Quest description: ");
-        builder.append(this.description);
-
-        builder.append("\nIs the quest completed? : ");
-
-        switch (this.questType) {
-            case DYNAMIC:
-                builder.append(this.requirement.execute());
-                break;
-
-            case STATIC:
-                builder.append(this.isCompleted);
-                break;
-        }
-
-        return builder.toString();
     }
 
     /**

@@ -220,17 +220,6 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * The player will receive this item and notify listeners.
-     *
-     * @param item
-     */
-    public void receiveItem(Item item) {
-        if (this.inventory.addItem(item)) {
-
-        }
-    }
-
-    /**
      * Pick up the specified item from the player's current room and add it to
      * the player's inventory. The same item cannot be added multiple times.
      *
@@ -296,16 +285,6 @@ public class Player extends SpriteBase implements BarValueListener {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Navigates the player to the specified room. This method does NOT notify
-     * ChangeRoomListeners.
-     *
-     * @param room
-     */
-    public void navigateSilentlyTo(Room room) {
-        currentRoom = room;
     }
 
     /**

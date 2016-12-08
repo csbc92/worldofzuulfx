@@ -6,9 +6,7 @@ package worldofzuulfx.Room;
  * the current room. Room can set exits and get them as well.
  *
  */
-import worldofzuulfx.Inventory.PlayerInventory;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.HashMap;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Inventory.Inventory;
@@ -29,8 +27,19 @@ public class Room {
     private Pane objectLayer;
     private final TileTerrain groundTiles;
 
+    /**
+     * Instantiates a Room-object based on the following parameters:
+     *
+     * @param ID The ID of the room
+     * @param description The description of the room
+     * @param groundLayer The layer which the room is drawn on excl. items, Player
+     * and NPCs.
+     * @param objectLayer The layer which items is drawn on.
+     * @param tiles The images which represents parts of a room
+     * @param groundLayout
+     */
     public Room(String ID, String description, Pane groundLayer, Pane objectLayer, HashMap<Integer, Tile> tiles, int[][] groundLayout) {
-        // Constructor - defines the description of the room.
+        // Constructor - 
         this.id = ID;
         this.description = description;
         this.locked = false;
@@ -95,7 +104,7 @@ public class Room {
         }
         return result;
     }
-    
+
     /**
      * @return the inventory
      */

@@ -2,11 +2,9 @@ package worldofzuulfx;
 
 import worldofzuulfx.Room.RoomFactory;
 import worldofzuulfx.Room.Room;
-import worldofzuulfx.Room.RoomsHandler;
+import worldofzuulfx.Room.RoomList;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -27,7 +25,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private PartyGuy partyguy;
     private Player player;
     private ECTSHandler ectsHandler;
-    private RoomsHandler roomHandler;
+    private RoomList roomHandler;
     private RoomFactory roomFactory;
     private QuestInventory questInventory;
     private RockPaperScissors RPS;
@@ -197,9 +195,8 @@ public class Game implements NavigateListener, ItemPickupListener {
      * @param gameLevel 
      */
     private void initRooms(int gameLevel) {
-        roomHandler = new RoomsHandler();
         roomFactory = new RoomFactory(gameLevel);
-        roomHandler.setRooms(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
+        roomHandler = new RoomList(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
     }
     
     /**
@@ -356,7 +353,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     /**
      * @return the roomHandler
      */
-    public RoomsHandler getRoomHandler() {
+    public RoomList getRoomHandler() {
         return roomHandler;
     }
 

@@ -1,31 +1,52 @@
-
 package worldofzuulfx.Items;
 
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
 import worldofzuulfx.Player;
 
-
 public class Drink extends Item {
 
     private int energyValue;
     private boolean alcoholDrink;
 
-    public Drink(String ID, String description, int weight, int energyValueVar, boolean alcoholicBeverage) {
+    /**
+     * Instantiates a Drink-object based on the following parameters:
+     *
+     * @param ID The ID of the Drink e.g. "beer"
+     * @param description The description of the drink.
+     * @param weight The weight of the drink.
+     * @param energyValue The energy of the drink.
+     * @param alcoholicBeverage Decides whether the drink contains alcohol or
+     * not.
+     */
+    public Drink(String ID, String description, int weight, int energyValue, boolean alcoholicBeverage) {
         super(Game.tiles.get(158).clone().getImageView().getImage(), ID, description, weight);
-        this.energyValue = energyValueVar;
+        this.energyValue = energyValue;
         this.alcoholDrink = alcoholicBeverage;
 
     }
 
+    /**
+     *
+     * @return The energy of the drink
+     */
     public int getEnergyValue() {
         return energyValue;
     }
 
+    /**
+     *
+     * @return True if the drink contains alcohol otherwise false.
+     */
     public boolean isAlcohol() {
         return alcoholDrink;
     }
 
+    /**
+     * If the player is near a NPC, the player will give the drink to the NPC;
+     * otherwise the player will drink the drink.
+     * @param player
+     */
     @Override
     public void use(Player player) {
         if (player.getNearNPC() == null) {

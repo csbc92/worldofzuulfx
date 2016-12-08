@@ -97,14 +97,6 @@ public class FXMLExamController implements Initializable {
         return grade;
     }
     
-    /**
-     * Gets the grade which the player obtained
-     * @return
-     */
-    public int getGrade() {
-        return grade;
-    }
-    
     private void initializeToggleGroups() {
         toggleGroups = new HashSet<>();
         

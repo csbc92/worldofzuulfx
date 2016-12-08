@@ -20,7 +20,8 @@ import worldofzuulfx.Items.Note;
 import worldofzuulfx.Player;
 
 /**
- * This class extends Inventory
+ * This class extends Inventory with functionality to draw the inventory on a
+ * layer.
  *
  */
 public class PlayerInventory extends Inventory {
@@ -72,8 +73,7 @@ public class PlayerInventory extends Inventory {
 
     /**
      * Select an item in the inventory based on Item i. Based on the selected
-     * item, a given text is displayed. e.g. "Give the beer" and "Use the
-     * globus"
+     * item, a text is displayed. e.g. "Give the beer" and "Use the globus".
      *
      * @param i The Item to be selected
      */
@@ -189,6 +189,13 @@ public class PlayerInventory extends Inventory {
         this.player = player;
     }
 
+    /**
+     * Executes the Ancestor-method (adds an item) and if the inventory contains
+     * at least one item, the first item in the inventory is selected.
+     *
+     * @param item item to be added
+     * @return True if the item was added and the inventory was drawn otherwise false.
+     */
     @Override
     public Boolean addItem(Item item) {
         if (super.addItem(item)) {
@@ -203,6 +210,13 @@ public class PlayerInventory extends Inventory {
         return false;
     }
 
+    /**
+     * Executes the Ancestor-method (Removes an item) and if the inventory contains
+     * at least one item, the first item in the inventory is selected.
+     * 
+     * @param item item to be removed
+     * @return True if the item was removed and the inventory was drawn otherwise false.
+     */
     @Override
     public Boolean removeItem(Item item) {
         if (super.removeItem(item)) {

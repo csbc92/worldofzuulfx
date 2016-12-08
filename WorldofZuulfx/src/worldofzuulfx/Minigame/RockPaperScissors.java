@@ -15,8 +15,8 @@ public class RockPaperScissors {
     }
 
     /**
-     * The play starts the game of Rock, Paper, Scissors. If player wins get
-     * beer. Player lose decrement energy.
+     * The play starts the game of Rock, Paper, Scissors. If player wins he gets
+     * a beer. If Player loses his decrement energy.
      */
     public void play() {
 
