@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package worldofzuulfx;
 
 import worldofzuulfx.Highscore.Highscores;
@@ -103,6 +98,8 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private Text tRoom;
     @FXML
     private Tab tabEndGame;
+    @FXML
+    private Tab tabCheat;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

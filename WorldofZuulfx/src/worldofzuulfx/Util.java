@@ -90,15 +90,15 @@ public class Util {
      * Converts a String to a two-dimensional int array
      * 
      * @param source A given string to be converted
-     * @param outerdelim Outer demlimiter
-     * @param innerdelim Inner delimiter
+     * @param outerdelim Outer demlimiter e.g. "\r"
+     * @param innerdelim Inner delimiter e.g. ","
      * @return Two-dimensional int array
      */
     public static int[][] strTo2d(String source, String outerdelim, String innerdelim) {
         // Replaces all characters except outerdelim with ""
  
         String s = source.trim().replaceAll("[^" + outerdelim + "]", "");
-        // Counts all characters and creats an two-dimensional int array based on this number plus one.
+        // Counts all characters and creates an two-dimensional int array based on this number plus one.
         int[][] result = new int[s.length() + 1][];
         
         int count = 0;
