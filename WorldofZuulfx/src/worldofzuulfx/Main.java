@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * 
+ *
  */
 public class Main extends Application {
 
@@ -31,7 +31,7 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.show();
     }
-    
+
     public static FXMLMainController getController() {
         return Main.controller;
     }
@@ -40,7 +40,6 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         launch(args);
     }
 

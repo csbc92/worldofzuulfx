@@ -237,48 +237,207 @@ public class RoomFactory {
 
         ArrayList<Room> rooms = new ArrayList<>();
 
-        outside = loadRoom("outside", backgroundLayer, objectLayer, tiles);
-        exam = loadRoom("exam", backgroundLayer, objectLayer, tiles);
-        campus = loadRoom("campus", backgroundLayer, objectLayer, tiles);
-        bookstore = loadRoom("bookstore", backgroundLayer, objectLayer, tiles);
-        hutten = loadRoom("Gydehutten", backgroundLayer, objectLayer, tiles);
-        canteen = loadRoom("Canteen", backgroundLayer, objectLayer, tiles);
-        knoldene = loadRoom("knoldene", backgroundLayer, objectLayer, tiles);
-        u163 = loadRoom("u163", backgroundLayer, objectLayer, tiles);
-        u170 = loadRoom("u170", backgroundLayer, objectLayer, tiles);
-        u180 = loadRoom("u180", backgroundLayer, objectLayer, tiles);
-        downunder = loadRoom("downunder", backgroundLayer, objectLayer, tiles);
+//        outside = loadRoom("outside", backgroundLayer, objectLayer, tiles);
+//        exam = loadRoom("exam", backgroundLayer, objectLayer, tiles);
+//        campus = loadRoom("campus", backgroundLayer, objectLayer, tiles);
+//        bookstore = loadRoom("bookstore", backgroundLayer, objectLayer, tiles);
+//        hutten = loadRoom("Gydehutten", backgroundLayer, objectLayer, tiles);
+//        canteen = loadRoom("Canteen", backgroundLayer, objectLayer, tiles);
+//        knoldene = loadRoom("knoldene", backgroundLayer, objectLayer, tiles);
+//        u163 = loadRoom("u163", backgroundLayer, objectLayer, tiles);
+//        u170 = loadRoom("u170", backgroundLayer, objectLayer, tiles);
+//        u180 = loadRoom("u180", backgroundLayer, objectLayer, tiles);
+//        downunder = loadRoom("downunder", backgroundLayer, objectLayer, tiles);
+//        
+        
+        outside = new Room("outside", "outside", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
+                                                                                                    {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                                    {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                    });
 
-//    //12x12
-//    outside = new Room("outside", "Oustide", backgroundLayer, objectLayer, tiles, tileLayout);
-//        outside.setExit("0600", campus, "0610");
-//        campus.setExit("0612", outside, "0601");
-//        campus.setExit("0006", exam, "0906");
-//        campus.setExit("0600", hutten, "0510");
-//        campus.setExit("1106", bookstore, "0106");
-//
-//        bookstore.setExit("0006", campus, "1006");
-//        exam.setExit("1106", campus, "0106");
-//
-//        hutten.setExit("0512", campus, "0601");
-//        hutten.setExit("1106", canteen, "0106");
-//        hutten.setExit("0500", knoldene, "0611");
-//        hutten.setExit("0900", downunder, "0106");
-//
-//        downunder.setExit("0612", canteen, "0601");
-//        downunder.setExit("0006", hutten, "0901");
-//
-//        canteen.setExit("0600", downunder, "0611");
-//        canteen.setExit("0006", hutten, "0906");
-//
-//        knoldene.setExit("0612", hutten, "0501");
-//        knoldene.setExit("0600", u163, "0511");
-//        knoldene.setExit("0006", u170, "1006");
-//        knoldene.setExit("1106", u180, "0106");
-//
-//        u163.setExit("0512", knoldene, "0601");
-//        u170.setExit("1106", knoldene, "0106");
-//        u180.setExit("0006", knoldene, "1006");
+        exam = new Room("exam", "exam", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                        {0, 12, 13, 13, 13, 13, 13, 13, 13, 13, 12, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 34, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                        {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                        {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                        });
+
+        campus = new Room("campus", "campus", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
+                                                                                                {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
+                                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+                                                                                                {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 34, 0},
+                                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                {0, 12, 12, 12, 12, 12, 20, 12, 12, 12, 12, 0},
+                                                                                                {0, 13, 13, 13, 13, 13, 20, 13, 13, 13, 13, 0},
+                                                                                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                });
+        
+        bookstore = new Room("bookstore", "bookstore", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                                        {0, 12, 13, 13, 13, 13, 13, 13, 13, 13, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                                        {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                        });
+        hutten = new Room("Gydehutten", "hutten", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 214, 12, 12, 12, 214, 12, 0},
+                                                                                                    {0, 12, 13, 13, 13, 215, 13, 13, 13, 215, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 34, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 12, 12, 12, 20, 12, 12, 12, 12, 12, 0},
+                                                                                                    {0, 13, 13, 13, 13, 20, 13, 13, 13, 13, 13, 0},
+                                                                                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                    });
+        canteen = new Room("Canteen", "Canteen", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
+                                                                                                    {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                                    {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                    });
+        knoldene = new Room("knoldene", "knoldene", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
+                                                                                                    {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+                                                                                                    {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 34, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                    {0, 12, 12, 12, 12, 12, 20, 12, 12, 12, 12, 0},
+                                                                                                    {0, 13, 13, 13, 13, 13, 20, 13, 13, 13, 13, 0},
+                                                                                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                    });
+        u163 = new Room("u163", "u163", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                         {0, 12, 168, 85, 99, 13, 13, 85, 99, 168, 12, 0},
+                                                                                         {0, 12, 169, 20, 20, 20, 20, 20, 20, 169, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 112, 126, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 210, 210, 210, 210, 210, 210, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 210, 210, 210, 210, 210, 210, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 12, 12, 12, 20, 12, 12, 12, 12, 12, 0},
+                                                                                         {0, 13, 13, 13, 13, 20, 13, 13, 13, 13, 13, 0},
+                                                                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                            });
+        u170 = new Room("u170", "u170", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                         {0, 12, 168, 85, 99, 85, 99, 13, 140, 154, 12, 0},
+                                                                                         {0, 12, 169, 20, 20, 20, 20, 20, 141, 155, 12, 0},
+                                                                                         {0, 12, 6, 20, 112, 126, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 210, 210, 210, 210, 210, 210, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 34, 0},
+                                                                                         {0, 12, 210, 210, 210, 210, 210, 210, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                         {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                            });
+        u180 = new Room("u180", "u180", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                         {0, 12, 140, 154, 13, 85, 99, 85, 99, 168, 12, 0},
+                                                                                         {0, 12, 141, 155, 20, 20, 20, 20, 20, 169, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 112, 126, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 210, 210, 210, 210, 210, 210, 12, 0},
+                                                                                         {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 210, 210, 210, 210, 210, 210, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                         {0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                         {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
+                                                                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                            });
+        downunder = new Room("downunder", "downunder", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+                                                                                                        {0, 12, 13, 13, 13, 13, 13, 13, 13, 13, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 202, 216, 20, 20, 12, 0},
+                                                                                                        {0, 13, 6, 20, 20, 20, 203, 217, 20, 20, 12, 0},
+                                                                                                        {0, 7, 20, 20, 20, 20, 204, 218, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+                                                                                                        {0, 12, 12, 12, 12, 12, 20, 12, 12, 12, 12, 0},
+                                                                                                        {0, 13, 13, 13, 13, 13, 20, 13, 13, 13, 13, 0},
+                                                                                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                                                                                                        });
+    
+
+        outside.setExit("0600", campus, "0610");
+        campus.setExit("0612", outside, "0601");
+        campus.setExit("0006", exam, "0906");
+        campus.setExit("0600", hutten, "0510");
+        campus.setExit("1106", bookstore, "0106");
+
+        bookstore.setExit("0006", campus, "1006");
+        exam.setExit("1106", campus, "0106");
+
+        hutten.setExit("0512", campus, "0601");
+        hutten.setExit("1106", canteen, "0106");
+        hutten.setExit("0500", knoldene, "0611");
+        hutten.setExit("0900", downunder, "0106");
+
+        downunder.setExit("0612", canteen, "0601");
+        downunder.setExit("0006", hutten, "0901");
+
+        canteen.setExit("0600", downunder, "0611");
+        canteen.setExit("0006", hutten, "0906");
+
+        knoldene.setExit("0612", hutten, "0501");
+        knoldene.setExit("0600", u163, "0511");
+        knoldene.setExit("0006", u170, "1006");
+        knoldene.setExit("1106", u180, "0106");
+
+        u163.setExit("0512", knoldene, "0601");
+        u170.setExit("1106", knoldene, "0106");
+        u180.setExit("0006", knoldene, "1006");
+
         Item item = ItemFactory.makeGlobus(3, canteen, "0505");
         item.move(256, 64);
         item.updateUI();
@@ -299,7 +458,7 @@ public class RoomFactory {
 
         //TODO skal kun bruges, når vi skal gemme det endelige spil. Skal slettes til sidst!
         // Alle Room-filer skal skrives så det er læseligt for et menneske. (Gør det manuelt)
-        loadRoomExits(rooms);
+//        loadRoomExits(rooms);
         //  StoreRooms(rooms);
         return rooms;
     }

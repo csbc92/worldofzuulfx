@@ -36,7 +36,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     public Game(Layers layers, int gameLevel) {
         // Loads a specific image containing all tiles to used throughout the game
-        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/KrRh335.png"), 32, 32);
+        TileLoader tLoader = new TileLoader(new Image("http://i.imgur.com/mVoYaCC.png"), 32, 32);
         tiles = tLoader.getTiles();
         this.layers = layers;
 
