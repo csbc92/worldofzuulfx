@@ -6,13 +6,11 @@
 package worldofzuulfx.tiles;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import worldofzuulfx.Room.Room;
 import worldofzuulfx.sprites.SpriteBase;
 
 /**
  *
- * @author cclausen
+ * A tile represent a part of a room, a item, a NPC or a Player.
  */
 public class Tile extends SpriteBase {
 
@@ -20,17 +18,31 @@ public class Tile extends SpriteBase {
     private int column;
     private int row;
 
+    /**
+     * Instantiates a Tile-object.
+     * @param id The ID of the tile
+     * @param img The image representing the tile.
+     */
     public Tile(int id, Image img) {
         super(img);
         this.id = id;
-
     }
 
+    /**
+     * Define the postion of the tile in a grid.
+     * @param column
+     * @param row 
+     */
     public void setPos(int column, int row) {
         this.setColumn(column);
         this.setRow(row);
     }
     
+    /**
+     * Get the position of the tile as a String in the following format: "xxyy".
+     * e.g. "0508" means five tiles to the right and eight tiles down.
+     * @return
+     */
     public String getPos() {
         String c = String.valueOf(column);
         String r = String.valueOf(row);
@@ -38,17 +50,25 @@ public class Tile extends SpriteBase {
         return result;
     }
 
+    /**
+     *
+     * @return The ID of the tile
+     */
     public int getID() {
         return this.id;
     }
 
+    /**
+     *
+     * @return A copy of the tile.
+     */
     public Tile clone() {
 
         return new Tile(this.id, this.getImageView().getImage());
     }
 
     /**
-     * @return the column
+     * @return The column
      */
     public int getColumn() {
         return column;

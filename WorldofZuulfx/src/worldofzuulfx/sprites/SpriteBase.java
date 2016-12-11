@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package worldofzuulfx.sprites;
 
-import java.util.HashMap;
+/**
+ * A Spritebase represents all visual object throughout the game. E.g. Items,
+ * tiles, player and NPCs. A Spritebase has the ability to move and collide.
+ */
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -43,8 +41,10 @@ public abstract class SpriteBase {
     private Rectangle bounds;
 
     /**
+     * This constructor sets the image, the height and width of the spritebase
+     * using a rectangle.
      *
-     * @param image
+     * @param image The image which represent the spritebase
      */
     public SpriteBase(Image image) {
         this.image = image;
@@ -58,11 +58,13 @@ public abstract class SpriteBase {
     }
 
     /**
+     * This constructor sets the image, layer and the position of the
+     * spritebase.
      *
-     * @param layer
-     * @param image
-     * @param x
-     * @param y
+     * @param layer The layer which the spritebase is drawn on.
+     * @param image The image that represents the spritebase.
+     * @param x The x-coordinate of the spritebase (Relative to the layer)
+     * @param y The y-coordinate of the spritebase (Relative to the layer)
      */
     public SpriteBase(Pane layer, Image image, double x, double y) {
         this(image);
@@ -81,84 +83,130 @@ public abstract class SpriteBase {
         addToLayer();
     }
 
+    /**
+     * Add itself to the layer to be shown.
+     */
     public void addToLayer() {
         this.layer.getChildren().add(getBounds());
         this.layer.getChildren().add(this.getImageView());
 
     }
 
+    /**
+     * Remove itself from the layer
+     */
     public void removeFromLayer() {
         this.layer.getChildren().remove(this.getImageView());
         this.layer.getChildren().remove(this.getBounds());
     }
 
+    /**
+     *
+     * @return The layer containing the spritebase
+     */
     public Pane getLayer() {
         return layer;
     }
 
+    /**
+     * Set the layer which the spritebase can be drawn on.
+     *
+     * @param layer
+     */
     public void setLayer(Pane layer) {
         this.layer = layer;
     }
 
+    /**
+     *
+     * @return The x-coordinate of the spritebase rectangle
+     */
     public final double getX() {
         return getBounds().getX();
     }
 
+    /**
+     * Set the x-coordinate of the spritebase rectangle
+     *
+     * @param x
+     */
     public final void setX(double x) {
         getBounds().setX(x);
     }
 
+    /**
+     *
+     * @return The y-coordinate of the spritebase rectangle
+     */
     public final double getY() {
         return getBounds().getY();
 
     }
 
+    /**
+     * Set the y-coordinate of the spritebase rectangle
+     *
+     * @param y
+     */
     public final void setY(double y) {
         getBounds().setY(y);
     }
 
+    /**
+     *
+     * @return The number of pixels which the spritebase uses move along the
+     * x-axis
+     */
     public double getDx() {
         return dx;
     }
 
+    /**
+     * set the number of pixels which the spritebase uses move along the x-axis
+     *
+     * @param dx
+     */
     public void setDx(double dx) {
         this.dx = dx;
     }
 
+    /**
+     *
+     * @return The number of pixels which the spritebase uses move along the
+     * y-axis
+     */
     public double getDy() {
         return dy;
     }
 
+    /**
+     * Set the number of pixels which the spritebase uses move along the y-axis
+     *
+     * @param dy
+     */
     public void setDy(double dy) {
         this.dy = dy;
     }
 
-    public double getDr() {
-        return dr;
-    }
-
-    public void setDr(double dr) {
-        this.dr = dr;
-    }
-
-    public boolean isRemovable() {
-        return removable;
-    }
-
-    public void setRemovable(boolean removable) {
-        this.removable = removable;
-    }
-
+    /**
+     * Moves the spritebase's rectangle to a given x-,y-position.
+     *
+     * @param x
+     * @param y
+     */
     public void move(double x, double y) {
 
         if (!getCanMove()) {
             return;
         }
-        // Important to add 1 pixel. Without it the player can not collides with other objects.
+
         this.getBounds().setX(x);
         this.getBounds().setY(y);
     }
 
+    /**
+     * Updates the position of the image relative to the rectangle.
+     */
     public void updateUI() {
 
         double x = getBounds().getX();
@@ -168,18 +216,34 @@ public abstract class SpriteBase {
 
     }
 
+    /**
+     *
+     * @return The width of the spritebase's rectangle.
+     */
     public double getWidth() {
         return w;
     }
 
+    /**
+     *
+     * @return The height of the spritebase's rectangle.
+     */
     public double getHeight() {
         return h;
     }
 
+    /**
+     *
+     * @return Get the center x-coordinate of the spritebase's rectangle
+     */
     public double getCenterX() {
         return getBounds().getX() + getBounds().getWidth() / 2;
     }
 
+    /**
+     *
+     * @return Get the center y-coordinate of the spritebase's rectangle
+     */
     public double getCenterY() {
         return getBounds().getY() + getBounds().getHeight() / 2;
     }
@@ -262,13 +326,6 @@ public abstract class SpriteBase {
     }
 
     /**
-     * Set flag that the sprite can be removed from the UI.
-     */
-    public void remove() {
-        setRemovable(true);
-    }
-
-    /**
      * @return the imageView
      */
     public ImageView getImageView() {
@@ -277,37 +334,50 @@ public abstract class SpriteBase {
     }
 
     /**
-     * @param canCollide the canCollide to set
+     * @param canCollide True if the spritebase can collide otherwise false
      */
     public void setCanCollide(boolean canCollide) {
         this.canCollide = canCollide;
     }
 
+    /**
+     *
+     * @return True if the spritebase can collide
+     */
     public boolean getCanCollide() {
         return this.canCollide;
     }
 
     /**
-     * @return the bounds
+     * @return The spritebase's rectangle
      */
     public Rectangle getBounds() {
         return bounds;
     }
 
     /**
-     * @return the canTeleport
+     * @return True if the spritebase can teleport another object - e.g. Player.
      */
     public boolean canTeleport() {
         return canTeleport;
     }
 
     /**
-     * @param canTeleport the canTeleport to set
+     * @param canTeleport True if the spritebase can teleport another object -
+     * e.g. Player. Otherwise false.
+     *
      */
     public void setCanTeleport(boolean canTeleport) {
         this.canTeleport = canTeleport;
     }
 
+    /**
+     * Set which room and position of the room, the spritebase can teleport
+     * another object to. CanTeleport is set True automatically.
+     *
+     * @param room
+     * @param nextPos
+     */
     public void setTeleport(Room room, String nextPos) {
         nextRoom = room;
         this.nextPos = nextPos;
@@ -316,70 +386,80 @@ public abstract class SpriteBase {
     }
 
     /**
-     * @return the nextRoom
+     * @return The room which the spritebase can teleport another object to.
      */
     public Room getNextRoom() {
         return nextRoom;
     }
 
     /**
-     * @param nextPosX the nextPosX to set
+     * Set the next x-coordinate is used when moving to check if the spritebase
+     * collides with another spritebase.
+     *
+     * @param nextPosX
      */
     public void setNextPosX(double nextPosX) {
         this.nextPosX = nextPosX;
     }
 
     /**
-     * @param nextPosY the nextPosY to set
+     * Set the next y-coordinate is used when moving to check if the spritebase
+     * collides with another spritebase.
+     *
+     * @param nextPosY
      */
     public void setNextPosY(double nextPosY) {
         this.nextPosY = nextPosY;
     }
 
     /**
-     * @return the nextPosY
+     * @return The next y-coordinate is used when moving to check if the
+     * spritebase collides with another spritebase.
      */
     public double getNextPosY() {
         return nextPosY;
     }
 
     /**
-     * @return the nextPosX
+     * @return The next x-coordinate is used when moving to check if the
+     * spritebase collides with another spritebase.
      */
     public double getNextPosX() {
         return nextPosX;
     }
 
     /**
-     * @return the canMove
+     * @return True if the spritebase can move otherwise false.
      */
     public boolean getCanMove() {
         return canMove;
     }
 
     /**
-     * @param canMove the canMove to set
+     * Set whether the spritebase can move or not.
+     * @param canMove 
      */
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
 
     /**
-     * @return the nextPos
+     * @return The postion in nextRoom
      */
     public String getNextPos() {
         return nextPos;
     }
 
     /**
-     * @return the image
+     * @return The image representing the spritebase.
      */
     public Image getImage() {
         return image;
     }
 
     /**
-     * @param image the image to set
+     * Set the image to represent the spritebase.
+     * @param image 
      */
     public void setImage(Image image) {
         this.image = image;
