@@ -30,9 +30,8 @@ public class FXMLExamController implements Initializable {
     private GridPane gridPane;
     
     private HashSet<ToggleGroup> toggleGroups;
-    private int grade;
     
-    private ExamCallback examInterface;
+    private ExamCallback examSubmitCallBack;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -40,8 +39,8 @@ public class FXMLExamController implements Initializable {
         initializeToggleGroups();
     }
     
-    public void setExamSubmittedCallback(ExamCallback examInterface) {
-        this.examInterface = examInterface;
+    public void setExamSubmittedCallback(ExamCallback examSubmitCallBack) {
+        this.examSubmitCallBack = examSubmitCallBack;
     }
 
     /**
@@ -59,24 +58,29 @@ public class FXMLExamController implements Initializable {
             RadioButton selected = (RadioButton)group.getSelectedToggle();
             
             if (selected != null) {
-                Boolean b = (Boolean)selected.getUserData();
+                Boolean isRightAnswer = (Boolean)selected.getUserData();
 
-                if (b != null) {
+                if (isRightAnswer != null) {
                     rightAnswerCounter++;
                 }
             }
         }
-        evaluate(rightAnswerCounter);
+        int grade = evaluateExam(rightAnswerCounter);
         
-        this.examInterface.examSubmittedCallback(grade);
-        
+        // Execute the Call back method and give the grade as parameter.
+        if (this.examSubmitCallBack != null) {
+            this.examSubmitCallBack.examSubmittedCallback(grade);
+        }
     }
+    
     /**
      * Calculates a grade based on the correct answers
      * @param correctAnswers 
      * @return A grade
      */
-    private int evaluate(int correctAnswers) {
+    private int evaluateExam(int correctAnswers) {
+        
+        int grade;
         
         if (correctAnswers == 8) {
             grade = 12;

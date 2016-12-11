@@ -40,7 +40,7 @@ import worldofzuulfx.Minigame.RockPaperScissorsMoves;
 import worldofzuulfx.Exam.ExamCallback;
 import worldofzuulfx.Highscore.Score;
 
-public class FXMLMainController implements Initializable, BarValueListener, ExamCallback {
+public class FXMLMainController implements Initializable, BarValueListener {
 
     private Stage stage;
     private Timer gameTimer;
@@ -123,16 +123,33 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private void initializeExamTab() {
         try {
             // Load the FXML document and Controller from another file
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("worldofzuulfx/Exam/FXMLExam.fxml"));
+            URL resourceUrl = getClass().getClassLoader().getResource("worldofzuulfx/Exam/FXMLExam.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
             Pane content = fxmlLoader.load();
             FXMLExamController controller = fxmlLoader.getController();
-
-            controller.setExamSubmittedCallback(this);
-
             // Set the tab's content
             tabExam.setContent(content);
+            
+            // This lambda expression is called after the exam is submitted.
+            controller.setExamSubmittedCallback((grade) -> {
+                // Calculate highscore
+                Player player = game.getPlayer();
+                int score = (player.getTimeLeft() + player.getEnergy()) * player.getHp().getValue() * grade;
+
+                // The score cannot be negative
+                if (score < 0) {
+                    score = 0;
+                }
+
+                highscores.add(player.getName(), score);
+                highscores.saveHighscores();
+
+                // Select highscore tab
+                tabControl.getSelectionModel().select(tabHighscore);
+            });
 
         } catch (IOException ex) {
+            System.out.println("The Exam FXML document was not found.");
             System.out.println(ex.getStackTrace());
             System.exit(0);
         }
@@ -309,23 +326,5 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private void onbutBackClick(ActionEvent event) {
         // Changes Highscore view to Mainmenu
         tabControl.getSelectionModel().select(tabNewGame);
-    }
-
-    @Override
-    public void examSubmittedCallback(int grade) {
-        // Calculate highscore
-        Player player = game.getPlayer();
-        int score = (player.getTimeLeft() + player.getEnergy()) * player.getHp().getValue() * grade;
-
-        // The score cannot be negative
-        if (score < 0) {
-            score = 0;
-        }
-
-        highscores.add(player.getName(), score);
-        highscores.saveHighscores();
-
-        // Select highscore tab
-        tabControl.getSelectionModel().select(tabHighscore);
     }
 }
