@@ -250,6 +250,7 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
     private void initializeGame() {
         int gameMode;
         // Sets the correct panes visible.
+        resetControls();
         pBackground.setVisible(true);
         pObjects.setVisible(true);
         pSprites.setVisible(true);
@@ -324,5 +325,12 @@ public class FXMLMainController implements Initializable, BarValueListener, Exam
 
         // Select highscore tab
         tabControl.getSelectionModel().select(tabHighscore);
+    }
+    
+    public void resetControls() {
+        tHealth.setText("");
+        tECTS.setText("");
+        tfTimeLeft.setText("");
+        
     }
 }
