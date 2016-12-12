@@ -35,7 +35,7 @@ public class RoomList {
     }
 
     /**
-     * Get all rooms based on whehter it is locked or not.
+     * Get all rooms based on whether it is locked or not.
      *
      * @param lockedRooms True only locked rooms are returned otherwise only
      * unlocked rooms are returned.
