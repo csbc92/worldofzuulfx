@@ -208,7 +208,7 @@ public class Game implements NavigateListener, ItemPickupListener {
      * the position of the player.
      */
     private void initPlayer() {
-        player = new Player("Player-name", layers.getPlayerLayer(), Game.tiles.get(125).getImageView().getImage(),
+        player = new Player("Player-name", layers.getPlayerLayer(), Game.tiles.get(120).getImageView().getImage(),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
 
         player.setCanCollide(true);
