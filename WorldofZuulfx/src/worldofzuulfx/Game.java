@@ -170,7 +170,6 @@ public class Game implements NavigateListener, ItemPickupListener {
      * Initiates all quests used throughout this game.
      */
     private void initQuests() {
-        
         questInventory = new QuestInventory();
         questInventory.initQuests(roomHandler, player);
     }
@@ -209,7 +208,7 @@ public class Game implements NavigateListener, ItemPickupListener {
      * the position of the player.
      */
     private void initPlayer() {
-        player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
+        player = new Player("Player-name", layers.getPlayerLayer(), Game.tiles.get(125).getImageView().getImage(),
                 layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
 
         player.setCanCollide(true);
@@ -222,9 +221,9 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         player.getInventory().setLayer(layers.getInventoryLayer());
     }
-    
+
     /**
-     *  Prints out a Welcome message.
+     * Prints out a Welcome message.
      */
     private void printWelcome() {
         String welcome = "Welcome " + getPlayer().getName() + ", to the World of Zuul!"
@@ -394,8 +393,9 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     /**
-     * Initiates TileLoader and loads a tileset based on the gameMode.
-     * If no gameMode is provided, a default tileset is loaded.
+     * Initiates TileLoader and loads a tileset based on the gameMode. If no
+     * gameMode is provided, a default tileset is loaded.
+     *
      * @param gameMode 0 = normal mode or 1 = abnormal mode
      */
     private void initTiles(int gameMode) {
