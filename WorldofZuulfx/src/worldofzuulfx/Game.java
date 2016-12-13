@@ -45,7 +45,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         initECTSHandler();
         initNPCs();
         initPartyGuy();
-        initQuest();
+        initQuests();
 
         gameLoop();
         // Navigates Player to Outside
@@ -82,16 +82,17 @@ public class Game implements NavigateListener, ItemPickupListener {
      * inventory (Which item to be selected).
      *
      */
-    public void updateSprites() {
+    private void updateSprites() {
         player.updateUI();
-        player.getInventory().selectItem(player.getInventory().getSelectedItem());
+        //TODO - Denne skal måske slettes.
+//        player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
     /**
      * Checks for collision between player and Tiles, Collision between player
      * and Items, and collision between player and NPCs.
      */
-    public void checkCollisions() {
+    private void checkCollisions() {
         Tile nextTile;
         Room currentRoom = this.player.getCurrentRoom();
 
@@ -165,8 +166,11 @@ public class Game implements NavigateListener, ItemPickupListener {
         player.move(player.getNextPosX(), player.getNextPosY());
     }
 
-    private void initQuest() {
-        // Initiates every quests.
+    /**
+     * Initiates all quests used throughout this game.
+     */
+    private void initQuests() {
+        
         questInventory = new QuestInventory();
         questInventory.initQuests(roomHandler, player);
     }
@@ -218,7 +222,10 @@ public class Game implements NavigateListener, ItemPickupListener {
 
         player.getInventory().setLayer(layers.getInventoryLayer());
     }
-
+    
+    /**
+     *  Prints out a Welcome message.
+     */
     private void printWelcome() {
         String welcome = "Welcome " + getPlayer().getName() + ", to the World of Zuul!"
                 + "\nWorld of Zuul is a new, incredibly boring adventure game. \n"
@@ -288,6 +295,9 @@ public class Game implements NavigateListener, ItemPickupListener {
         finished = true;
     }
 
+    /**
+     * Initiates all NPCs and places them in their respective room.
+     */
     private void initNPCs() {
         // U163 NPCS
         Room u163 = getRoomHandler().getRoom("U163");
@@ -383,7 +393,12 @@ public class Game implements NavigateListener, ItemPickupListener {
         player.getECTSBar().setValue(0);
     }
 
-    public void initTiles(int gameMode) {
+    /**
+     * Initiates TileLoader and loads a tileset based on the gameMode.
+     * If no gameMode is provided, a default tileset is loaded.
+     * @param gameMode 0 = normal mode or 1 = abnormal mode
+     */
+    private void initTiles(int gameMode) {
         TileLoader tLoader;
 
         switch (gameMode) {
