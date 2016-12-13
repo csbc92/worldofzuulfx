@@ -11,9 +11,9 @@ public abstract class Item extends SpriteBase {
     private Boolean isLocked;
     private String id;
 
-    //TODO
     /**
-     *
+     * Instatiates an item - however since this is a abstract class the class
+     * itself can not be instantiated but a subclass of this can.
      * @param image The Image to be shown
      * @param id The ID of the Item
      * @param description The description of Item

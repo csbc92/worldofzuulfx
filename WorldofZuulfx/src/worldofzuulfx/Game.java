@@ -82,16 +82,17 @@ public class Game implements NavigateListener, ItemPickupListener {
      * inventory (Which item to be selected).
      *
      */
-    public void updateSprites() {
+    private void updateSprites() {
         player.updateUI();
-        player.getInventory().selectItem(player.getInventory().getSelectedItem());
+        //TODO - Denne skal måske slettes.
+//        player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
     /**
      * Checks for collision between player and Tiles, Collision between player
      * and Items, and collision between player and NPCs.
      */
-    public void checkCollisions() {
+    private void checkCollisions() {
         Tile nextTile;
         Room currentRoom = this.player.getCurrentRoom();
 
