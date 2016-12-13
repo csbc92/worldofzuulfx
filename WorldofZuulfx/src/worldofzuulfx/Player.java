@@ -268,7 +268,7 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public boolean navigateTo(Room room) {
         if (!room.isLocked()) {
-            // TODO slet Drunk til 
+            // TODO slet Drunk, hvis det ikke anvendes.
             Random r = new Random();
             Room oldRoom = null;
             oldRoom = currentRoom;

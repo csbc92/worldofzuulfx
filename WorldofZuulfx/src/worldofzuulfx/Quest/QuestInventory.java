@@ -8,7 +8,6 @@ import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Items.Note;
 import worldofzuulfx.NPC.NPC;
 import worldofzuulfx.Player;
-import worldofzuulfx.Room.Room;
 import worldofzuulfx.Room.RoomList;
 
 public class QuestInventory {

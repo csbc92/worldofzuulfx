@@ -27,12 +27,9 @@ public abstract class SpriteBase {
     private boolean canTeleport = false;
 
     private Room nextRoom;
-    private String nextPos;
+    private String nextTelePos;
     private double nextPosX;
     private double nextPosY;
-
-    private double nextTelePosX;
-    private double nextTelePosY;
 
     private double w;
     private double h;
@@ -215,7 +212,6 @@ public abstract class SpriteBase {
         double y = getBounds().getY();
 
         getImageView().relocate(x, y);
-
     }
 
     /**
@@ -248,83 +244,6 @@ public abstract class SpriteBase {
      */
     public double getCenterY() {
         return getBounds().getY() + getBounds().getHeight() / 2;
-    }
-
-    // TODO Slet CollidesWith
-    public boolean collidesWith(SpriteBase otherSprite) {
-        boolean collides = false;
-//        double i;
-//        double l;
-//        if (this.canCollide && otherSprite.canCollide) {
-//            if (getBounds().getBoundsInParent().intersects(otherSprite.getBounds().getBoundsInParent())) {
-//                
-//                
-//                
-//                boolean left = (this.getCenterX() > otherSprite.getCenterX() &&
-//                                 (this.getCenterY() > otherSprite.getCenterY() || this.getCenterY() < otherSprite.getCenterY()));
-//                
-//                boolean right = (this.getCenterX() < otherSprite.getCenterX() &&
-//                                (this.getCenterY() > otherSprite.getCenterY() || this.getCenterY() < otherSprite.getCenterY()));
-//                
-//                boolean top = (this.getCenterX() == otherSprite.getCenterX() && this.getCenterY() > otherSprite.getCenterY());
-//                
-//                boolean bottom = (this.getCenterX() == otherSprite.getCenterX() && this.getCenterY() < otherSprite.getCenterY());
-//                
-//                if (right) {
-//                    System.out.println("RIGHT");
-//                } else if (left) {
-//                    System.out.println("LEFT");
-//                } else if (top) {
-//                    System.out.println("TOP");
-//                } else if (bottom) {
-//                    System.out.println("BOTTOM");
-//                }
-//                
-//                i = getCenterY(getBounds()) - getCenterY(otherSprite.getBounds());
-//                l = getCenterY(otherSprite.getBounds()) - getCenterY(getBounds());
-
-        // Player either hits a tile with its top or bottom
-//                if (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()) > 0
-//                        && (getCenterY(getBounds()) - getCenterY(otherSprite.getBounds()))/2 < 35) {
-//                    // Top
-//                    actions.put(spriteActions.UP, false);
-//
-//                }
-//                if (getCenterY(otherSprite.getBounds()) - getCenterY(getBounds()) < 0
-//                        && getCenterY(otherSprite.getBounds()) - getCenterY(getBounds()) < -200) {
-//                    // Bottom
-//                    actions.put(spriteActions.DOWN, false);
-//                }
-//
-//                if (getCenterX(getBounds()) - getCenterX(otherSprite.getBounds()) > 0
-//                        && getCenterX(getBounds()) - getCenterX(otherSprite.getBounds()) < 35) {
-//                    // Left
-//                    actions.put(spriteActions.LEFT, false);
-//                }
-//                if (getCenterX(otherSprite.getBounds()) - getCenterX(getBounds()) < 0
-//                        && getCenterX(otherSprite.getBounds()) - getCenterX(getBounds()) < -250) {
-//                    //Right
-//                    actions.put(spriteActions.RIGHT, false);
-//                }
-//**************************************************************
-//                if (getBounds().getBoundsInParent().getMinY() < otherSprite.getBounds().getBoundsInParent().getMinY()
-//                        && getBounds().getBoundsInParent().getMaxY() > otherSprite.getBounds().getBoundsInParent().getMinY()) {
-//                    actions.put(spriteActions.DOWN, false);
-//                    System.out.println("Bottom");
-//                } else {
-//                    actions.put(spriteActions.UP, false);
-//                    System.out.println("Top");
-//                }
-//                // Player either hits a tile with its left side or right side
-//                if (getBounds().getBoundsInParent().getMinX() < otherSprite.getBounds().getBoundsInParent().getMaxX()
-//                        && getBounds().getBoundsInParent().getMaxX() > otherSprite.getBounds().getBoundsInParent().getMaxX()) {
-//                    actions.put(spriteActions.LEFT, false);
-//                    System.out.println("LEFT");
-//                } else {
-//                    actions.put(spriteActions.RIGHT, false);
-//                    System.out.println("Right");
-//                }
-        return collides;
     }
 
     /**
@@ -382,7 +301,7 @@ public abstract class SpriteBase {
      */
     public void setTeleport(Room room, String nextPos) {
         nextRoom = room;
-        this.nextPos = nextPos;
+        this.nextTelePos = nextPos;
 
         canTeleport = true;
     }
@@ -449,7 +368,7 @@ public abstract class SpriteBase {
      * @return The postion in nextRoom
      */
     public String getNextPos() {
-        return nextPos;
+        return nextTelePos;
     }
 
     /**
