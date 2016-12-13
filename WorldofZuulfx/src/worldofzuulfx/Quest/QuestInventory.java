@@ -50,8 +50,6 @@ public class QuestInventory {
                     + "\n\nYou have been given a new Quest. "
                     + "To view its content type ‘quest’ in the console. You can type this command if you are lost.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
-            // Navigate the player out of the exam room
-            Room campus = roomHandler.getRoom("Campus");
 
             roomHandler.getRoom("Exam").setLocked(true); // Lock the exam room again
 

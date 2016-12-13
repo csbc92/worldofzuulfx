@@ -8,10 +8,13 @@ package worldofzuulfx.Room;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.NPC.NPC;
+import worldofzuulfx.sprites.SpriteBase;
 import worldofzuulfx.tiles.Tile;
 import worldofzuulfx.tiles.TileTerrain;
 
@@ -156,7 +159,7 @@ public class Room {
      * Player and NPCs.
      * @return
      */
-    public TileTerrain getTileMap() {
+    public TileTerrain getTileTerrain() {
         return this.groundTiles;
     }
 
@@ -195,5 +198,15 @@ public class Room {
      */
     public Pane getBackground() {
         return groundLayer;
+    }
+    
+    public Set<SpriteBase> getAllSpriteBases() {
+        Set<SpriteBase> allSpriteBases = new HashSet<>();
+        
+        allSpriteBases.addAll(npcList);
+        allSpriteBases.addAll(roomInventory.getItemList());
+        allSpriteBases.addAll(groundTiles.getTileTerrain());
+        
+        return allSpriteBases;
     }
 }

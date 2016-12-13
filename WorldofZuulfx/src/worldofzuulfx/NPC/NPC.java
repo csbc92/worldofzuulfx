@@ -4,6 +4,7 @@ package worldofzuulfx.NPC;
 import javafx.scene.image.Image;
 import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Items.Item;
+import worldofzuulfx.Player;
 import worldofzuulfx.Room.Room;
 import worldofzuulfx.sprites.SpriteBase;
 
@@ -83,5 +84,22 @@ public class NPC extends SpriteBase {
      */
     public Room getCurrentRoom(){
         return currentRoom;
+    }
+
+    @Override
+    public void collides(SpriteBase spriteBase) {
+        
+        if (spriteBase instanceof Player) {
+            Player player = (Player)spriteBase;
+            
+            if (this.canTeleport()) {
+                player.navigateTo(this.getNextRoom());
+            } else {
+                // Reset the nextPos since a collision was detected
+                player.setNextPosX(player.getX());
+                player.setNextPosY(player.getY());
+                player.setNearNPC(this);
+            }
+        }
     }
 }

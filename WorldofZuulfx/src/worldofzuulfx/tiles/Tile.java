@@ -6,6 +6,7 @@
 package worldofzuulfx.tiles;
 
 import javafx.scene.image.Image;
+import worldofzuulfx.Player;
 import worldofzuulfx.sprites.SpriteBase;
 
 /**
@@ -93,5 +94,23 @@ public class Tile extends SpriteBase {
      */
     public void setRow(int row) {
         this.row = row;
+    }
+
+    @Override
+    public void collides(SpriteBase spriteBase) {
+        
+        if (spriteBase instanceof Player) {
+            Player player = (Player)spriteBase;
+            
+            if (this.canTeleport() && player.navigateTo(this.getNextRoom())) {
+                // The Player needs to moved with the offset 1.
+                Tile nextTile = this.getNextRoom().getTileTerrain().getTile(this.getNextPos());
+                player.move(nextTile.getX() + 1, nextTile.getY() + 1);
+            }
+
+            // Reset the nextPos since a collision was detected
+            player.setNextPosX(player.getX());
+            player.setNextPosY(player.getY());
+        }
     }
 }

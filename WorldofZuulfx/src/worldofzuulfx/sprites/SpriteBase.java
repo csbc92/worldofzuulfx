@@ -82,6 +82,8 @@ public abstract class SpriteBase {
 
         addToLayer();
     }
+    
+    public abstract void collides(SpriteBase spriteBase);
 
     /**
      * Add itself to the layer to be shown.

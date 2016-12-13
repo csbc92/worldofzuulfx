@@ -131,7 +131,7 @@ public class RoomFactory {
         Util.newPropFile();
         for (Room room : list) {
             // Converts a two-dimensional int array to a String.
-            String result = Arrays.stream(room.getTileMap().getTileTerrainLayout()).map(Arrays::toString).collect(Collectors.joining(System.lineSeparator()));
+            String result = Arrays.stream(room.getTileTerrain().getTileTerrainLayout()).map(Arrays::toString).collect(Collectors.joining(System.lineSeparator()));
             String roomID = room.getID();
             Util.setProp(roomID, result);
             Util.setProp(roomID + ".description", room.getShortDescription());
@@ -159,7 +159,7 @@ public class RoomFactory {
         for (Room room : list) {
             exitCounter = 0;
             // Iterates through the Tileterrain of the room
-            for (Tile tile : room.getTileMap().getTileTerrain()) {
+            for (Tile tile : room.getTileTerrain().getTileTerrain()) {
                 if (tile.canTeleport()) {
                     exitID = room.getID() + ".Exit." + exitCounter;
                     Util.setProp(exitID + ".door", tile.getPos());

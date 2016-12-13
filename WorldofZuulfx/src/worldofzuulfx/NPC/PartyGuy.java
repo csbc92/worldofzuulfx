@@ -3,10 +3,13 @@ package worldofzuulfx.NPC;
 import worldofzuulfx.Player;
 import worldofzuulfx.Room.Room;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
+import worldofzuulfx.Minigame.RockPaperScissors;
+import worldofzuulfx.sprites.SpriteBase;
 
 /**
  *
@@ -15,6 +18,7 @@ public class PartyGuy extends NPC {
 
     int[] partyRNG = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     private Inventory inventory;
+    private RockPaperScissors RPS;
 
     public PartyGuy(String ID, String name, Image img) {
         super(ID, name, img);
@@ -48,5 +52,69 @@ public class PartyGuy extends NPC {
             return item;
         }
         return null;
+    }
+    
+    /**
+     *
+     * @return The Rock, Paper, Scissors game
+     */
+    public RockPaperScissors getRPS() {
+        return RPS;
+    }
+    
+    @Override
+    public void collides(SpriteBase spriteBase) {
+        super.collides(spriteBase);
+        
+        if (spriteBase instanceof Player) {
+            Player player = (Player)spriteBase;
+            if (this instanceof PartyGuy) {
+                if (player.getCurrentRoom().getID().equals("downunder")) {
+                    challenge(player);
+                } else {
+                    player.getInventory().addItem(this.giveItem());
+                }
+            }
+        }
+    }
+    
+    /**
+     * The command to start the minigame if the player is within downunder
+     *
+     * @param command
+     */
+    private void challenge(Player player) {
+        Thread rpsThread;
+        player.setCanMove(false);
+        rpsThread = new Thread() {
+            // runnable for that thread
+            public void run() {
+
+                RPS = new RockPaperScissors();
+                String txt;
+
+                txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
+                        + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
+                        + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+                // .play() waits for user-input.
+                RPS.play();
+
+                Platform.runLater(new Runnable() {
+
+                    public void run() {
+                        if (RPS.getMoveComparison() == 1) {
+                            player.getInventory().addItem(ItemFactory.makeBeer());
+                        }
+                        if (RPS.getMoveComparison() == -1) {
+                            player.increaseEnergy(-30);
+                        }
+                        player.setCanMove(true);
+                    }
+
+                });
+                this.interrupt();
+            }
+        };
+        rpsThread.start();
     }
 }

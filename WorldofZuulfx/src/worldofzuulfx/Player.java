@@ -600,4 +600,9 @@ public class Player extends SpriteBase implements BarValueListener {
     public Bar getHp() {
         return hp;
     }
+
+    @Override
+    public void collides(SpriteBase spriteBase) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

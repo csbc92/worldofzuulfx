@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import worldofzuulfx.Events.*;
 import worldofzuulfx.Interfaces.*;
@@ -15,6 +16,7 @@ import worldofzuulfx.NPC.*;
 import worldofzuulfx.Minigame.RockPaperScissors;
 import worldofzuulfx.Quest.Quest;
 import worldofzuulfx.Quest.QuestInventory;
+import worldofzuulfx.sprites.SpriteBase;
 
 import worldofzuulfx.tiles.*;
 
@@ -92,76 +94,24 @@ public class Game implements NavigateListener, ItemPickupListener {
      * and Items, and collision between player and NPCs.
      */
     public void checkCollisions() {
-        Tile nextTile;
         Room currentRoom = this.player.getCurrentRoom();
-
-        // Check tile collision
-        for (Tile tile : currentRoom.getTileMap().getTileTerrain()) {
-
-            if (tile.getCanCollide()) {
-                if (tile.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-
-                    if (tile.canTeleport() && player.navigateTo(tile.getNextRoom())) {
-
-                        // The Player needs to moved with the offset 1.
-                        nextTile = tile.getNextRoom().getTileMap().getTile(tile.getNextPos());
-                        player.move(nextTile.getX() + 1, nextTile.getY() + 1);
-                    }
-
-                    // Reset the nextPos since a collision was detected
-                    player.setNextPosX(player.getX());
-                    player.setNextPosY(player.getY());
+        double playerWidth = player.getBounds().getWidth();
+        double playerHeight = player.getBounds().getHeight();
+        double playersNextPosY = player.getNextPosY();
+        double playersNextPosX = player.getNextPosX();
+        Bounds boundsToBeChecked = null;
+        
+        for (SpriteBase sprite : currentRoom.getAllSpriteBases()) {
+            if (sprite.getCanCollide()) {
+                boundsToBeChecked = sprite.getBounds().getBoundsInLocal();
+                if (boundsToBeChecked.intersects(playersNextPosX, playersNextPosY, playerWidth, playerHeight)) {
+                    sprite.collides(player);
                     return;
                 }
             }
         }
-
-        // Check item collision
-        for (Item item : currentRoom.getRoomInventory().getItemList()) {
-            if (item.getCanCollide()) {
-                if (item.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-
-                    if (item.canTeleport()) {
-                        player.navigateTo(item.getNextRoom());
-                    } else {
-                        // Pick up the item
-                        player.pickupItem(item);
-
-                        // Reset the nextPos since a collision was detected
-                        player.setNextPosX(player.getX());
-                        player.setNextPosY(player.getY());
-                    }
-                    return;
-                }
-            }
-        }
-
-        // Check NPC collision
-        for (NPC npc : currentRoom.getNPCList()) {
-            if (npc.getCanCollide()) {
-                if (npc.getBounds().getBoundsInLocal().intersects(player.getNextPosX(), player.getNextPosY(), player.getBounds().getWidth(), player.getBounds().getHeight())) {
-
-                    if (npc.canTeleport()) {
-                        player.navigateTo(npc.getNextRoom());
-                    } else {
-                        // Reset the nextPos since a collision was detected
-                        player.setNextPosX(player.getX());
-                        player.setNextPosY(player.getY());
-                        player.setNearNPC(npc);
-
-                        if (npc instanceof PartyGuy) {
-                            if (player.getCurrentRoom() == getRoomHandler().getRoom("downunder")) {
-                                challenge();
-                            } else {
-                                player.getInventory().addItem(((PartyGuy) npc).giveItem());
-                            }
-                        }
-                    }
-                    return;
-                }
-            }
-        }
-        // MOves the player if it did not collide with any objects - e.g. Items, tiles and NPCs.
+            
+        // Moves the player if it did not collide with any objects - e.g. Items, tiles and NPCs.
         player.move(player.getNextPosX(), player.getNextPosY());
     }
 
@@ -201,6 +151,8 @@ public class Game implements NavigateListener, ItemPickupListener {
     private void initRooms(int gameMode) {
         roomFactory = new RoomFactory(gameMode);
         roomHandler = new RoomList(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
+        roomHandler.getRoom("Gydehutten").setLocked(true);
+        roomHandler.getRoom("Bookstore").setLocked(true);
     }
 
     /**
@@ -421,6 +373,6 @@ public class Game implements NavigateListener, ItemPickupListener {
      * @return the RPS
      */
     public RockPaperScissors getRPS() {
-        return RPS;
+        return partyguy.getRPS();
     }
 }
