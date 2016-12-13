@@ -4,6 +4,7 @@ package worldofzuulfx.Quest;
 import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Items.Book;
+import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Items.Note;
 import worldofzuulfx.NPC.NPC;
@@ -113,8 +114,8 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
             
             Book oopBook = ItemFactory.makeBook("OOP-book", Book.BookColor.RED);
-            oopBook.setX(128);
-            oopBook.setY(128);
+            oopBook.setX(288);
+            oopBook.setY(96);
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(oopBook);
         });
 
@@ -184,8 +185,8 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
             
             Book iseBook = ItemFactory.makeBook("ISE-Book", Book.BookColor.ORANGE);
-            iseBook.setX(128);
-            iseBook.setY(128);
+            iseBook.setX(289);
+            iseBook.setY(97);
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(iseBook);
         });
         
@@ -244,8 +245,8 @@ public class QuestInventory {
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
             Book cosBook = ItemFactory.makeBook("COS-Book", Book.BookColor.GREEN);
-            cosBook.setX(128);
-            cosBook.setY(128);
+            cosBook.setX(288);
+            cosBook.setY(96);
             roomHandler.getRoom("Bookstore").getRoomInventory().addItem(cosBook);
         });
 
@@ -300,10 +301,20 @@ public class QuestInventory {
                     + "\nLook in your inventory for your notes";
             player.getInventory().addItem(cosNote);
             ConsoleInfo.setConsoleData(postCompleteMessage);
+            
+            Item computer = ItemFactory.makeComputer();
+            computer.setX(256);
+            computer.setY(208);
+            roomHandler.getRoom("downunder").getRoomInventory().addItem(computer);
+        });
+        
+        Quest pickupComputerQ = qFactory.pickupItemQuest("getComputerQ", "Computer", "Find your computer in downunder", null);
+        pickupComputerQ.setPostAction(() -> {
+            String postCompleteMessage = "You are now ready to attend the exam.";
+            ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
         
-
         // Give the player an initial quest
         player.setActiveQuest(goToCampusQ, true);
 
@@ -334,6 +345,7 @@ public class QuestInventory {
         bookstoreCos.setChainQuest(pickupCOSBookQ);
         pickupCOSBookQ.setChainQuest(returnToU180);
         returnToU180.setChainQuest(cosLecture);
+        cosLecture.setChainQuest(pickupComputerQ);
 
         // Save a reference to the rest of the quests
         this.allGameQuests.put("goToCampusQ", goToCampusQ);
@@ -357,5 +369,6 @@ public class QuestInventory {
         this.allGameQuests.put("pickupCOSBookQ", pickupCOSBookQ);
         this.allGameQuests.put("returnToU180", returnToU180);
         this.allGameQuests.put("cosLecture", cosLecture);
+        this.allGameQuests.put("pickupComputerQ", pickupComputerQ);
     }
 }

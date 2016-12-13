@@ -438,11 +438,6 @@ public class RoomFactory {
         u170.setExit("1106", knoldene, "0106");
         u180.setExit("0006", knoldene, "1006");
 
-        Item item = ItemFactory.makeGlobus(3, canteen, "0505");
-        item.move(256, 64);
-        item.updateUI();
-        outside.getRoomInventory().addItem(item);
-
         rooms.add(canteen);
         rooms.add(outside);
         rooms.add(exam);

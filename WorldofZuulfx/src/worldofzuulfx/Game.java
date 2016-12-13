@@ -161,7 +161,7 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     private void initPlayer() {
         player = new Player("Player-name", layers.getPlayerLayer(), Game.tiles.get(120).getImageView().getImage(),
-                layers.getBackgoundLayer().getLayoutX() + 65.0, layers.getBackgoundLayer().getLayoutY() + 65.0);
+                layers.getBackgoundLayer().getLayoutX() + 129.0, layers.getBackgoundLayer().getLayoutY() + 369.0);
 
         player.setCanCollide(true);
         player.setDx(32);
@@ -288,7 +288,9 @@ public class Game implements NavigateListener, ItemPickupListener {
             if (!player.getCurrentRoom().getID().equals("downunder")) {
                 // Spawns PartyGuy in a random location, and always places him in the corner of the room
                 partyguy.move(256, 256);
-                partyguy.spawn(getRoomHandler().getRooms(false));
+                ArrayList<Room> rooms = getRoomHandler().getRooms(false);
+                rooms.remove(getRoomHandler().getRoom("outside"));
+                partyguy.spawn(rooms);
             } else {
                 // Spawns PartyGuy in Downunder, if the player is in Downunder.
                 partyguy.navigateTo(getRoomHandler().getRoom("downunder"));
