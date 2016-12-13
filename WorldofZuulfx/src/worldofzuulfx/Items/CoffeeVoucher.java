@@ -16,7 +16,7 @@ public class CoffeeVoucher extends Item {
     /**
      * Instantiates a CoffeeVoucher based on the following parameters.
      *
-     * @param ID The ID of the CoffeeVoucher 
+     * @param ID The ID of the CoffeeVoucher
      * @param description The description of the CoffeeVoucher
      * @param weight The weight of the coffeeVoucher
      * @param voucherAmount The number of times which the Voucher can be used
@@ -36,7 +36,7 @@ public class CoffeeVoucher extends Item {
     }
 
     /**
-  
+     *
      * @return true if the voucher amount is greater than 0.
      */
     public Boolean checkAmount() {
@@ -62,10 +62,13 @@ public class CoffeeVoucher extends Item {
                 Item coffee = ItemFactory.makeCoffee();
                 if (player.getInventory().addItem(coffee)) {
                     voucherAmount--;
+                    if (!this.checkAmount()) {
+                        player.getInventory().removeItem(this);
+                    }
                 }
-            } else {
-                ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
-                player.getInventory().removeItem(this);
+//            } else {
+//                ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
+//                player.getInventory().removeItem(this);
             }
         }
     }
