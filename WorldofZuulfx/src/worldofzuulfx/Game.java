@@ -70,13 +70,10 @@ public class Game implements NavigateListener, ItemPickupListener {
                 if (isFinished()) {
                     timer.stop();
                 }
-
             }
-
         };
 
         timer.start();
-
     }
 
     /**
@@ -87,7 +84,7 @@ public class Game implements NavigateListener, ItemPickupListener {
     private void updateSprites() {
         player.updateUI();
         //TODO - Denne skal måske slettes.
-//        player.getInventory().selectItem(player.getInventory().getSelectedItem());
+        player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
     /**
