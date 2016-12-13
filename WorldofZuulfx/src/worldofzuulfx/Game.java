@@ -34,13 +34,13 @@ public class Game implements NavigateListener, ItemPickupListener {
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
-    public Game(Layers layers, int gameLevel) {
+    public Game(Layers layers, int gameMode) {
         // Loads a specific image containing all tiles to used throughout the game
-        TileLoader tLoader = new TileLoader(new Image("resources/tiles1.png"), 32, 32);
-        tiles = tLoader.getTiles();
+
+        initTiles(gameMode);
         this.layers = layers;
 
-        initRooms(gameLevel);
+        initRooms(gameMode);
         initPlayer();
         initECTSHandler();
         initNPCs();
@@ -164,7 +164,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         // MOves the player if it did not collide with any objects - e.g. Items, tiles and NPCs.
         player.move(player.getNextPosX(), player.getNextPosY());
     }
-    
+
     private void initQuest() {
         // Initiates every quests.
         questInventory = new QuestInventory();
@@ -189,19 +189,20 @@ public class Game implements NavigateListener, ItemPickupListener {
         }
         return list;
     }
+
     /**
      * Initiate all rooms based on a given GameLevel.
-     * 
-     * @param gameLevel 
+     *
+     * @param gameMode
      */
-    private void initRooms(int gameLevel) {
-        roomFactory = new RoomFactory(gameLevel);
+    private void initRooms(int gameMode) {
+        roomFactory = new RoomFactory(gameMode);
         roomHandler = new RoomList(roomFactory.createRooms(tiles, layers.getBackgoundLayer(), layers.getObjectsLayer()));
     }
-    
+
     /**
-     * Initiate Player - which involves Player name, layers, Player-image
-     * and the position of the player.
+     * Initiate Player - which involves Player name, layers, Player-image and
+     * the position of the player.
      */
     private void initPlayer() {
         player = new Player("Player-name", layers.getPlayerLayer(), new Image("http://i.imgur.com/zLwFeje.png"),
@@ -313,8 +314,9 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     /**
      * When the Player navigates to a new room, this methods is executed.
-     * 
-     * @param event An event containing information about the Old Room and the New Room
+     *
+     * @param event An event containing information about the Old Room and the
+     * New Room
      */
     @Override
     public void navigated(NavigateEvent event) {
@@ -337,8 +339,9 @@ public class Game implements NavigateListener, ItemPickupListener {
 
     /**
      * When Player picks up an item, this method is executed.
-     * 
-     * @param event Contains information about the item and the player, who picked up the item.
+     *
+     * @param event Contains information about the item and the player, who
+     * picked up the item.
      */
     @Override
     public void itemPickedUp(ItemPickupEvent event) {
@@ -378,6 +381,26 @@ public class Game implements NavigateListener, ItemPickupListener {
         Room examRoom = getRoomHandler().getRoom("exam");
         this.ectsHandler = new ECTSHandler(player, examRoom);
         player.getECTSBar().setValue(0);
+    }
+
+    public void initTiles(int gameMode) {
+        TileLoader tLoader;
+
+        switch (gameMode) {
+            case 0: {
+                tLoader = new TileLoader(new Image("resources/tiles1.png"), 32, 32);
+                break;
+            }
+            case 1: {
+                tLoader = new TileLoader(new Image("resources/tiles2.png"), 32, 32);
+                break;
+            }
+            default: {
+                tLoader = new TileLoader(new Image("resources/tiles1.png"), 32, 32);
+                break;
+            }
+        }
+        tiles = tLoader.getTiles();
     }
 
     /**
