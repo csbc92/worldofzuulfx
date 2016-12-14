@@ -437,7 +437,7 @@ public class RoomFactory {
         u163.setExit("0512", knoldene, "0601");
         u170.setExit("1106", knoldene, "0106");
         u180.setExit("0006", knoldene, "1006");
-
+        
         rooms.add(canteen);
         rooms.add(outside);
         rooms.add(exam);
