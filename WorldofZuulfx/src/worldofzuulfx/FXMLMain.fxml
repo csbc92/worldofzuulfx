@@ -163,24 +163,6 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab fx:id="tabCheat" text="Cheater">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
-                     <children>
-                        <Text fill="WHITE" layoutX="47.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You got caught cheating">
-                           <font>
-                              <Font size="55.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="199.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost">
-                           <font>
-                              <Font size="83.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
         </tabs>
       </TabPane>
    </children>

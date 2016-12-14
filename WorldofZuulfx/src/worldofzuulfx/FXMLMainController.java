@@ -98,8 +98,6 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private Tab tabEndGame;
     @FXML
-    private Tab tabCheat;
-    @FXML
     private TextField lPlayername;
 
     @Override
