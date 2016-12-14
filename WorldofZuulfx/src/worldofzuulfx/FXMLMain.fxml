@@ -152,13 +152,18 @@
             </Tab>
             <Tab fx:id="tabEndGame" text="The End">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
+                <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#onbutBackClick" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                      <children>
                         <Text fill="WHITE" layoutX="199.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost">
                            <font>
                               <Font size="83.0" />
                            </font>
                         </Text>
+                        <Button fx:id="butTryAgain" layoutX="263.0" layoutY="458.0" mnemonicParsing="false" onMouseClicked="#onbutTryAgainClick" prefHeight="67.0" prefWidth="168.0" text="Try Again">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
               </content>
