@@ -23,6 +23,7 @@ import worldofzuulfx.tiles.*;
 public class Game implements NavigateListener, ItemPickupListener {
 
     private boolean finished;
+    private boolean gameOver;
     private int timeLeft;
     private PartyGuy partyguy;
     private Player player;
@@ -36,14 +37,14 @@ public class Game implements NavigateListener, ItemPickupListener {
     public static HashMap<Integer, Tile> tiles;
     private Layers layers;
 
-    public Game(Layers layers, int gameMode) {
+    public Game(Layers layers, String playerName, int gameMode) {
         // Loads a specific image containing all tiles to used throughout the game
 
         initTiles(gameMode);
         this.layers = layers;
 
         initRooms(gameMode);
-        initPlayer();
+        initPlayer(playerName);
         initECTSHandler();
         initNPCs();
         initPartyGuy();
@@ -83,7 +84,6 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     private void updateSprites() {
         player.updateUI();
-        //TODO - Denne skal måske slettes.
         player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
@@ -156,8 +156,8 @@ public class Game implements NavigateListener, ItemPickupListener {
      * Initiate Player - which involves Player name, layers, Player-image and
      * the position of the player.
      */
-    private void initPlayer() {
-        player = new Player("Player-name", layers.getPlayerLayer(), Game.tiles.get(120).getImageView().getImage(),
+    private void initPlayer(String playerName) {
+        player = new Player(playerName, layers.getPlayerLayer(), Game.tiles.get(120).getImageView().getImage(),
                 layers.getBackgoundLayer().getLayoutX() + 129.0, layers.getBackgoundLayer().getLayoutY() + 369.0);
 
         player.setCanCollide(true);
@@ -374,5 +374,19 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     public RockPaperScissors getRPS() {
         return partyguy.getRPS();
+    }
+
+    /**
+     * @return the lostGame
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    /**
+     * @param lostGame the lostGame to sets
+     */
+    public void setGameOver() {
+        this.gameOver = true;
     }
 }

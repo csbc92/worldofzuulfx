@@ -114,6 +114,12 @@
                                     <Font size="18.0" />
                                  </font>
                               </RadioButton>
+                              <TextField fx:id="lPlayername" layoutX="263.0" layoutY="347.0" onKeyReleased="#onlPlayernameChanged" prefHeight="25.0" prefWidth="156.0" />
+                              <Label layoutX="250.0" layoutY="293.0" text="Enter your name" textFill="WHITE">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
                      </children>
@@ -149,24 +155,6 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                      <children>
                         <Text fill="WHITE" layoutX="199.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost">
-                           <font>
-                              <Font size="83.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab fx:id="tabCheat" text="Cheater">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
-                     <children>
-                        <Text fill="WHITE" layoutX="47.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You got caught cheating">
-                           <font>
-                              <Font size="55.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="199.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You lost">
                            <font>
                               <Font size="83.0" />
                            </font>
