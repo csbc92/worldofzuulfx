@@ -48,18 +48,18 @@
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="2">
          <children>
             <Label text="Question 5: Starting a new project, what you be your first task?" />
-            <RadioButton mnemonicParsing="false" text="Find out what model to use?">
+            <RadioButton mnemonicParsing="false" text="Find out which model to use?">
                <toggleGroup>
                   <ToggleGroup fx:id="question5" />
                </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="q5Answer" mnemonicParsing="false" text="To find out the requirements and needs?" toggleGroup="$question5" />
-            <RadioButton mnemonicParsing="false" text="To make Coffee and watch the lates episode of friends?" toggleGroup="$question5" />
+            <RadioButton mnemonicParsing="false" text="To make Coffee and watch the latest episode of friends?" toggleGroup="$question5" />
          </children>
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="3">
          <children>
-            <Label text="Question 7: Subtract to bits, 1001 from 1111, the answer is?" />
+            <Label text="Question 7: Subtract two bits, 1001 from 1111, the answer is?" />
             <RadioButton mnemonicParsing="false" text="011000?">
                <toggleGroup>
                   <ToggleGroup fx:id="question7" />
@@ -71,7 +71,7 @@
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1">
          <children>
-            <Label text="Question 2: An objects condition is defined by?" />
+            <Label text="Question 2: The state of an object is defined by?" />
             <RadioButton mnemonicParsing="false" text="The object's most important variable values?">
                <toggleGroup>
                   <ToggleGroup fx:id="question2" />
@@ -84,7 +84,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label text="Question 4: What does a software engineer &quot;build&quot;?" />
-            <RadioButton mnemonicParsing="false" text="Giant buildings for houseing purposes?">
+            <RadioButton mnemonicParsing="false" text="Giant buildings for housing purposes?">
                <toggleGroup>
                   <ToggleGroup fx:id="question4" />
                </toggleGroup>
@@ -108,7 +108,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <Label text="Question 8: What does CPU mean?" />
-            <RadioButton mnemonicParsing="false" text="Computer Programming Userinterface?">
+            <RadioButton mnemonicParsing="false" text="Computer Programming User interface?">
                <toggleGroup>
                   <ToggleGroup fx:id="question8" />
                </toggleGroup>

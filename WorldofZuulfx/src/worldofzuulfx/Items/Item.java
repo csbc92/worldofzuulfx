@@ -79,17 +79,12 @@ public abstract class Item extends SpriteBase {
         
         if (spriteBase instanceof Player) {
             Player player = (Player)spriteBase;
-            
-            if (this.canTeleport()) {
-                player.navigateTo(this.getNextRoom());
-            } else {
-                // Pick up the item
-                player.pickupItem(this);
+            // Pick up the item
+            player.pickupItem(this);
 
-                // Reset the nextPos since a collision was detected
-                player.setNextPosX(player.getX());
-                player.setNextPosY(player.getY());
-            }
+            // Reset the nextPos since a collision was detected
+            player.setNextPosX(player.getX());
+            player.setNextPosY(player.getY());
         }
     }
 }

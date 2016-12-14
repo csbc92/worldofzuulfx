@@ -33,8 +33,7 @@ public class QuestInventory {
         // Create quests
         Quest goToCampusQ = qFactory.roomQuest("goToCampusQ", "Campus", "Go to Campus", null);
         goToCampusQ.setPostAction(() -> {
-            String postCompleteMessage = "The final exam for the semester awaits, but you're not prepared. "
-                    + "\nYou have spent your time on anything else than studying.";
+            String postCompleteMessage = "Find your way to the exam room.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
@@ -43,12 +42,12 @@ public class QuestInventory {
         roomHandler.getRoom("Exam").setLocked(false); // Temporarily unlock so the player can navigate here
         goToExamnRoomQ.setPostAction(() -> {
 
-            String postCompleteMessage = "To prepare for the final exam you'll have to explore the university "
-                    + "and collect both ECTS-points "
+            String postCompleteMessage = "To participate in the final exam you'll have to explore the university "
+                    + "and collect ECTS-points "
                     + "and important notes that you were too lazy to take during the semester."
-                    + "\n\nThe exam room will unlock when you have collected enough ECTS-points. "
-                    + "\n\nYou have been given a new Quest. "
-                    + "To view its content type ‘quest’ in the console. You can type this command if you are lost.";
+                    + "\n\nThe exam room will be locked until you have collected enough ECTS-points. "
+                    + "\n\nYou have been given a new Quest. " + 
+                    "A hint for the quest can be seen below the 'Active Quest' label.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
 
             roomHandler.getRoom("Exam").setLocked(true); // Lock the exam room again
@@ -75,14 +74,24 @@ public class QuestInventory {
         Quest goToCanteenQ = qFactory.roomQuest("goToCanteenQ", "Canteen", "Go to the Canteen.", null);
         goToCanteenQ.setPostAction(() -> {
             String postCompleteMessage = "This is the canteen where you can exchange Coffee Vouchers for coffee"
-                    + "\n\nUse the Coffee Voucher by typing 'use' followed by 'coffee voucher' in the console.";
+                    + "\nYou can scroll between items in your inventory by using the keys 'A' and 'Z'"
+                    + "\n\nUse the Coffee Voucher by first selecting it in the inventory and then press the 'U'-key on the keyboard."
+                    + "\nYou can drop any item by selecting it and then hit the 'D' key.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
         Quest coffeeQ = qFactory.pickupItemQuest("coffeeQ", "coffee", "Buy a coffee.", null);
         coffeeQ.setPostAction(() -> {
-            String postCompleteMessage = "Quickly! Bring the coffee to Anders in U163.";
+            String postCompleteMessage = "Right on! Bring the coffee to Anders in U163.";
 
+            ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+        
+        Quest coffeeQReturnToU163 = qFactory.roomQuest("coffeeQReturnToU163", "U163", "Find your way back to U163.", null);
+        coffeeQReturnToU163.setPostAction(() -> {
+            String postCompleteMessage = "Deliver the coffee to Anders by first selecting the coffee in your inventory using the 'A' / 'Z' keys. "
+                    + "\nWhen the coffee is selected approach Anders by moving towards him. "
+                    + "\nGive Anders the coffee by hitting the 'U' key.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
 
@@ -93,9 +102,9 @@ public class QuestInventory {
                     + "\n\"Coffee is the source for maintaining your energy-level. "
                     + "Throughout the game you have to maintain your energy-level by drinking coffee "
                     + "but the amount of Coffee Vouchers is limited so use them wisely. "
-                    + "If you run out of energy, you will black out and wake up at a random place in the university. "
-                    + "\n\nBe careful. You can only black out a few times before you remain unconscious and the game is lost.\""
-                    + "\n\nTo drink a Coffee type ‘use coffee’ followed by ‘drink’ in the console.";
+                    + "If you run out of energy, you lose 1 HP. "
+                    + "\n\nBe careful. You only have a certain amount of HP. Lose them all and the game is lost.\""
+                    + "\n\nTo drink a Coffee select the item in the inventory and hit the 'U'-key.";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
@@ -108,9 +117,8 @@ public class QuestInventory {
         leaveU163Q.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
                     + "\n\"The OOP lesson has not finished yet. To attend to the course, you need your OOP book. "
-                    + "You can collect the book in the Book store.\""
-                    + "\n\nFind your way to the Book store and collect the book. "
-                    + "Remember that you can use the map if you’re lost.";
+                    + "You can collect the book in the book store.\""
+                    + "\n\nFind your way to the book store and collect the book.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
             
             Book oopBook = ItemFactory.makeBook("OOP-book", Book.BookColor.RED);
@@ -122,10 +130,7 @@ public class QuestInventory {
         Quest goToBookStoreQ = qFactory.roomQuest("goToBookStoreQ", "Bookstore", "Go to the Bookstore", null);
         goToBookStoreQ.setPostAction(() -> {
             String postCompleteMessage = "This is the Book store. "
-                    + "\nIn here you can collect books that are needed to attend to different courses at the university. "
-                    + "\n\nTo search a room for items type ‘search’ in the console. "
-                    + "To collect an item type ‘take’ followed by the name of the item you want to collect. "
-                    + "e.g. ‘take oopbook’ in the console.";
+                    + "\nIn here you can collect books that are needed to attend to different courses at the university.";
             ConsoleInfo.setConsoleData(postCompleteMessage);            
         });
         
@@ -138,7 +143,11 @@ public class QuestInventory {
         Quest returnToU163 = qFactory.roomQuest("returnToU163", "U163", "Return to U163", null);
         returnToU163.setPostAction(() -> {
             String postCompleteMessage = "Daniel:"
-                    + "\n\"Now that you have the book, the course can begin.\"";
+                    + "\n\"Now that you have the book, the course can begin.\""
+                    
+                    + "\n\nDeliver the OOP-book to Daniel by first selecting the book in your inventory using the 'A' / 'Z' keys. "
+                    + "\nWhen the OOP-book is selected approach Daniel by moving towards him. "
+                    + "\nGive Daniel the OOP-book by hitting the 'U' key.";
     
             ConsoleInfo.setConsoleData(postCompleteMessage);
             
@@ -166,7 +175,8 @@ public class QuestInventory {
         Quest oopLecture = qFactory.deliveryQuest("oopLecture", "OOP-book", daniel, "Participate in OOP lecture by giving Daniel the OOP-book", new Reward(null, 10));
         oopLecture.setPostAction(() -> {
             String postCompleteMessage = "You have now completed the OOP lecture"
-                    + "\nLook in your inventory for your notes";
+                    + "\nLook in your inventory for your notes."
+                    + "\nYou can read your notes by selecting them and then hit the 'U' key.";
             player.getInventory().addItem(oopNote);
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
@@ -193,7 +203,7 @@ public class QuestInventory {
         Quest bookstoreIse = qFactory.roomQuest("bookstoreIse", "Bookstore", "Go to Bookstore", null);
         bookstoreIse.setPostAction(() -> {
             String postCompleteMessage = "Bookstore"
-                    + "\nSearch for the ISE-Book";
+                    + "\nPickup your ISE-Book";
 
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
@@ -310,7 +320,14 @@ public class QuestInventory {
         
         Quest pickupComputerQ = qFactory.pickupItemQuest("getComputerQ", "Computer", "Find your computer in downunder", null);
         pickupComputerQ.setPostAction(() -> {
-            String postCompleteMessage = "You are now ready to attend the exam.";
+            String postCompleteMessage = "You are now ready to attend the exam. Hurry up before the time runs out!";
+            ConsoleInfo.setConsoleData(postCompleteMessage);
+        });
+        
+        Quest gotoExamRoomQ = qFactory.roomQuest("gotoExamRoomQ", "exam", "Go to the exam room!", null);
+        gotoExamRoomQ.setPostAction(() -> {
+            String postCompleteMessage = "Select your Computer in your inventory and hit the 'U' key "
+                    + "to participate in the final exam!";
             ConsoleInfo.setConsoleData(postCompleteMessage);
         });
         
@@ -323,7 +340,8 @@ public class QuestInventory {
         goToExamnRoomQ.setChainQuest(goToU163RoomQ);
         goToU163RoomQ.setChainQuest(goToCanteenQ);
         goToCanteenQ.setChainQuest(coffeeQ);
-        coffeeQ.setChainQuest(deliverCoffeeQ);
+        coffeeQ.setChainQuest(coffeeQReturnToU163);
+        coffeeQReturnToU163.setChainQuest(deliverCoffeeQ);
         deliverCoffeeQ.setChainQuest(leaveU163Q);
         
         // Chain OOP
@@ -346,6 +364,7 @@ public class QuestInventory {
         pickupCOSBookQ.setChainQuest(returnToU180);
         returnToU180.setChainQuest(cosLecture);
         cosLecture.setChainQuest(pickupComputerQ);
+        pickupComputerQ.setChainQuest(gotoExamRoomQ);
 
         // Save a reference to the rest of the quests
         this.allGameQuests.put("goToCampusQ", goToCampusQ);
@@ -353,6 +372,7 @@ public class QuestInventory {
         this.allGameQuests.put("goToU163RoomQ", goToU163RoomQ);
         this.allGameQuests.put("goToCanteenQ", goToCanteenQ);
         this.allGameQuests.put("coffeeQ", coffeeQ);
+        this.allGameQuests.put("coffeeQReturnToU163", coffeeQReturnToU163);
         this.allGameQuests.put("deliverCoffeeQ", deliverCoffeeQ);
         this.allGameQuests.put("leaveU163Q", leaveU163Q);
         this.allGameQuests.put("goToBookStoreQ", goToBookStoreQ);
@@ -370,5 +390,6 @@ public class QuestInventory {
         this.allGameQuests.put("returnToU180", returnToU180);
         this.allGameQuests.put("cosLecture", cosLecture);
         this.allGameQuests.put("pickupComputerQ", pickupComputerQ);
+        this.allGameQuests.put("gotoExamRoomQ", gotoExamRoomQ);
     }
 }

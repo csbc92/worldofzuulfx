@@ -103,7 +103,7 @@ public class Tile extends SpriteBase {
             Player player = (Player)spriteBase;
             
             if (this.canTeleport() && player.navigateTo(this.getNextRoom())) {
-                // The Player needs to moved with the offset 1.
+                // The Player needs to be moved with the offset 1.
                 Tile nextTile = this.getNextRoom().getTileTerrain().getTile(this.getNextPos());
                 player.move(nextTile.getX() + 1, nextTile.getY() + 1);
             }

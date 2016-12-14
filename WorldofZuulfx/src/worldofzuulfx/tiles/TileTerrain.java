@@ -19,12 +19,9 @@ public class TileTerrain {
         this.uniqTiles = new HashMap<>(uniqTiles);
         // Prepare a new terrain of tiles.
         this.terrain = new ArrayList<>();
-        // This is the ID's of tiles that objects can collide with.
+        // This is the ID's of tiles that objects cannot collide with.
         this.nonCollideableTilesIDs = new int[]{6, 7, 8, 19, 20, 21, 33, 34, 35, 153, 167, 184, 186, 201, 215};
-        
-//        this.collideableTilesIDs = new int[]{0, 12, 13, 85, 99, 112, 126, 133, 134, 137, 138, 139, 140, 141, 147, 148, 149, 150, 154, 155, 
-//                                            168, 169, 185, 198, 202, 203, 204, 210, 213, 214, 216, 217, 218};
-// Load the tile terrain.
+        // Load the tile terrain.
         load();
     }
 

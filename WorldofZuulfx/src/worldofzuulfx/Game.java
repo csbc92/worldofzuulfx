@@ -175,9 +175,13 @@ public class Game implements NavigateListener, ItemPickupListener {
      * Prints out a Welcome message.
      */
     private void printWelcome() {
-        String welcome = "Welcome " + getPlayer().getName() + ", to the World of Zuul!"
-                + "\nWorld of Zuul is a new, incredibly boring adventure game. \n"
-                + getPlayer().getCurrentRoom().getLongDescription();
+        String playerName = getPlayer().getName();
+        
+        String welcome = "Hello " + playerName + ". " +
+                "You are a software student at the University of Southern Denmark \n" +
+                "The final exam for the semester awaits, but you're not prepared. \n" +
+                "You have spent your time on anything else than studying. \n\n" +
+                "Find your way to Campus by using the arrow-keys on the keyboard.";
         ConsoleInfo.setConsoleData(welcome);
     }
 
