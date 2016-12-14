@@ -345,6 +345,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
         tHealth.setText("");
         tfTimeLeft.setText("");
+        lPlayername.setText("");
     }
     
     /**
