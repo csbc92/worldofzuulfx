@@ -18,6 +18,7 @@ public class RockPaperScissors {
      * The play starts the game of Rock, Paper, Scissors. If player wins he gets
      * a beer. If Player loses his decrement energy.
      */
+    //http://www.wikihow.com/Make-a-Rock,-Paper,-Scissors-Game-in-Java
     public void play() {
 
         ConsoleInfo.setConsoleData("Rock (R), Paper (P) or Scissors (S)");

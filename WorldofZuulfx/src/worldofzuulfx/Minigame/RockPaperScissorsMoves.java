@@ -2,8 +2,8 @@ package worldofzuulfx.Minigame;
 
 /**
  * The moves in the minigame Rock, Paper or Scissors.
- *
  */
+//http://www.wikihow.com/Make-a-Rock,-Paper,-Scissors-Game-in-Java
 public enum RockPaperScissorsMoves {
     ROCK, PAPER, SCISSORS;
 

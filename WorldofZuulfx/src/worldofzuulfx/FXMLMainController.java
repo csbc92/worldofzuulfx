@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +19,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -32,7 +32,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import worldofzuulfx.Exam.FXMLExamController;
 import worldofzuulfx.Minigame.RockPaperScissorsMoves;
-import worldofzuulfx.Exam.ExamCallback;
 import worldofzuulfx.Highscore.Score;
 
 public class FXMLMainController implements Initializable, BarValueListener {
@@ -99,7 +98,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private Tab tabEndGame;
     @FXML
-    private Tab tabCheat;
+    private TextField lPlayername;
+    @FXML
+    private Button butTryAgain;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -110,6 +111,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
         //The selected value is later used to choose which game mode to be played
         rbNormal.setUserData(0);
         rbAbnormal.setUserData(1);
+        butNewGame.setDisable(true);
         // Binds properties to their respective textfield
         tItemInfo.textProperty().bind(ConsoleInfo.itemProperty());
         lQuest.textProperty().bind(ConsoleInfo.questProperty());
@@ -126,10 +128,10 @@ public class FXMLMainController implements Initializable, BarValueListener {
             FXMLExamController controller = fxmlLoader.getController();
             // Set the tab's content
             tabExam.setContent(content);
-            
+
             // This lambda expression is called after the exam is submitted.
             controller.setExamSubmittedCallback((grade) -> {
-                // Calculate highscore
+                // Calculate the Player's highscore
                 Player player = game.getPlayer();
                 int score = (player.getTimeLeft() + player.getEnergy()) * player.getHp().getValue() * grade;
 
@@ -137,7 +139,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
                 if (score < 0) {
                     score = 0;
                 }
-
+                game.setFinished();
                 highscores.add(player.getName(), score);
                 highscores.saveHighscores();
 
@@ -222,36 +224,40 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
     @FXML
     private void onClickNewGame(ActionEvent event) {
-        if (game == null) {
-            initializeGame();
+//        if (game == null) {
+        initializeGame();
 
-            // Create a timer which keeps decreasing the timeleft variable
-            gameTimer = new Timer();
-            gameTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    int value = game.getPlayer().getTimeLeft();
-                    // Checks if the time ran out or if the game was finished for som other reason
-                    if (value == 1 || game.isFinished()) {
-                        gameTimer.cancel();
-                        game.setFinished();
-                        tabControl.getSelectionModel().select(tabEndGame);
-
-                    }
-                    game.getPlayer().setTimeLeft(--value);
-                    tfTimeLeft.setText(value + " sec");
+        // Create a timer which keeps decreasing the timeleft variable
+        gameTimer = new Timer();
+        gameTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                int value = game.getPlayer().getTimeLeft();
+                // Checks if the time ran out or if the game was finished for some other reason
+                if (value == 1) {
+                    game.setGameOver();
                 }
-            }, 1000, 1000);
+                if (game.isGameOver()) {
+                    gameTimer.cancel();
+                    tabControl.getSelectionModel().select(tabEndGame);
 
-            // Creates a listener which listens for onClose event.
-            stage = (Stage) pInfo.getScene().getWindow();
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                public void handle(WindowEvent we) {
+                }
+                if (game.isFinished()) {
                     gameTimer.cancel();
                 }
-            });
-        }
+
+                game.getPlayer().setTimeLeft(--value);
+                tfTimeLeft.setText(value + " sec");
+            }
+        }, 1000, 1000);
+
+        // Creates a listener which listens for onClose event.
+        stage = (Stage) pInfo.getScene().getWindow();
+        stage.setOnCloseRequest((WindowEvent we) -> {
+            gameTimer.cancel();
+        });
     }
+//    }
 
     private void initializeConsole() {
         taConsol.textProperty().bind(ConsoleInfo.consoleProperty());
@@ -272,6 +278,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
         pObjects.setVisible(true);
         pSprites.setVisible(true);
         pInfo.setVisible(true);
+        pInventory.setVisible(true);
         tabControl.getSelectionModel().select(tabGame);
         pMain.requestFocus(); // Important that pMain request the focus otherwise the eventhandler will not work.
 
@@ -281,7 +288,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
         // GameLevel chooses which game to be loaded - Normal or Hogwarts mode.
         gameMode = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
 
-        game = new Game(layers, gameMode); //En instans af spillet oprettes.
+        game = new Game(layers, lPlayername.getText(), gameMode); //En instans af spillet oprettes.
 
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
@@ -300,11 +307,12 @@ public class FXMLMainController implements Initializable, BarValueListener {
     public void barValueChanged(Bar bar) {
         // Divides the current value of the bar by 100.
         // The progressbar only accepts value in the range 0..1
+        int hp = game.getPlayer().getHp().getValue();
         progEnergy.setProgress((double) bar.getValue() / 100);
-        tHealth.setText(String.valueOf(game.getPlayer().getHp().getValue()));
+        tHealth.setText(String.valueOf(hp));
         // If the current value of the Energy-bar is below 1 then
-        if (bar.getValue() < 1 && game.getPlayer().getHp().getValue() == 1) {
-            game.setFinished();
+        if (bar.getValue() < 1 && hp == 1) {
+            game.setGameOver();
         }
     }
 
@@ -325,12 +333,39 @@ public class FXMLMainController implements Initializable, BarValueListener {
         // Changes Highscore view to Mainmenu
         tabControl.getSelectionModel().select(tabNewGame);
     }
-    
+
+    /**
+     * Background, sprites, inventory, NPC and Item layer will be reset.
+     */
     public void resetControls() {
+        pBackground.getChildren().clear();
+        pObjects.getChildren().clear();
+        pSprites.getChildren().clear();
+        pInventory.getChildren().clear();
+
         tHealth.setText("");
-        tECTS.setText("");
         tfTimeLeft.setText("");
-        
+
     }
 
+    /**
+     *
+     * Checks if lPlayername contains text: If true the new game button is
+     * enabled. If false the new game button is disabled.
+     */
+    @FXML
+    private void onlPlayernameChanged(KeyEvent event) {
+
+        if (lPlayername.getText().trim().length() != 0) {
+            butNewGame.setDisable(false);
+        } else {
+            butNewGame.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void onbutTryAgainClick(MouseEvent event) {
+        // Changes Highscore view to Mainmenu
+        tabControl.getSelectionModel().select(tabNewGame);
+    }
 }
