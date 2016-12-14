@@ -99,6 +99,8 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Tab tabEndGame;
     @FXML
     private TextField lPlayername;
+    @FXML
+    private Button butTryAgain;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -343,18 +345,17 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
         tHealth.setText("");
         tfTimeLeft.setText("");
-        lPlayername.setText("");
+
     }
-    
+
     /**
-     * 
-     * Checks if lPlayername contains text:
-     * If true the new game button is enabled.
-     * If false the new game button is disabled.
+     *
+     * Checks if lPlayername contains text: If true the new game button is
+     * enabled. If false the new game button is disabled.
      */
     @FXML
     private void onlPlayernameChanged(KeyEvent event) {
-       
+
         if (lPlayername.getText().trim().length() != 0) {
             butNewGame.setDisable(false);
         } else {
@@ -362,4 +363,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
         }
     }
 
+    @FXML
+    private void onbutTryAgainClick(MouseEvent event) {
+        // Changes Highscore view to Mainmenu
+        tabControl.getSelectionModel().select(tabNewGame);
+    }
 }
