@@ -68,7 +68,7 @@ public class Game implements NavigateListener, ItemPickupListener {
 
                 checkCollisions();
 
-                if (isFinished()) {
+                if (isFinished() || isGameOver()) {
                     timer.stop();
                 }
             }

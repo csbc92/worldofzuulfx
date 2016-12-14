@@ -433,7 +433,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * the item doesn't exist in the player's inventory - nothing is dropped in
      * the current room.
      *
-     * @param i
+     * @param i Item to be dropped
      */
     public void drop(Item i) {
         if (this.inventory.removeItem(i)) {
