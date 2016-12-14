@@ -29,6 +29,7 @@ public class QuestFactory {
      * Creates a new quest that is completed when the player IS in a certain
      * room. Once the player has been into this room, the quest's requirement
      * is set to true, even when the player has left the room.
+     * @param questID The ID of the Quest.
      * @param roomID The ID of the room the player has to be in.
      * @param questDescription The description of the quest, e.g. Go to room xyz.
      * @param reward The reward of the quest.
@@ -84,7 +85,8 @@ public class QuestFactory {
     /**
      * Creates a new quest that is completed when the NPC carries a certain
      * Item in the NPC's inventory.
-     * @param ID The specific Item the NPC has to carry.
+     * @param questID The ID of the Quest
+     * @param itemID The specific Item the NPC has to carry.
      * @param npc The NPC who has to carry the item.
      * @param questDescription The description of the quest, e.g. Pick up a Coffee.
      * @param reward The reward of the quest.

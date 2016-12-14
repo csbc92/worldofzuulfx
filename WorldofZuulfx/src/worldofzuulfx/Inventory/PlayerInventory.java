@@ -34,8 +34,8 @@ public class PlayerInventory extends Inventory {
     /**
      * Uses the constructor of the super-class
      *
-     * @param maxWeight
-     * @param capacity
+     * @param maxWeight The maximum weight that the inventory can carry
+     * @param capacity The capacity that the inventory can carry.
      */
     public PlayerInventory(int maxWeight, int capacity) {
         super(maxWeight, capacity);

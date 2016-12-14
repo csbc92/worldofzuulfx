@@ -12,8 +12,8 @@ public class Reward {
     /**
      * Instantiates a Reward-object. 
      * A Reward can be an Item and ECTS-points or just one of them.
-     * @param item 
-     * @param ectsPoints
+     * @param item The item
+     * @param ectsPoints  The ECTS-points
      */
     public Reward(Item item, int ectsPoints) {
         this.item = item;

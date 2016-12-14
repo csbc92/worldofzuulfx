@@ -27,7 +27,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
    
     /**
      * Checks if the Active Quest is completed when the player navigates
-     * @param navEvent
+     * @param navEvent An event containing information about the navigation.
      */
     @Override
     public void navigated(NavigateEvent navEvent) {
@@ -36,7 +36,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
 
     /**
      * Checks if the Active Quest is completed when the player picks up an item.
-     * @param pickupEvent
+     * @param pickupEvent An event containing information about item which was picked up.
      */
     @Override
     public void itemPickedUp(ItemPickupEvent pickupEvent) {
@@ -45,7 +45,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
     
     /**
      * Checks if the Active Quest is completed when the player deliveres an item.
-     * @param event
+     * @param event An event containing information about the delivery of an item.
      */
     @Override
     public void itemDelivered(ItemDeliveredEvent event) {
@@ -54,7 +54,7 @@ public class QuestHandler implements NavigateListener, ItemPickupListener, ItemD
     
     /**
      * Checks if the Active Quest is completed when the player uses an item
-     * @param event
+     * @param event An event containing information about the use of an item.
      */
     @Override
     public void itemUsed(ItemUseEvent event) {

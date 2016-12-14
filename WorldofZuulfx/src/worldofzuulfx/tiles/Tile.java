@@ -31,8 +31,8 @@ public class Tile extends SpriteBase {
 
     /**
      * Define the postion of the tile in a grid.
-     * @param column
-     * @param row 
+     * @param column The x-axis
+     * @param row The y-axis
      */
     public void setPos(int column, int row) {
         this.setColumn(column);
@@ -42,7 +42,7 @@ public class Tile extends SpriteBase {
     /**
      * Get the position of the tile as a String in the following format: "xxyy".
      * e.g. "0508" means five tiles to the right and eight tiles down.
-     * @return
+     * @return The position as a String
      */
     public String getPos() {
         String c = String.valueOf(column);

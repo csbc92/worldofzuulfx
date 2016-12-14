@@ -32,7 +32,7 @@ public class Note extends Item {
 
     /**
      * Displays the content of the Note in the console.
-     * @param player
+     * @param player The player who uses the note.
      */
     @Override
     public void use(Player player) {

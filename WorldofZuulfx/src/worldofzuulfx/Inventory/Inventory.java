@@ -68,7 +68,7 @@ public class Inventory {
      * Item does not already exists.
      * Inventory har space to an additional item.
      * The current weight plus the weight of the item does not exceed max weight
-     * @param item
+     * @param item The item to be added.
      * @return
      */
     public Boolean addItem(Item item) {
@@ -100,7 +100,7 @@ public class Inventory {
 
     /**
      * Get an item based on the inventory index
-     * @param index
+     * @param index The index of the item.
      * @return The item based on the index
      */
     public Item getItem(int index) {
@@ -125,7 +125,7 @@ public class Inventory {
 
     /**
      * Gets the amount of a given item class in the inventory
-     * @param cls
+     * @param cls The class of the item
      * @return 
      */
     public int amountOf(Class<?> cls) {

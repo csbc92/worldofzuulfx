@@ -21,7 +21,7 @@ public class RoomList {
      * Get a specific room based on a roomID.
      *
      * @param ID The roomID
-     * @return
+     * @return The room corresponding to the provided roomID.
      */
     public Room getRoom(String ID) {
 
@@ -39,7 +39,7 @@ public class RoomList {
      *
      * @param lockedRooms True only locked rooms are returned otherwise only
      * unlocked rooms are returned.
-     * @return
+     * @return A list of rooms
      */
     public ArrayList<Room> getRooms(Boolean lockedRooms) {
         ArrayList<Room> roomsToReturn = new ArrayList<>();

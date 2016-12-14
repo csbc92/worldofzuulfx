@@ -48,10 +48,10 @@ public class Bar {
     }
 
     /**
-     * Increase the player's energi-level by adding x amount of energy to the
+     * Increase the player's energy-level by adding x amount of energy to the
      * current energy-level.
      *
-     * @param energyAmount
+     * @param amount The amount of energy to be added.
      */
     public void increaseEnergy(int amount) {
         int currentVal = getValue();

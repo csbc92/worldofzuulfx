@@ -377,14 +377,14 @@ public class Game implements NavigateListener, ItemPickupListener {
     }
 
     /**
-     * @return the lostGame
+     * @return True if GameOver otherwise false.
      */
     public boolean isGameOver() {
         return gameOver;
     }
 
     /**
-     * @param lostGame the lostGame to sets
+     * A flag representing GameOver is set true.
      */
     public void setGameOver() {
         this.gameOver = true;

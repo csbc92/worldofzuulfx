@@ -53,7 +53,7 @@ public class CoffeeVoucher extends Item {
      * and if the voucherAmount is below one the CoffeeVoucher removes itself
      * from the inventory.
      *
-     * @param player
+     * @param player The player who uses the Coffee Voucher
      */
     @Override
     public void use(Player player) {

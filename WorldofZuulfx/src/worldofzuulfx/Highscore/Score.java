@@ -27,7 +27,7 @@ public class Score {
 
     /**
      * This is used when displaying the objects in the listview "lvHighscores"
-     * @return
+     * @return A String containing the Name and the highscore.
      */
     @Override
     public String toString() {

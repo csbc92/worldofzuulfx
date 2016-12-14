@@ -63,7 +63,7 @@ public abstract class Item extends SpriteBase {
      * class. The method gives the functionality to use different items in
      * different ways.
      *
-     * @param player
+     * @param player The player who uses the item.
      */
     public abstract void use(Player player);
 

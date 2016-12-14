@@ -77,7 +77,7 @@ public class Quest {
     /**
      * Checks if the Quest is completed.
      *
-     * @return
+     * @return True if the Quest has been completed otherwise false.
      */
     public Boolean checkRequirement() {
 

@@ -157,7 +157,7 @@ public class Room {
     /**
      * The layer which the room is drawn on excl. items,
      * Player and NPCs.
-     * @return
+     * @return A TileTerrain
      */
     public TileTerrain getTileTerrain() {
         return this.groundTiles;
