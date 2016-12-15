@@ -27,6 +27,7 @@ public class Util {
                 getPropFile().store(output, null);
             }
         } catch (IOException io) {
+            System.out.println("Couldn't save the file");
             io.printStackTrace();
         }
     }
@@ -45,6 +46,7 @@ public class Util {
             // load a properties file
             getPropFile().load(input);     
         } catch (FileNotFoundException ex) {
+            System.out.println("Couldn't load the file");
             ex.printStackTrace();
         } catch (IOException io) {
             io.printStackTrace();

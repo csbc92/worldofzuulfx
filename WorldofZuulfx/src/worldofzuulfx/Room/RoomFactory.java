@@ -58,7 +58,7 @@ public class RoomFactory {
                 break;
             }
             case 1: {
-                Util.loadFile("rooms.data");
+                Util.loadFile("rooms2.data");
                 break;
             }
             default: {
@@ -144,7 +144,20 @@ public class RoomFactory {
                 Util.setProp(item + ".PosY", Double.toString(room.getRoomInventory().getItem(i).getY()));
             }
         }
-        Util.storeFile("rooms.data");
+        switch (gameMode) {
+            case 0: {
+                Util.storeFile("rooms.data");
+                break;
+            }
+            case 1: {
+                Util.storeFile("rooms2.data");
+                break;
+            }
+            default: {
+                Util.storeFile("rooms.data");
+                break;
+            }
+        }
         storeRoomExits(list);
     }
 
@@ -172,7 +185,20 @@ public class RoomFactory {
             }
             Util.setProp(room.getID() + ".numExits", String.valueOf(exitCounter));
         }
-        Util.storeFile("exits.data");
+           switch (gameMode) {
+            case 0: {
+                Util.storeFile("exits.data");
+                break;
+            }
+            case 1: {
+                Util.storeFile("exits2.data");
+                break;
+            }
+            default: {
+                Util.storeFile("exits.data");
+                break;
+            }
+        }
     }
 
     /**
@@ -197,7 +223,7 @@ public class RoomFactory {
                 break;
             }
             case 1: {
-                Util.loadFile("exits.data");
+                Util.loadFile("exits2.data");
                 break;
             }
             default: {
@@ -251,7 +277,7 @@ public class RoomFactory {
         downunder = loadRoom("downunder", backgroundLayer, objectLayer, tiles);
         
         
-//        outside = new Room("outside", "outside", backgroundLayer, objectLayer, tiles, new int[][]{{0, 137, 137, 137, 137, 137, 213, 137, 137, 137, 137, 0},
+//        outside = new Room("outside", "Outside", backgroundLayer, objectLayer, tiles, new int[][]{{0, 137, 137, 137, 137, 137, 213, 137, 137, 137, 137, 0},
 //                                                                                                    {0, 138, 139, 138, 139, 138, 215, 138, 139, 138, 138, 0},
 //                                                                                                    {0, 153, 153, 153, 149, 167, 167, 167, 149, 153, 153, 0},
 //                                                                                                    {0, 153, 153, 153, 150, 167, 167, 167, 150, 153, 153, 0},
@@ -266,7 +292,7 @@ public class RoomFactory {
 //                                                                                                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 //                                                                                                    });
 //
-//        exam = new Room("exam", "exam", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+//        exam = new Room("exam", "Exam", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
 //                                                                                        {0, 12, 133, 147, 85, 99, 113, 127, 133, 147, 12, 0},
 //                                                                                        {0, 12, 134, 148, 20, 20, 20, 20, 134, 148, 12, 0},
 //                                                                                        {0, 12, 6, 20, 20, 186, 186, 20, 20, 20, 12, 0},
@@ -281,7 +307,7 @@ public class RoomFactory {
 //                                                                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 //                                                                                        });
 //
-//        campus = new Room("campus", "campus", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
+//        campus = new Room("campus", "Campus", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 214, 12, 12, 12, 12, 0},
 //                                                                                                {0, 12, 13, 13, 13, 13, 215, 13, 13, 13, 12, 0},
 //                                                                                                {0, 12, 6, 186, 20, 20, 20, 20, 186, 211, 12, 0},
 //                                                                                                {0, 12, 184, 211, 186, 20, 20, 20, 186, 212, 12, 0},
@@ -296,7 +322,7 @@ public class RoomFactory {
 //                                                                                                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 //                                                                                                });
 //        
-//        bookstore = new Room("bookstore", "bookstore", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+//        bookstore = new Room("bookstore", "Bookstore", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
 //                                                                                                        {0, 12, 133, 147, 133, 147, 133, 147, 133, 147, 12, 0},
 //                                                                                                        {0, 12, 134, 148, 134, 148, 134, 148, 134, 148, 12, 0},
 //                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
@@ -310,13 +336,13 @@ public class RoomFactory {
 //                                                                                                        {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
 //                                                                                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 //                                                                                                        });
-//        hutten = new Room("Gydehutten", "hutten", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 214, 12, 12, 12, 214, 12, 0},
-//                                                                                                    {0, 12, 13, 13, 13, 215, 13, 13, 13, 215, 12, 0},
+//        hutten = new Room("Gydehutten", "Gydehutten", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 214, 12, 12, 12, 12, 12, 0},
+//                                                                                                    {0, 12, 13, 13, 13, 215, 13, 13, 13, 13, 12, 0},
 //                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                    {0, 12, 184, 198, 186, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 12, 0},
-//                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
-//                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 34, 0},
+//                                                                                                    {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+//                                                                                                    {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 34, 0},
 //                                                                                                    {0, 12, 184, 211, 186, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                    {0, 12, 184, 212, 186, 20, 20, 186, 186, 20, 12, 0},
 //                                                                                                    {0, 12, 6, 186, 20, 20, 186, 84, 98, 186, 12, 0},
@@ -343,8 +369,8 @@ public class RoomFactory {
 //                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 186, 211, 12, 0},
 //                                                                                                    {0, 12, 184, 198, 186, 20, 20, 20, 186, 212, 12, 0},
 //                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 20, 186, 12, 0},
-//                                                                                                    {0, 13, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
-//                                                                                                    {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 34, 0},
+//                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 13, 0},
+//                                                                                                    {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 34, 0},
 //                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                    {0, 12, 184, 198, 186, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                    {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 12, 0},
@@ -394,13 +420,13 @@ public class RoomFactory {
 //                                                                                         {0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 0},
 //                                                                                         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 //                                                                                            });
-//        downunder = new Room("downunder", "downunder", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
+//        downunder = new Room("downunder", "Downunder", backgroundLayer, objectLayer, tiles, new int[][]{{0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0},
 //                                                                                                        {0, 12, 13, 13, 13, 13, 13, 13, 13, 13, 12, 0},
 //                                                                                                        {0, 12, 6, 186, 186, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                        {0, 12, 184, 84, 98, 186, 20, 202, 216, 20, 12, 0},
 //                                                                                                        {0, 12, 6, 186, 186, 20, 20, 203, 217, 20, 12, 0},
-//                                                                                                        {0, 13, 6, 20, 20, 20, 20, 204, 218, 20, 12, 0},
-//                                                                                                        {0, 7, 20, 20, 20, 20, 20, 20, 20, 20, 12, 0},
+//                                                                                                        {0, 12, 6, 20, 20, 20, 20, 204, 218, 20, 12, 0},
+//                                                                                                        {0, 12, 6, 20, 20, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                        {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                        {0, 12, 184, 210, 186, 20, 20, 20, 20, 20, 12, 0},
 //                                                                                                        {0, 12, 6, 186, 20, 20, 20, 20, 20, 20, 12, 0},
@@ -422,10 +448,8 @@ public class RoomFactory {
 //        hutten.setExit("0512", campus, "0601");
 //        hutten.setExit("1106", canteen, "0106");
 //        hutten.setExit("0500", knoldene, "0611");
-//        hutten.setExit("0900", downunder, "0106");
-//
+//        hutten.setExit("0006", u170, "1006");
 //        downunder.setExit("0612", canteen, "0601");
-//        downunder.setExit("0006", hutten, "0901");
 //
 //        canteen.setExit("0600", downunder, "0611");
 //        canteen.setExit("0006", hutten, "0906");
@@ -436,7 +460,7 @@ public class RoomFactory {
 //        knoldene.setExit("1106", u180, "0106");
 //
 //        u163.setExit("0512", knoldene, "0601");
-//        u170.setExit("1106", knoldene, "0106");
+//        u170.setExit("1106", hutten, "0106");
 //        u180.setExit("0006", knoldene, "1006");
 //        
         rooms.add(canteen);
@@ -455,7 +479,7 @@ public class RoomFactory {
         //TODO skal kun bruges, når vi skal gemme det endelige spil. Skal slettes til sidst!
         // Alle Room-filer skal skrives så det er læseligt for et menneske. (Gør det manuelt)
         loadRoomExits(rooms);
-        //  StoreRooms(rooms);
+//          StoreRooms(rooms);
         return rooms;
     }
 }
