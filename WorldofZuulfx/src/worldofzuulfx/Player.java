@@ -120,7 +120,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * Increase the player's energi-level by adding x amount of energy to the
      * current energy-level.
      *
-     * @param energyAmount
+     * @param energyAmount The amount of energy to be increased.
      */
     public void increaseEnergy(int energyAmount) {
         this.energy.increaseEnergy(energyAmount);
@@ -149,9 +149,8 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param quest The quest a player should do.
      * @param overrideOldQuest If this flag is set to true the player's "old"
      * quest will be overridden.
-     * @return
      */
-    public boolean setActiveQuest(Quest quest, boolean overrideOldQuest) {
+    public void setActiveQuest(Quest quest, boolean overrideOldQuest) {
 
         if (quest == null) {
             ConsoleInfo.setQuestData("No active quest");
@@ -162,22 +161,20 @@ public class Player extends SpriteBase implements BarValueListener {
             if (quest != null) {
                 ConsoleInfo.setQuestData(quest.getDescription());
             }
-            return true;
+            return;
         } else if (this.activeQuest == null) {
             this.activeQuest = quest;
             if (quest != null) {
                 ConsoleInfo.setQuestData(quest.getDescription());
             }
-            return true;
+            return;
         }
-
-        return false;
     }
 
     /**
      * Untracks the Quest q if the quest is not the active quest.
      * The quest q is added to the inactive quest list.
-     * @param q
+     * @param q The quest to be untracked
      */
     public void untrackQuest(Quest q) {
         if (activeQuest != null) {
@@ -190,7 +187,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * The player uses an item if the player's inventory contains it.
      * The item then calls it method use() which reqeuires a Player as argument.
      * Then it notifies all ItemUse listeners.
-     * @param item
+     * @param item The item to be used.
      */
     public void useItem(Item item) {
         if (item != null) {
@@ -204,8 +201,8 @@ public class Player extends SpriteBase implements BarValueListener {
     /**
      * Deliver an item to the specified NPC.
      *
-     * @param receiver
-     * @param item
+     * @param receiver The receiver of the item.
+     * @param item The item to be received.
      */
     public void deliverItem(NPC receiver, Item item) {
         //TODO: If-statement should check for the exact item - not the class.
@@ -223,7 +220,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * Pick up the specified item from the player's current room and add it to
      * the player's inventory. The same item cannot be added multiple times.
      *
-     * @param item
+     * @param item The item that was picked up.
      */
     public void pickupItem(Item item) {
         // Checks if Player just dropped an item.
@@ -263,7 +260,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * ChangeRoomListeners. It checks if room is locked - if it is the case
      * nothing happens.
      *
-     * @param room
+     * @param room The room to be navigated to.
      * @return It will return true if it navigates,
      */
     public boolean navigateTo(Room room) {
@@ -433,7 +430,7 @@ public class Player extends SpriteBase implements BarValueListener {
      * the item doesn't exist in the player's inventory - nothing is dropped in
      * the current room.
      *
-     * @param i
+     * @param i Item to be dropped
      */
     public void drop(Item i) {
         if (this.inventory.removeItem(i)) {

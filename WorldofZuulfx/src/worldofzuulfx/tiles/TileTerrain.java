@@ -88,7 +88,7 @@ public class TileTerrain {
 
     /**
      * Get a specific tile based on specific tile position in the format "xxyy".
-     * @param pos
+     * @param pos The position of the tile.
      * @return A tile.
      */
     public Tile getTile(String pos) {

@@ -45,7 +45,7 @@ public class Drink extends Item {
     /**
      * If the player is near a NPC, the player will give the drink to the NPC;
      * otherwise the player will drink the drink.
-     * @param player
+     * @param player The player who uses the drink
      */
     @Override
     public void use(Player player) {

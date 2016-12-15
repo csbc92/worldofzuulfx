@@ -13,7 +13,7 @@ public class NavigateEvent {
      * An event containing information about the navigation of a player
      * @param oldRoom The room which the player came from
      * @param newRoom The room which the player navigated to
-     * @param player 
+     * @param player The player who navigated,
      */
     public NavigateEvent(Room oldRoom, Room newRoom, Player player) {
         this.oldRoom = oldRoom;

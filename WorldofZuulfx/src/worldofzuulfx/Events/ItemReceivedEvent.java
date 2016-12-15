@@ -13,8 +13,8 @@ public class ItemReceivedEvent {
     private final Item item;
 
     /**
-     * An event containing information
-     * @param item
+     * An event containing information about reception of an item
+     * @param item The item that was received.
      */
     public ItemReceivedEvent(Item item) {
 

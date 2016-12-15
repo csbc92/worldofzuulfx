@@ -239,13 +239,12 @@ public class FXMLMainController implements Initializable, BarValueListener {
             public void run() {
                 int value = game.getPlayer().getTimeLeft();
                 // Checks if the time ran out or if the game was finished for some other reason
-                if (value == 1) {
+                if (value <= 1) {
                     game.setGameOver();
                 }
                 if (game.isGameOver()) {
                     gameTimer.cancel();
                     tabControl.getSelectionModel().select(tabEndGame);
-
                 }
                 if (game.isFinished()) {
                     gameTimer.cancel();

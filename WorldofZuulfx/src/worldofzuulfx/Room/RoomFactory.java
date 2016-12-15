@@ -35,7 +35,7 @@ public class RoomFactory {
      * @param objectLayer The layer which items is drawn on.
      * @param tiles The images which represents parts of a room, NPCs, Items and
      * Player.
-     * @return
+     * @return A Rooms based of the given parameters.
      */
     public Room loadRoom(String roomID, Pane backgroundLayer, Pane objectLayer, HashMap<Integer, Tile> tiles) {
         int[][] tileLayout;
@@ -125,7 +125,7 @@ public class RoomFactory {
      * Store all rooms found (incl. Items) in the given list as a file - e.g.
      * "rooms.data".
      *
-     * @param list
+     * @param list The list of rooms to be stored.
      */
     public void StoreRooms(ArrayList<Room> list) {
         Util.newPropFile();
@@ -150,7 +150,7 @@ public class RoomFactory {
     /**
      * Store all room exits as a file.
      *
-     * @param list
+     * @param list The list of exits to be stored.
      */
     public void storeRoomExits(ArrayList<Room> list) {
         int exitCounter;

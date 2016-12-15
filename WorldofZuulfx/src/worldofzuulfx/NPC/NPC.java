@@ -58,7 +58,7 @@ public class NPC extends SpriteBase {
     
     /**
      * Get the NPC's inventory
-     * @return
+     * @return The NPC's inventory
      */
     public Inventory getInventory() {
         return this.inventory;

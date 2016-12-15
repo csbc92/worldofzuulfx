@@ -95,7 +95,7 @@ public final class ConsoleInfo {
 
     /**
      * Sets the Quest's String data
-     * @param data
+     * @param data The string
      */
     public static void setQuestData(String data) {
         questInfo.set(data);

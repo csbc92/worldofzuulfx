@@ -24,7 +24,7 @@ public class Computer extends Item {
      * will trigger the exam.(FXMLExamController) If the player tries to use the
      * Computer outside the Exam room a text will be displayed.
      *
-     * @param player
+     * @param player The player who uses the computer
      */
     @Override
     public void use(Player player) {

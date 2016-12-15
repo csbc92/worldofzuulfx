@@ -53,7 +53,7 @@ public class ItemFactory {
      * Instantiates a CoffeeVoucher-object with predefined parameters. E.g.
      * VoucherAmount = 10;
      *
-     * @return
+     * @return A coffee voucher
      */
     public static CoffeeVoucher makeCoffeeVoucher() {
 
@@ -79,7 +79,7 @@ public class ItemFactory {
      * @param noteID The ID of the Note
      * @param description The description of the Note
      * @param content The content of the Note.
-     * @return
+     * @return A note based on the given paramters.
      */
     public static Note makeNote(String noteID, String description, String content) {
 
@@ -105,7 +105,7 @@ public class ItemFactory {
      * @param toRoom The Room which the player is teleported to.
      * @param nextPos The position of room the player will be placed when he
      * teleports.
-     * @return
+     * @return A globus
      */
     public static Globus makeGlobus(int spins, Room toRoom, String nextPos) {
 

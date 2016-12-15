@@ -49,7 +49,7 @@ public class Globus extends Item {
      * The Globus can be used in all rooms. Using the Globus will force the
      * player to teleport to a given rooms (toRoom)
 
-     * @param player
+     * @param player The player who uses the globus
      */
     @Override
     public void use(Player player) {

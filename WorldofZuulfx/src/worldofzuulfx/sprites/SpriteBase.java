@@ -79,7 +79,7 @@ public abstract class SpriteBase {
 
         addToLayer();
     }
-    
+
     public abstract void collides(SpriteBase spriteBase);
 
     /**
@@ -110,7 +110,7 @@ public abstract class SpriteBase {
     /**
      * Set the layer which the spritebase can be drawn on.
      *
-     * @param layer
+     * @param layer The spritebase layer
      */
     public void setLayer(Pane layer) {
         this.layer = layer;
@@ -127,7 +127,7 @@ public abstract class SpriteBase {
     /**
      * Set the x-coordinate of the spritebase rectangle
      *
-     * @param x
+     * @param x The x-coordinate
      */
     public final void setX(double x) {
         getBounds().setX(x);
@@ -145,7 +145,7 @@ public abstract class SpriteBase {
     /**
      * Set the y-coordinate of the spritebase rectangle
      *
-     * @param y
+     * @param y The y-coordinate
      */
     public final void setY(double y) {
         getBounds().setY(y);
@@ -190,8 +190,8 @@ public abstract class SpriteBase {
     /**
      * Moves the spritebase's rectangle to a given x-,y-position.
      *
-     * @param x
-     * @param y
+     * @param x X-position
+     * @param y y-poistion
      */
     public void move(double x, double y) {
 
@@ -294,10 +294,10 @@ public abstract class SpriteBase {
 
     /**
      * Set which room and position of the room, the spritebase can teleport
-     * another object to. CanTeleport is set True automatically.
+     * another spritebase to. CanTeleport is set True automatically.
      *
-     * @param room
-     * @param nextPos
+     * @param room The room which the spritebase is teleported to.
+     * @param nextPos The position in the room.
      */
     public void setTeleport(Room room, String nextPos) {
         nextRoom = room;
@@ -317,7 +317,7 @@ public abstract class SpriteBase {
      * Set the next x-coordinate is used when moving to check if the spritebase
      * collides with another spritebase.
      *
-     * @param nextPosX
+     * @param nextPosX The x-position
      */
     public void setNextPosX(double nextPosX) {
         this.nextPosX = nextPosX;
@@ -327,7 +327,7 @@ public abstract class SpriteBase {
      * Set the next y-coordinate is used when moving to check if the spritebase
      * collides with another spritebase.
      *
-     * @param nextPosY
+     * @param nextPosY The y-position
      */
     public void setNextPosY(double nextPosY) {
         this.nextPosY = nextPosY;
@@ -358,7 +358,9 @@ public abstract class SpriteBase {
 
     /**
      * Set whether the spritebase can move or not.
-     * @param canMove 
+     *
+     * @param canMove Set true if the spritebase shall be able to move otherwise
+     * false.
      */
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
@@ -380,7 +382,8 @@ public abstract class SpriteBase {
 
     /**
      * Set the image to represent the spritebase.
-     * @param image 
+     *
+     * @param image The image to represent the spritebase.
      */
     public void setImage(Image image) {
         this.image = image;
