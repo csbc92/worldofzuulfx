@@ -3,6 +3,7 @@ package worldofzuulfx;
 import worldofzuulfx.Highscore.Highscores;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +41,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
     private Timer gameTimer;
     private Highscores highscores;
     private Game game;
+    private boolean inputControlsInitialized;
 
     @FXML
     private TextArea taConsol;
@@ -105,7 +107,6 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeConsole();
-        initializeExamTab();
         initialzeHighscore();
         // Sets the userData for the two radiobutton. 
         //The selected value is later used to choose which game mode to be played
@@ -163,69 +164,73 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
     private void addInputControls(Scene scene) {
 
-        // keyboard handler: key pressed
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if (!game.isFinished()) {
+        if (!inputControlsInitialized) {
+            // keyboard handler: key pressed
+            scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+                if (!game.isFinished()) {
 
-                if (key.getCode() == KeyCode.RIGHT) {
-                    game.getPlayer().setNearNPC(null);
-                    game.getPlayer().setDroppedItem(false);
-                    game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
+                    if (key.getCode() == KeyCode.RIGHT) {
+                        game.getPlayer().setNearNPC(null);
+                        game.getPlayer().setDroppedItem(false);
+                        game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
 
-                }
-                if (key.getCode() == KeyCode.LEFT) {
-                    game.getPlayer().setNearNPC(null);
-                    game.getPlayer().setDroppedItem(false);
-                    game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
-
-                }
-                if (key.getCode() == KeyCode.UP) {
-                    game.getPlayer().setNearNPC(null);
-                    game.getPlayer().setDroppedItem(false);
-                    game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
-
-                }
-                if (key.getCode() == KeyCode.DOWN) {
-                    game.getPlayer().setNearNPC(null);
-                    game.getPlayer().setDroppedItem(false);
-                    game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
-                }
-
-                if (key.getCode() == KeyCode.A) {
-                    game.getPlayer().getInventory().nextItem();
-                    game.getPlayer().getInventory().draw(false);
-                }
-                if (key.getCode() == KeyCode.Z) {
-                    game.getPlayer().getInventory().previousItem();
-                    game.getPlayer().getInventory().draw(false);
-                }
-
-                if (key.getCode() == KeyCode.D) {
-                    game.getPlayer().drop(game.getPlayer().getInventory().getSelectedItem());
-                }
-                if (key.getCode() == KeyCode.U) {
-                    game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
-                }
-                if (game.getRPS() != null) {
-
-                    if (key.getCode() == KeyCode.R) {
-                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.ROCK);
                     }
-                    if (key.getCode() == KeyCode.P) {
-                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.PAPER);
+                    if (key.getCode() == KeyCode.LEFT) {
+                        game.getPlayer().setNearNPC(null);
+                        game.getPlayer().setDroppedItem(false);
+                        game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
+
                     }
-                    if (key.getCode() == KeyCode.S) {
-                        game.getRPS().setPlayerMove(RockPaperScissorsMoves.SCISSORS);
+                    if (key.getCode() == KeyCode.UP) {
+                        game.getPlayer().setNearNPC(null);
+                        game.getPlayer().setDroppedItem(false);
+                        game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
+
+                    }
+                    if (key.getCode() == KeyCode.DOWN) {
+                        game.getPlayer().setNearNPC(null);
+                        game.getPlayer().setDroppedItem(false);
+                        game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
+                    }
+
+                    if (key.getCode() == KeyCode.A) {
+                        game.getPlayer().getInventory().nextItem();
+                        game.getPlayer().getInventory().draw(false);
+                    }
+                    if (key.getCode() == KeyCode.Z) {
+                        game.getPlayer().getInventory().previousItem();
+                        game.getPlayer().getInventory().draw(false);
+                    }
+
+                    if (key.getCode() == KeyCode.D) {
+                        game.getPlayer().drop(game.getPlayer().getInventory().getSelectedItem());
+                    }
+                    if (key.getCode() == KeyCode.U) {
+                        game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
+                    }
+                    if (game.getRPS() != null) {
+
+                        if (key.getCode() == KeyCode.R) {
+                            game.getRPS().setPlayerMove(RockPaperScissorsMoves.ROCK);
+                        }
+                        if (key.getCode() == KeyCode.P) {
+                            game.getRPS().setPlayerMove(RockPaperScissorsMoves.PAPER);
+                        }
+                        if (key.getCode() == KeyCode.S) {
+                            game.getRPS().setPlayerMove(RockPaperScissorsMoves.SCISSORS);
+                        }
                     }
                 }
-            }
-        });
+            });
+            inputControlsInitialized = true;
+        }
     }
 
     @FXML
     private void onClickNewGame(ActionEvent event) {
 //        if (game == null) {
         initializeGame();
+        initializeExamTab();
 
         // Create a timer which keeps decreasing the timeleft variable
         gameTimer = new Timer();

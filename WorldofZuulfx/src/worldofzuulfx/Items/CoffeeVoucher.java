@@ -66,9 +66,6 @@ public class CoffeeVoucher extends Item {
                         player.getInventory().removeItem(this);
                     }
                 }
-//            } else {
-//                ConsoleInfo.setConsoleData("You have used up your Coffee Voucher.");
-//                player.getInventory().removeItem(this);
             }
         }
     }

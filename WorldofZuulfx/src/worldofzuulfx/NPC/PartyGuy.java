@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Inventory.Inventory;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
@@ -21,6 +22,7 @@ public class PartyGuy extends NPC {
     int[] partyRNG = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     private Inventory inventory;
     private RockPaperScissors RPS;
+    private Thread rpsThread;
 
     public PartyGuy(String ID, String name, Image img) {
         super(ID, name, img);
@@ -31,8 +33,9 @@ public class PartyGuy extends NPC {
 
     // TODO write about Party Time
     /**
-     * Adds partyguy to a random room
-     * and makes sure that PartyGoy always has a clock on him.
+     * Adds partyguy to a random room and makes sure that PartyGoy always has a
+     * clock on him.
+     *
      * @param rooms The list of rooms which the PartyGuy can spawn in.
      */
     public void spawn(ArrayList<Room> rooms) {
@@ -55,7 +58,7 @@ public class PartyGuy extends NPC {
         }
         return null;
     }
-    
+
     /**
      *
      * @return The Rock, Paper, Scissors game
@@ -63,13 +66,13 @@ public class PartyGuy extends NPC {
     public RockPaperScissors getRPS() {
         return RPS;
     }
-    
+
     @Override
     public void collides(SpriteBase spriteBase) {
         super.collides(spriteBase);
-        
+
         if (spriteBase instanceof Player) {
-            Player player = (Player)spriteBase;
+            Player player = (Player) spriteBase;
             if (this instanceof PartyGuy) {
                 if (player.getCurrentRoom().getID().equals("downunder")) {
                     challenge(player);
@@ -79,26 +82,30 @@ public class PartyGuy extends NPC {
             }
         }
     }
-    
+
     /**
      * The command to start the minigame if the player is within downunder
      *
      * @param command
      */
     private void challenge(Player player) {
-        Thread rpsThread;
+
         player.setCanMove(false);
+        RPS = new RockPaperScissors();
+
         rpsThread = new Thread() {
             // runnable for that thread
             public void run() {
-
-                RPS = new RockPaperScissors();
-                String txt;
-
-                txt = "I hereby challenge thee to an epic battle of 'ROCK PAPER AND SCISSOR' *epic drumroll*"
-                        + "\n Sound trumpets! let our bloody colours wave! And either victory, or else a grave. "
-                        + "\n Just kidding. If you win I will give you coffee, if you lose then your energy will drai";
+                
+                ConsoleInfo.setConsoleData("Rock (R), Paper (P) or Scissors (S)");
                 // .play() waits for user-input.
+                while (RPS.getPlayerMove() == null) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 RPS.play();
 
                 Platform.runLater(new Runnable() {
@@ -114,11 +121,6 @@ public class PartyGuy extends NPC {
                     }
 
                 });
-                try {
-                    this.join();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
             }
         };
         rpsThread.start();

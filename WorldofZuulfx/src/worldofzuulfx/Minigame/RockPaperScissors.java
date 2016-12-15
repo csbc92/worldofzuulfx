@@ -21,14 +21,8 @@ public class RockPaperScissors {
     //http://www.wikihow.com/Make-a-Rock,-Paper,-Scissors-Game-in-Java
     public void play() {
 
-        ConsoleInfo.setConsoleData("Rock (R), Paper (P) or Scissors (S)");
-        while (playerMove == null) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        }
+        //ConsoleInfo.setConsoleData("Rock (R), Paper (P) or Scissors (S)");
+
         computerMove = computerMove();
 
         moveComparison = playerMove.compareMove(computerMove);
@@ -70,8 +64,10 @@ public class RockPaperScissors {
      * @param playerMove the playerMove to set
      */
     public void setPlayerMove(RockPaperScissorsMoves playerMove) {
-
         this.playerMove = playerMove;
-
+    }
+    
+    public RockPaperScissorsMoves getPlayerMove() {
+        return this.playerMove;
     }
 }
