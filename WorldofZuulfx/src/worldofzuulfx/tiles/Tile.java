@@ -105,12 +105,12 @@ public class Tile extends SpriteBase {
             if (this.canTeleport() && player.navigateTo(this.getNextRoom())) {
                 // The Player needs to be moved with the offset 1.
                 Tile nextTile = this.getNextRoom().getTileTerrain().getTile(this.getNextPos());
-                player.move(nextTile.getX() + 1, nextTile.getY() + 1);
+                player.setX(nextTile.getX() + 1);
+                player.setY(nextTile.getY() + 1);
             }
 
             // Reset the nextPos since a collision was detected
-            player.setNextPosX(player.getX());
-            player.setNextPosY(player.getY());
+            player.move(player.getX(), player.getY());
         }
     }
 }

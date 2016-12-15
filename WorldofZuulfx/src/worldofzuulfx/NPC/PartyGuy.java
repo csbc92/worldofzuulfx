@@ -73,13 +73,13 @@ public class PartyGuy extends NPC {
 
         if (spriteBase instanceof Player) {
             Player player = (Player) spriteBase;
-            if (this instanceof PartyGuy) {
-                if (player.getCurrentRoom().getID().equals("downunder")) {
-                    challenge(player);
-                } else {
-                    player.getInventory().addItem(this.giveItem());
-                }
+
+            if (player.getCurrentRoom().getID().equals("downunder")) {
+                challenge(player);
+            } else if (!player.getInventory().addItem(this.giveItem())) {
+                ConsoleInfo.setConsoleData("You don't have enough space to get a clock!");
             }
+
         }
     }
 
@@ -96,7 +96,7 @@ public class PartyGuy extends NPC {
         rpsThread = new Thread() {
             // runnable for that thread
             public void run() {
-                
+
                 ConsoleInfo.setConsoleData("Rock (R), Paper (P) or Scissors (S)");
                 // .play() waits for user-input.
                 while (RPS.getPlayerMove() == null) {
@@ -112,7 +112,9 @@ public class PartyGuy extends NPC {
 
                     public void run() {
                         if (RPS.getMoveComparison() == 1) {
-                            player.getInventory().addItem(ItemFactory.makeBeer());
+                            if (!player.getInventory().addItem(ItemFactory.makeBeer())) {
+                                ConsoleInfo.setConsoleData("You don't have enough space to get your reward!");
+                            }
                         }
                         if (RPS.getMoveComparison() == -1) {
                             player.increaseEnergy(-30);

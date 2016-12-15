@@ -58,8 +58,8 @@ public class Globus extends Item {
         if (this.checkAmount()) {
             player.navigateTo(toRoom);
             nextTile = toRoom.getTileTerrain().getTile(nextPos);
-            player.setNextPosX(nextTile.getX() + 1);
-            player.setNextPosY(nextTile.getY() + 1);
+
+            player.move(nextTile.getX() + 1, nextTile.getY() + 1);
             spinAmount--;
 
         } else {

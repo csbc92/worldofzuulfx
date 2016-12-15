@@ -54,7 +54,8 @@ public class PlayerInventory extends Inventory {
             if (getLayer() != null) {
                 getLayer().getChildren().clear();
                 for (Item item : getItemList()) {
-                    item.move(i * 50 + 20, 0);
+                    item.setX(i * 50 + 20);
+                    item.setY(0);
                     item.updateUI();
                     getLayer().getChildren().add(item.getImageView());
                     i++;

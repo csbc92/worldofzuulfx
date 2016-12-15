@@ -114,7 +114,8 @@ public class Game implements NavigateListener, ItemPickupListener {
         }
         
         // Moves the player if it did not collide with any objects - e.g. Items, tiles and NPCs.
-        player.move(player.getNextPosX(), player.getNextPosY());
+        player.setX(player.getNextPosX());
+        player.setY(player.getNextPosY());
     }
 
     /**
@@ -258,22 +259,26 @@ public class Game implements NavigateListener, ItemPickupListener {
         // U163 NPCS
         Room u163 = getRoomHandler().getRoom("U163");
         NPC anders = new NPC("Anders", "Anders", Game.tiles.get(124).getImageView().getImage());
-        anders.move(96, 64);
+        anders.setX(96);
+        anders.setY(64);
         NPC daniel = new NPC("Daniel", "Daniel", Game.tiles.get(125).getImageView().getImage());
-        daniel.move(256, 64);
+        daniel.setX(256);
+        daniel.setY(64);
         u163.addNPC(daniel);
         u163.addNPC(anders);
 
         // U170 NPCS
         Room u170 = getRoomHandler().getRoom("U170");
         NPC lone = new NPC("Lone", "Lone", Game.tiles.get(121).getImageView().getImage());
-        lone.move(96, 64);
+        lone.setX(96);
+        lone.setY(64);
         u170.addNPC(lone);
 
         // U180 NPCS
         Room u180 = getRoomHandler().getRoom("U180");
         NPC erik = new NPC("Erik", "Erik", Game.tiles.get(122).getImageView().getImage());
-        erik.move(128, 64);
+        erik.setX(128);
+        erik.setY(64);
         u180.addNPC(erik);
 
     }
@@ -292,7 +297,8 @@ public class Game implements NavigateListener, ItemPickupListener {
             // If true (statement above) - then checks if Player is not in the room "downunder".
             if (!player.getCurrentRoom().getID().equals("downunder")) {
                 // Spawns PartyGuy in a random location, and always places him in the corner of the room
-                partyguy.move(256, 256);
+                partyguy.setX(256);
+                partyguy.setY(256);
                 ArrayList<Room> rooms = getRoomHandler().getRooms(false);
                 rooms.remove(getRoomHandler().getRoom("outside"));
                 partyguy.spawn(rooms);
