@@ -200,9 +200,14 @@ public class Room {
         return groundLayer;
     }
     
+    /**
+     * Returns all spritebases that is associated with the room.
+     * @return A set of spritebases
+     */
     public Set<SpriteBase> getAllSpriteBases() {
         Set<SpriteBase> allSpriteBases = new HashSet<>();
         
+        // Add all the spritebases to the set.
         allSpriteBases.addAll(npcList);
         allSpriteBases.addAll(roomInventory.getItemList());
         allSpriteBases.addAll(groundTiles.getTileTerrain());

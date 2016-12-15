@@ -79,7 +79,12 @@ public abstract class SpriteBase {
 
         addToLayer();
     }
-
+    
+    /**
+     * The purpose of this method is that it is called in case of intersection.
+     * It has to be overrided by sub-classes of the SpriteBase class.
+     * @param spriteBase The SpriteBase that was intersected with.
+     */
     public abstract void collides(SpriteBase spriteBase);
 
     /**

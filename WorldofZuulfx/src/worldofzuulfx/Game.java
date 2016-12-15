@@ -99,16 +99,20 @@ public class Game implements NavigateListener, ItemPickupListener {
         double playersNextPosX = player.getNextPosX();
         Bounds boundsToBeChecked = null;
         
+        // Check collision for all sprites in the player’s current room.
+        // This can be Items, NPCs and Tiles.
         for (SpriteBase sprite : currentRoom.getAllSpriteBases()) {
             if (sprite.getCanCollide()) {
                 boundsToBeChecked = sprite.getBounds().getBoundsInLocal();
                 if (boundsToBeChecked.intersects(playersNextPosX, playersNextPosY, playerWidth, playerHeight)) {
+                    // Run the collides method for the spritebase that the
+                    // player collides with.
                     sprite.collides(player);
                     return;
                 }
             }
         }
-            
+        
         // Moves the player if it did not collide with any objects - e.g. Items, tiles and NPCs.
         player.move(player.getNextPosX(), player.getNextPosY());
     }
