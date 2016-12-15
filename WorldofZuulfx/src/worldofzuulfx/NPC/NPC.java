@@ -96,8 +96,7 @@ public class NPC extends SpriteBase {
                 player.navigateTo(this.getNextRoom());
             } else {
                 // Reset the nextPos since a collision was detected
-                player.setNextPosX(player.getX());
-                player.setNextPosY(player.getY());
+                player.move(player.getX(), player.getY());
                 player.setNearNPC(this);
             }
         }

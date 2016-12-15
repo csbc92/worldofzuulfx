@@ -168,45 +168,44 @@ public class FXMLMainController implements Initializable, BarValueListener {
             // keyboard handler: key pressed
             scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
                 if (!game.isFinished()) {
-
-                    if (key.getCode() == KeyCode.RIGHT) {
-                        game.getPlayer().setNearNPC(null);
-                        game.getPlayer().setDroppedItem(false);
-                        game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() + game.getPlayer().getDx());
-
-                    }
-                    if (key.getCode() == KeyCode.LEFT) {
-                        game.getPlayer().setNearNPC(null);
-                        game.getPlayer().setDroppedItem(false);
-                        game.getPlayer().setNextPosX(game.getPlayer().getBounds().getX() - game.getPlayer().getDx());
-
-                    }
-                    if (key.getCode() == KeyCode.UP) {
-                        game.getPlayer().setNearNPC(null);
-                        game.getPlayer().setDroppedItem(false);
-                        game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() - game.getPlayer().getDy());
-
-                    }
-                    if (key.getCode() == KeyCode.DOWN) {
-                        game.getPlayer().setNearNPC(null);
-                        game.getPlayer().setDroppedItem(false);
-                        game.getPlayer().setNextPosY(game.getPlayer().getBounds().getY() + game.getPlayer().getDy());
+                    Player player = game.getPlayer();
+                    if (player.getCanMove()) {
+                        if (key.getCode() == KeyCode.RIGHT) {
+                            player.setNearNPC(null);
+                            player.setDroppedItem(false);
+                            player.move(player.getBounds().getX() + player.getDx(), player.getBounds().getY());
+                        }
+                        if (key.getCode() == KeyCode.LEFT) {
+                            player.setNearNPC(null);
+                            player.setDroppedItem(false);
+                            player.move(player.getBounds().getX() - player.getDx(), player.getBounds().getY());
+                        }
+                        if (key.getCode() == KeyCode.UP) {
+                            player.setNearNPC(null);
+                            player.setDroppedItem(false);                  
+                            player.move(player.getBounds().getX(), player.getBounds().getY() - player.getDy());
+                        }
+                        if (key.getCode() == KeyCode.DOWN) {
+                            player.setNearNPC(null);
+                            player.setDroppedItem(false);
+                            player.move(player.getBounds().getX(), player.getBounds().getY() + player.getDy());                
+                        }
                     }
 
                     if (key.getCode() == KeyCode.A) {
-                        game.getPlayer().getInventory().nextItem();
-                        game.getPlayer().getInventory().draw(false);
+                        player.getInventory().nextItem();
+                        player.getInventory().draw(false);
                     }
                     if (key.getCode() == KeyCode.Z) {
-                        game.getPlayer().getInventory().previousItem();
-                        game.getPlayer().getInventory().draw(false);
+                        player.getInventory().previousItem();
+                        player.getInventory().draw(false);
                     }
 
                     if (key.getCode() == KeyCode.D) {
-                        game.getPlayer().drop(game.getPlayer().getInventory().getSelectedItem());
+                        player.drop(player.getInventory().getSelectedItem());
                     }
                     if (key.getCode() == KeyCode.U) {
-                        game.getPlayer().useItem(game.getPlayer().getInventory().getSelectedItem());
+                        player.useItem(player.getInventory().getSelectedItem());
                     }
                     if (game.getRPS() != null) {
 

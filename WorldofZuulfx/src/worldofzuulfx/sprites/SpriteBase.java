@@ -193,7 +193,8 @@ public abstract class SpriteBase {
     }
 
     /**
-     * Moves the spritebase's rectangle to a given x-,y-position.
+     * Set the next x-coordinate and y-coordinate. This is used when moving to check if the spritebase
+     * collides with another spritebase.
      *
      * @param x X-position
      * @param y y-poistion
@@ -203,9 +204,8 @@ public abstract class SpriteBase {
         if (!getCanMove()) {
             return;
         }
-
-        this.getBounds().setX(x);
-        this.getBounds().setY(y);
+        this.nextPosX = x;
+        this.nextPosY = y;
     }
 
     /**
@@ -316,26 +316,6 @@ public abstract class SpriteBase {
      */
     public Room getNextRoom() {
         return nextRoom;
-    }
-
-    /**
-     * Set the next x-coordinate is used when moving to check if the spritebase
-     * collides with another spritebase.
-     *
-     * @param nextPosX The x-position
-     */
-    public void setNextPosX(double nextPosX) {
-        this.nextPosX = nextPosX;
-    }
-
-    /**
-     * Set the next y-coordinate is used when moving to check if the spritebase
-     * collides with another spritebase.
-     *
-     * @param nextPosY The y-position
-     */
-    public void setNextPosY(double nextPosY) {
-        this.nextPosY = nextPosY;
     }
 
     /**

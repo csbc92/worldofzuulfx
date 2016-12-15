@@ -1,4 +1,3 @@
-
 package worldofzuulfx.Inventory;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ public class Inventory {
 
     /**
      * Creates an inventory which contains items.
+     *
      * @param maxWeight The maximum weight that the inventory can carry
      * @param capacity The capacity that the inventory can carry.
      */
@@ -43,7 +43,7 @@ public class Inventory {
     public int getCurrentWeight() {
         return currentWeight;
     }
-    
+
     /**
      *
      * @return The numbers of items inside the inventory
@@ -63,11 +63,11 @@ public class Inventory {
     }
 
     /**
-     * Adds an item to the inventory if the following are true:
-     * Item is not null.
-     * Item does not already exists.
-     * Inventory har space to an additional item.
-     * The current weight plus the weight of the item does not exceed max weight
+     * Adds an item to the inventory if the following are true: Item is not
+     * null. Item does not already exists. Inventory har space to an additional
+     * item. The current weight plus the weight of the item does not exceed max
+     * weight
+     *
      * @param item The item to be added.
      * @return
      */
@@ -86,8 +86,9 @@ public class Inventory {
     }
 
     /**
-     * Removes an item from the inventory if item is not null and the item
-     * which is to be removed is not locked. 
+     * Removes an item from the inventory if item is not null and the item which
+     * is to be removed is not locked.
+     *
      * @param item The item to be removed
      * @return True if the item was removed otherwise false
      */
@@ -100,6 +101,7 @@ public class Inventory {
 
     /**
      * Get an item based on the inventory index
+     *
      * @param index The index of the item.
      * @return The item based on the index
      */
@@ -112,6 +114,7 @@ public class Inventory {
 
     /**
      * Checks if the inventory contains a specific classe
+     *
      * @param cls The class to be found
      * @return True if the item class was found otherwise false
      */
@@ -125,8 +128,9 @@ public class Inventory {
 
     /**
      * Gets the amount of a given item class in the inventory
+     *
      * @param cls The class of the item
-     * @return 
+     * @return
      */
     public int amountOf(Class<?> cls) {
         int counter = 0;
@@ -140,6 +144,7 @@ public class Inventory {
 
     /**
      * Checks if the inventory contains a specific Item ID
+     *
      * @param ID The ID of the item.
      * @return True if the item ID was found otherwise false
      */

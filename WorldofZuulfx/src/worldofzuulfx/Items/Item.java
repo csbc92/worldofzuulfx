@@ -83,8 +83,8 @@ public abstract class Item extends SpriteBase {
             player.pickupItem(this);
 
             // Reset the nextPos since a collision was detected
-            player.setNextPosX(player.getX());
-            player.setNextPosY(player.getY());
+
+            player.move(player.getX(), player.getY());
         }
     }
 }

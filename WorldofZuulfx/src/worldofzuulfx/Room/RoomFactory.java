@@ -112,7 +112,8 @@ public class RoomFactory {
             if (item != null) {
                 itemX = Double.parseDouble(Util.getProp(itemPath + ".PosX"));
                 itemY = Double.parseDouble(Util.getProp(itemPath + ".PosY"));
-                item.move(itemX, itemY);
+                item.setX(itemX);
+                item.setY(itemY);
                 item.updateUI();
                 room.getRoomInventory().addItem(item);
             }

@@ -172,8 +172,9 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Untracks the Quest q if the quest is not the active quest.
-     * The quest q is added to the inactive quest list.
+     * Untracks the Quest q if the quest is not the active quest. The quest q is
+     * added to the inactive quest list.
+     *
      * @param q The quest to be untracked
      */
     public void untrackQuest(Quest q) {
@@ -184,9 +185,10 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * The player uses an item if the player's inventory contains it.
-     * The item then calls it method use() which reqeuires a Player as argument.
-     * Then it notifies all ItemUse listeners.
+     * The player uses an item if the player's inventory contains it. The item
+     * then calls it method use() which reqeuires a Player as argument. Then it
+     * notifies all ItemUse listeners.
+     *
      * @param item The item to be used.
      */
     public void useItem(Item item) {
@@ -238,7 +240,7 @@ public class Player extends SpriteBase implements BarValueListener {
 
     /**
      * Gives the player a Reward.
-     * 
+     *
      * @param reward e.g. an item and ECTS-points
      */
     public void giveReward(Reward reward) {
@@ -434,7 +436,9 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     public void drop(Item i) {
         if (this.inventory.removeItem(i)) {
-            i.move(this.getX() - 1, this.getY() - 1);
+            // An offset(-1) is used because the player is placed on the tiles with the offset +1
+            i.setX(this.getX() - 1);
+            i.setY(this.getY() - 1);
             this.currentRoom.getRoomInventory().addItem(i);
             this.currentRoom.draw();
             setDroppedItem(true);
