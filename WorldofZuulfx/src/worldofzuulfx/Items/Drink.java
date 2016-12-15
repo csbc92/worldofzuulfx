@@ -55,7 +55,7 @@ public class Drink extends Item {
                 // Mulitplying the value of the energy increment based on the alcoCounter, as a risk-reward bonus.
                 player.increaseEnergy(this.getEnergyValue() * player.getAlcoCounter());
                 // After incrementing on the energy it is checked whether the player has reached his Alcohol tolerance.
-                //player.setDrunk();
+                player.setDrunk();
             } else {
                 player.increaseEnergy(this.getEnergyValue());
             }

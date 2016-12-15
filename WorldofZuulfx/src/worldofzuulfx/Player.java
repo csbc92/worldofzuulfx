@@ -6,6 +6,7 @@ import worldofzuulfx.Quest.Quest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import worldofzuulfx.Events.ItemDeliveredEvent;
@@ -30,6 +31,7 @@ public class Player extends SpriteBase implements BarValueListener {
     private Bar energy;
     private Bar hp;
     private boolean drunk;
+    private boolean hadBlackout;
     private PlayerInventory inventory;
 
     private Quest activeQuest;
@@ -269,15 +271,16 @@ public class Player extends SpriteBase implements BarValueListener {
         if (!room.isLocked()) {
             // TODO slet Drunk, hvis det ikke anvendes.
             Random r = new Random();
-            Room oldRoom = null;
+            Room oldRoom;
             oldRoom = currentRoom;
             currentRoom = room;
             alcoCounter = 0;
             // Generates random number for alcoTolerance whenever the player changes room.
             setAlcoTolerance(r.nextInt(5 - 2) + 2);
-
-            // Decrease the players energy each time he navigates between rooms.
-            energy.increaseEnergy(-5);
+            if (!hadBlackout) {
+                // Decrease the players energy each time he navigates between rooms.
+                energy.increaseEnergy(-5);
+            }
 
             ConsoleInfo.setRoomData(room.getShortDescription());
             notifyNavigateListeners(oldRoom, currentRoom);
@@ -451,8 +454,12 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param rooms
      */
     public void blackout(ArrayList<Room> rooms) {
+        hadBlackout = true;
         int random = (int) (Math.random() * rooms.size());
         this.navigateTo(rooms.get(random));
+        this.setX(160);
+        this.setY(192);
+        hadBlackout = false;
     }
 
     /**
@@ -525,16 +532,16 @@ public class Player extends SpriteBase implements BarValueListener {
      */
     @Override
     public void barValueChanged(Bar bar) {
-        if (bar.getValue() <= 0 || isDrunk() == true) {
+        if (bar.getValue() <= 0 || isDrunk()) {
             // TODO - Håndter blackout!
-            //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
-            //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
+            this.blackout(roomRandom);
+            ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
             if (getHp().getValue() > 1) {
+                setDrunk();
+                
                 bar.setValue(bar.getMax());
                 getHp().setValue(getHp().getValue() - 1);
-                setAlcoCounter(0);
-                setDrunk();
             } else {
                 // TODO sæt finish flag
             }
@@ -605,5 +612,12 @@ public class Player extends SpriteBase implements BarValueListener {
     @Override
     public void collides(SpriteBase spriteBase) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * @param roomRandom the roomRandom to set
+     */
+    public void setRoomRandom(ArrayList<Room> roomRandom) {
+        this.roomRandom = roomRandom;
     }
 }

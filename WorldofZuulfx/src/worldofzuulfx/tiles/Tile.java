@@ -21,6 +21,7 @@ public class Tile extends SpriteBase {
 
     /**
      * Instantiates a Tile-object.
+     *
      * @param id The ID of the tile
      * @param img The image representing the tile.
      */
@@ -31,6 +32,7 @@ public class Tile extends SpriteBase {
 
     /**
      * Define the postion of the tile in a grid.
+     *
      * @param column The x-axis
      * @param row The y-axis
      */
@@ -38,16 +40,17 @@ public class Tile extends SpriteBase {
         this.setColumn(column);
         this.setRow(row);
     }
-    
+
     /**
      * Get the position of the tile as a String in the following format: "xxyy".
      * e.g. "0508" means five tiles to the right and eight tiles down.
+     *
      * @return The position as a String
      */
     public String getPos() {
         String c = String.valueOf(column);
         String r = String.valueOf(row);
-        String result = String.format("%2s", c).replace(' ', '0') + String.format("%2s", r).replace(' ', '0') ;
+        String result = String.format("%2s", c).replace(' ', '0') + String.format("%2s", r).replace(' ', '0');
         return result;
     }
 
@@ -98,17 +101,17 @@ public class Tile extends SpriteBase {
 
     @Override
     public void collides(SpriteBase spriteBase) {
-        
+
         if (spriteBase instanceof Player) {
-            Player player = (Player)spriteBase;
-            
+            Player player = (Player) spriteBase;
+
             if (this.canTeleport() && player.navigateTo(this.getNextRoom())) {
                 // The Player needs to be moved with the offset 1.
                 Tile nextTile = this.getNextRoom().getTileTerrain().getTile(this.getNextPos());
                 player.setX(nextTile.getX() + 1);
                 player.setY(nextTile.getY() + 1);
             }
-
+            
             // Reset the nextPos since a collision was detected
             player.move(player.getX(), player.getY());
         }
