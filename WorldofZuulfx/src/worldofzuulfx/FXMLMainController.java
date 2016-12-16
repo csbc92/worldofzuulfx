@@ -3,11 +3,11 @@ package worldofzuulfx;
 import worldofzuulfx.Highscore.Highscores;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -100,9 +100,9 @@ public class FXMLMainController implements Initializable, BarValueListener {
     @FXML
     private Tab tabEndGame;
     @FXML
-    private TextField lPlayername;
-    @FXML
     private Button butTryAgain;
+    @FXML
+    private TextField tfPlayername;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -291,7 +291,7 @@ public class FXMLMainController implements Initializable, BarValueListener {
         // GameLevel chooses which game to be loaded - Normal or Hogwarts mode.
         gameMode = (Integer) tgGameLevel.selectedToggleProperty().get().getUserData();
 
-        game = new Game(layers, lPlayername.getText(), gameMode); //En instans af spillet oprettes.
+        game = new Game(layers, tfPlayername.getText(), gameMode); //En instans af spillet oprettes.
 
         // Listen for when the players energy changes.
         game.getPlayer().getEnergyBar().addBarValueListener(this);
@@ -351,24 +351,29 @@ public class FXMLMainController implements Initializable, BarValueListener {
 
     }
 
-    /**
-     *
-     * Checks if lPlayername contains text: If true the new game button is
-     * enabled. If false the new game button is disabled.
-     */
     @FXML
-    private void onlPlayernameChanged(KeyEvent event) {
-
-        if (lPlayername.getText().trim().length() != 0) {
+    private void onTabChanged(Event event) {
+        tfPlayername.clear();
+        if (tfPlayername.getText().trim().length() != 0) {
             butNewGame.setDisable(false);
         } else {
             butNewGame.setDisable(true);
         }
     }
+    
+        /**
+     *
+     * Checks if lPlayername contains text: If true the new game button is
+     * enabled. If false the new game button is disabled.
+     */
 
     @FXML
-    private void onbutTryAgainClick(MouseEvent event) {
-        // Changes Highscore view to Mainmenu
-        tabControl.getSelectionModel().select(tabNewGame);
+    private void ontfPlayernameChanged(KeyEvent event) {
+        
+        if (tfPlayername.getText().trim().length() != 0) {
+            butNewGame.setDisable(false);
+        } else {
+            butNewGame.setDisable(true);
+        }
     }
 }

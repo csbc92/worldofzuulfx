@@ -31,7 +31,6 @@ public class PartyGuy extends NPC {
         inventory = new Inventory(10000, 1);
     }
 
-    // TODO write about Party Time
     /**
      * Adds partyguy to a random room and makes sure that PartyGoy always has a
      * clock on him.

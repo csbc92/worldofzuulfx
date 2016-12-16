@@ -37,9 +37,7 @@ public class Note extends Item {
     @Override
     public void use(Player player) {
 
-        if (player.getCurrentRoom().getID().equals("exam")) {
-            //TODO player cheated during exam
-        } else {
+        if (!player.getCurrentRoom().getID().equals("exam")) {
             ConsoleInfo.setConsoleData(content);
         }
     }
