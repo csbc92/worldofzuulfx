@@ -49,7 +49,7 @@ public class Game implements NavigateListener, ItemPickupListener {
         initNPCs();
         initPartyGuy();
         initQuests();
-        
+
         gameLoop();
         // Navigates Player to Outside
         player.navigateTo(roomHandler.getRoom("outside"));
@@ -84,7 +84,6 @@ public class Game implements NavigateListener, ItemPickupListener {
      */
     private void updateSprites() {
         player.updateUI();
-        
         player.getInventory().selectItem(player.getInventory().getSelectedItem());
     }
 
@@ -175,7 +174,6 @@ public class Game implements NavigateListener, ItemPickupListener {
         player.addItemPickupListener(this);
 
         player.getInventory().setLayer(layers.getInventoryLayer());
-        player.setRoomRandom(roomHandler.getRooms(false));
     }
 
     /**
