@@ -488,18 +488,6 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Checks whether a player is drunk or not by comparing the tolerance with
-     * the alcoCounter.
-     */
-    public void setDrunk() {
-        if (alcoCounter == alcoTolerance) {
-            this.drunk = true;
-        } else {
-            this.drunk = false;
-        }
-    }
-
-    /**
      * Sets the alcoTolerance.
      *
      * @param i
@@ -518,25 +506,18 @@ public class Player extends SpriteBase implements BarValueListener {
     }
 
     /**
-     * Checks if the player reached minimum energy after energy change, or if
-     * player reached it's alcoTolerance.
+     * Checks if the player reached minimum energy after energy change
      *
      * @param bar
      */
     @Override
     public void barValueChanged(Bar bar) {
         if (bar.getValue() <= 0 || isDrunk() == true) {
-            // TODO - Håndter blackout!
-            //    this.blackout(Main.getGame().getRoomHandler().getRooms(false));
-            //ConsoleInfo.setConsoleData("You just had a blackout, good luck finding your missing item... MUAHAHAHAHA");
 
             if (getHp().getValue() > 1) {
                 bar.setValue(bar.getMax());
                 getHp().setValue(getHp().getValue() - 1);
                 setAlcoCounter(0);
-                setDrunk();
-            } else {
-                // TODO sæt finish flag
             }
         }
     }

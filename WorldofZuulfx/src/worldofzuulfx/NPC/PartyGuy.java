@@ -77,7 +77,7 @@ public class PartyGuy extends NPC {
             if (player.getCurrentRoom().getID().equals("downunder")) {
                 challenge(player);
             } else if (!player.getInventory().addItem(this.giveItem())) {
-                ConsoleInfo.setConsoleData("You don't have enough space to get a clock!");
+                ConsoleInfo.setConsoleData("You have already received your clock or you don't have enough space in your inventory");
             }
 
         }
