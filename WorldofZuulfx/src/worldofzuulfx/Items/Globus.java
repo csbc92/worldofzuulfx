@@ -48,7 +48,7 @@ public class Globus extends Item {
     /**
      * The Globus can be used in all rooms. Using the Globus will force the
      * player to teleport to a given rooms (toRoom)
-
+     *
      * @param player The player who uses the globus
      */
     @Override
@@ -56,12 +56,14 @@ public class Globus extends Item {
         Tile nextTile;
 
         if (this.checkAmount()) {
+            spinAmount--;
+            if (!this.checkAmount()) {
+                player.getInventory().removeItem(this);
+            }
             player.navigateTo(toRoom);
             nextTile = toRoom.getTileTerrain().getTile(nextPos);
 
             player.move(nextTile.getX() + 1, nextTile.getY() + 1);
-            spinAmount--;
-
         } else {
             player.getInventory().removeItem(this);
         }
