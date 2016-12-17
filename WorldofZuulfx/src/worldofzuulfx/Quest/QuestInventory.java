@@ -4,7 +4,6 @@ package worldofzuulfx.Quest;
 import java.util.HashMap;
 import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Items.Book;
-import worldofzuulfx.Items.Globus;
 import worldofzuulfx.Items.Item;
 import worldofzuulfx.Items.ItemFactory;
 import worldofzuulfx.Items.Note;
@@ -50,11 +49,6 @@ public class QuestInventory {
                     + "\n\nYou have been given a new Quest. " + 
                     "A hint for the quest can be seen below the 'Active Quest' label.";
             ConsoleInfo.setConsoleData(postCompleteMessage);
-            
-            Globus globus = ItemFactory.makeGlobus(10, roomHandler.getRoom("canteen"), "");
-            globus.setX(256);
-            globus.setY(96);
-            roomHandler.getRoom("canteen").getRoomInventory().addItem(globus);
 
             roomHandler.getRoom("Exam").setLocked(true); // Lock the exam room again
 
