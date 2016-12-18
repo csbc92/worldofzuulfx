@@ -5,7 +5,6 @@
  */
 package worldofzuulfx.Items;
 
-import worldofzuulfx.ConsoleInfo;
 import worldofzuulfx.Game;
 import worldofzuulfx.Player;
 

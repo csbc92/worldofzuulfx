@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
-import worldofzuulfx.Main;
 
 public class FXMLExamController implements Initializable {
     

@@ -3,8 +3,6 @@ package worldofzuulfx.NPC;
 import worldofzuulfx.Player;
 import worldofzuulfx.Room.Room;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import worldofzuulfx.ConsoleInfo;
