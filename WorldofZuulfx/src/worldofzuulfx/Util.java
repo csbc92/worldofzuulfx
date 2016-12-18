@@ -72,7 +72,7 @@ public class Util {
     }
 
     /**
-     * Get a property based on a given key
+     * Get a property value based on a given key
      * @param name key
      * @return A value based on the key. If the key is not found a String with "null" is returned.
      */
