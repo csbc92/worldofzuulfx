@@ -82,7 +82,7 @@ public class Player extends SpriteBase implements BarValueListener {
         ects.setValue(0);
         energy.setValue(100);
         hp.setValue(3);
-        timeLeft = (5 * 60);
+        timeLeft = (10 * 60);
     }
 
     /**
@@ -207,7 +207,6 @@ public class Player extends SpriteBase implements BarValueListener {
      * @param item The item to be received.
      */
     public void deliverItem(NPC receiver, Item item) {
-        //TODO: If-statement should check for the exact item - not the class.
         if (this.inventory.contains(item.getClass())) {
             if (receiver.receiveItem(item)) {
                 // Remove the item from the players inventory.

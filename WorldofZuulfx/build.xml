@@ -3,8 +3,10 @@
     <import file="nbproject/build-impl.xml"/>
 	<target name="-post-compile">
 		<copy file="exits.data" todir="${dist.dir}"/>
+		<copy file="exits2.data" todir="${dist.dir}"/>
 		<copy file="highscore.data" todir="${dist.dir}"/>
 		<copy file="rooms.data" todir="${dist.dir}"/>
+		<copy file="rooms2.data" todir="${dist.dir}"/>
 	</target>
     <!--
 
